@@ -1,0 +1,613 @@
+{
+  "pagination": { "limit": 100, "offset": 0, "count": 100, "total": 1655 },
+  "data": {
+    "name": "Stockholm Stock Exchange",
+    "acronym": "OMX",
+    "mic": "XSTO",
+    "country": "Sweden",
+    "city": "Stockholm",
+    "website": "WWW.NASDAQOMXNORDIC.COM",
+    "tickers": [
+      {
+        "name": "PFIZER INC.",
+        "symbol": "PFE.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ASTRAZENECA PLC",
+        "symbol": "AZN.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "EQUINOR ASA",
+        "symbol": "EQNRO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "ABB LTD",
+        "symbol": "ABB.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ATLAS COPCO AB SER. A",
+        "symbol": "ATCO_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "INVESTOR AB SER. B",
+        "symbol": "INVE_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "INVESTOR AB SER. A",
+        "symbol": "INVE_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ATLAS COPCO AB SER. B",
+        "symbol": "ATCO_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NORDEA BANK ABP",
+        "symbol": "NDA_SE.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "VOLVO, AB SER. B",
+        "symbol": "VOLV_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "VOLVO, AB SER. A",
+        "symbol": "VOLV_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HENNES & MAURITZ AB, H & M SER. B",
+        "symbol": "HM_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ERICSSON, TELEFONAB. L M SER. A",
+        "symbol": "ERIC_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "DNB ASA",
+        "symbol": "DNBO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "ERICSSON, TELEFONAB. L M SER. B",
+        "symbol": "ERIC_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ASSA ABLOY AB SER. B",
+        "symbol": "ASSA_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TELENOR",
+        "symbol": "TELO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "SKANDINAVISKA ENSKILDA BANKEN SER. C",
+        "symbol": "SEB_C.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NOKIA CORPORATION",
+        "symbol": "NOKIA_SEK.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "ESSITY AB SER. B",
+        "symbol": "ESSITY_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ESSITY AB SER. A",
+        "symbol": "ESSITY_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SVENSKA HANDELSBANKEN SER. B",
+        "symbol": "SHB_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SKANDINAVISKA ENSKILDA BANKEN SER. A",
+        "symbol": "SEB_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SANDVIK AB",
+        "symbol": "SAND.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SVENSKA HANDELSBANKEN SER. A",
+        "symbol": "SHB_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HEXAGON AB SER. B",
+        "symbol": "HEXA_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SWEDBANK AB SER A",
+        "symbol": "SWED_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TELIA COMPANY AB",
+        "symbol": "TELIA.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "EQT AB",
+        "symbol": "EQT.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "EPIROC AB SER. A",
+        "symbol": "EPI_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "EPIROC AB SER. B",
+        "symbol": "EPI_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "MOWI ASA",
+        "symbol": "MOWIO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "TRATON SE",
+        "symbol": "8TRA.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ADEVINTA ASA",
+        "symbol": "ADEO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "LUNDBERGFORETAGEN AB, L E SER. B",
+        "symbol": "LUND_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "STORA ENSO OYJ SER. A",
+        "symbol": "STE_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TELE2 AB SER. B",
+        "symbol": "TEL2_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "INDUSTRIVARDEN, AB SER. A",
+        "symbol": "INDU_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GJENSIDIGE FORSIKRING ASA",
+        "symbol": "GJFO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "TELE2 AB SER. A",
+        "symbol": "TEL2_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LATOUR, INVESTMENTAB. SER. B",
+        "symbol": "LATO_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "INDUSTRIVARDEN, AB SER. C",
+        "symbol": "INDU_C.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "YARA INTERNATIONAL",
+        "symbol": "YARO.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SWEDISH MATCH AB",
+        "symbol": "SWMA.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ALFA LAVAL AB",
+        "symbol": "ALFA.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "STORA ENSO OYJ SER. R",
+        "symbol": "STE_R.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SKANSKA AB SER. B",
+        "symbol": "SKA_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "AKER BP ASA",
+        "symbol": "AKERBPO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "ORKLA",
+        "symbol": "ORKO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "FASTIGHETS AB BALDER SER. B",
+        "symbol": "BALD_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NIBE INDUSTRIER AB SER. B",
+        "symbol": "NIBE_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LUNDIN PETROLEUM AB",
+        "symbol": "LUPE.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SKF, AB SER. B",
+        "symbol": "SKF_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SKF, AB SER. A",
+        "symbol": "SKF_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ICA GRUPPEN AB",
+        "symbol": "ICA.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SVENSKA CELLULOSA AB SCA SER. A",
+        "symbol": "SCA_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SVENSKA CELLULOSA AB SCA SER. B",
+        "symbol": "SCA_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "EVOLUTION GAMING GROUP AB",
+        "symbol": "EVO.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ELECTROLUX, AB SER. A",
+        "symbol": "ELUX_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "CASTELLUM AB",
+        "symbol": "CAST.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SAMHALLSBYGGNADSBO. I NORDEN AB SER. D",
+        "symbol": "SBB_D.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "SAGAX AB A",
+        "symbol": "SAGA_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SCHIBSTED ASA SER. A",
+        "symbol": "SCHAO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "AKELIUS RESIDENTIAL PROPERTY AB SER. D",
+        "symbol": "AKEL_D.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ELECTROLUX, AB SER. B",
+        "symbol": "ELUX_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "AUTOLIV INC. SDB",
+        "symbol": "ALIV_SDB.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NORSK HYDRO",
+        "symbol": "NHYO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "KINNEVIK AB SER. A",
+        "symbol": "KINV_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BOLIDEN AB",
+        "symbol": "BOL.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HOLMEN AB SER. A",
+        "symbol": "HOLM_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SCHIBSTED SER. B",
+        "symbol": "SCHBO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "SAGAX AB B",
+        "symbol": "SAGA_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "KINNEVIK AB SER. B",
+        "symbol": "KINV_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "FABEGE AB",
+        "symbol": "FABG.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SAMHALLSBYGGNADSBO. I NORDEN AB SER. B",
+        "symbol": "SBB_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SALMAR ASA",
+        "symbol": "SALMO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "SECURITAS AB SER. B",
+        "symbol": "SECU_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SWEDISH ORPHAN BIOVITRUM AB",
+        "symbol": "SOBI.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TOMRA SYSTEMS",
+        "symbol": "TOMO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "HOLMEN AB SER. B",
+        "symbol": "HOLM_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LIFCO AB SER.B",
+        "symbol": "LIFCO_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GETINGE AB SER. B",
+        "symbol": "GETI_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "MILLICOM INTERNATIONAL CELLULAR S.A. SDB",
+        "symbol": "TIGO_SDB.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "AAK AB",
+        "symbol": "AAK.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TRELLEBORG AB SER. B",
+        "symbol": "TREL_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ELEKTA AB SER. B",
+        "symbol": "EKTA_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "AXFOOD AB",
+        "symbol": "AXFO.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "WALLENSTAM AB SER. B",
+        "symbol": "WALL_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "INDUTRADE AB",
+        "symbol": "INDT.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HUSQVARNA AB SER. A",
+        "symbol": "HUSQ_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HUSQVARNA AB SER. B",
+        "symbol": "HUSQ_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LUNDIN MINING CORPORATION",
+        "symbol": "LUMI.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SWECO AB SER. B",
+        "symbol": "SWEC_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SWECO AB SER. A",
+        "symbol": "SWEC_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HUFVUDSTADEN AB SER. A",
+        "symbol": "HUFV_A.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SAAB AB SER. B",
+        "symbol": "SAAB_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LEROY SEAFOOD GROUP ASA",
+        "symbol": "LSGO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "BAKKAFROST P/F",
+        "symbol": "BAKKAO.XSTO",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "BEIJER REF AB SER. B",
+        "symbol": "BEIJ_B.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TIETOEVRY CORPORATION",
+        "symbol": "TIETOS.XSTO",
+        "has_intraday": false,
+        "has_eod": true
+      }
+    ]
+  }
+}

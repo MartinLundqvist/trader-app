@@ -1,0 +1,613 @@
+{
+  "pagination": { "limit": 100, "offset": 0, "count": 100, "total": 8033 },
+  "data": {
+    "name": "London Stock Exchange",
+    "acronym": "LSE",
+    "mic": "XLON",
+    "country": "United Kingdom",
+    "city": "London",
+    "website": "WWW.LONDONSTOCKEXCHANGE.COM",
+    "tickers": [
+      {
+        "name": "SAMSUNG ELECTRONICS CO LTD (ATT) GDR (EACH REP 25 ",
+        "symbol": "BC94.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TOYOTA MOTOR CORPORATION Y50",
+        "symbol": "TYT.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ROYAL DUTCH SHELL PLC 'A' ORD EUR0.07",
+        "symbol": "RDSA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ROYAL DUTCH SHELL PLC 'B' ORD EUR0.07",
+        "symbol": "RDSB.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BOEING CO. COM STK USD5 (CDI)",
+        "symbol": "BOE.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "UNILEVER PLC ORD 3 1/9P",
+        "symbol": "ULVR.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HSBC HOLDINGS PLC ORD $0.50 (UK REG)",
+        "symbol": "HSBA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "INTERNATIONAL BUSINESS MACHINES CORPORATION COM ST",
+        "symbol": "IBM.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ASTRAZENECA PLC ORD SHS $0.25",
+        "symbol": "AZN.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HONEYWELL INTERNATIONAL INCORPORATED COM STK USD1",
+        "symbol": "HON.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TOTAL S.A. TOTAL ORD SHS",
+        "symbol": "TTA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BP PLC $0.25",
+        "symbol": "BP.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GLAXOSMITHKLINE PLC ORD 25P",
+        "symbol": "GSK.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GENERAL ELECTRIC COMPANY COM STK USD0.06 (CDI)",
+        "symbol": "GEC.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BHP GROUP PLC ORD $0.50",
+        "symbol": "BHP.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BRITISH AMERICAN TOBACCO PLC ORD 25P",
+        "symbol": "BATS.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "DIAGEO PLC ADR (4:1)",
+        "symbol": "DGED.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "DIAGEO PLC ORD 28 101/108P",
+        "symbol": "DGE.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "RIO TINTO PLC ORD 10P",
+        "symbol": "RIO.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BANCO SANTANDER S.A. ORD EUR0.50 (CDI)",
+        "symbol": "BNC.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "MARSH & MCLENNAN COS. INC COM US$1",
+        "symbol": "MHM.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "PJSC LUKOIL ORD RUB0.025",
+        "symbol": "LKOH.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "RECKITT BENCKISER GROUP PLC ORD 10P",
+        "symbol": "RB.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "RELX PLC ORD 14 51/116P",
+        "symbol": "REL.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "VODAFONE GROUP PLC ORD USD0.20 20/21",
+        "symbol": "VOD.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NATIONAL GRID PLC ORD 12 204/473P",
+        "symbol": "NG.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LLOYDS BANKING GROUP PLC ORD 10P",
+        "symbol": "LLOY.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "PRUDENTIAL PLC ORD 5P",
+        "symbol": "PRU.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SCHLUMBERGER LD COM STK US$0.01",
+        "symbol": "SCL.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LONDON STOCK EXCHANGE GROUP PLC ORD SHS 6 79/86P",
+        "symbol": "LSE.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "COMPASS GROUP PLC ORD 11 1/20P",
+        "symbol": "CPG.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GLENCORE PLC ORD USD0.01",
+        "symbol": "GLEN.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BANCO BILBAO VIZCAYA ARGENTARIA S.A. ORD EUR0.49",
+        "symbol": "BVA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BARCLAYS PLC ORD 25P",
+        "symbol": "BARC.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "EXPERIAN PLC ORD USD0.10",
+        "symbol": "EXPN.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ANGLO AMERICAN PLC ORD USD0.54945",
+        "symbol": "AAL.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TESCO PLC ORD 5P",
+        "symbol": "TSCO.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "MITSUBISHI ELECTRIC CORPORATION COM STK Y50",
+        "symbol": "MEL.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "CRH PLC ORD EUR 0.32",
+        "symbol": "CRH.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ROYAL BANK OF SCOTLAND GROUP PLC ORD 100P",
+        "symbol": "RBS.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BAE SYSTEMS PLC ORD 2.5P",
+        "symbol": "BA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "COCA-COLA EUROPEAN PARTNERS PLC ORD EUR0.01 (DI)",
+        "symbol": "CCEP.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ASSOCIATED BRITISH FOODS PLC ORD 5 15/22P",
+        "symbol": "ABF.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "KERRY GROUP PLC 'A'ORD EUR0.125",
+        "symbol": "KYGA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "STANDARD CHARTERED PLC ORD USD0.50",
+        "symbol": "STAN.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "CARNIVAL PLC ORD USD 1.66",
+        "symbol": "CCL.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SSE PLC ORD 50P",
+        "symbol": "SSE.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SMITH & NEPHEW PLC ORD USD0.20",
+        "symbol": "SN.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "FERGUSON PLC ORD 10P",
+        "symbol": "FERG.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LEGAL & GENERAL GROUP PLC ORD 2 1/2P",
+        "symbol": "LGEN.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "COMPAGNIE DE SAINT-GOBAIN COMPAGNIE DE ST-GOBAIN O",
+        "symbol": "COD.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "IMPERIAL BRANDS PLC ORD 10P",
+        "symbol": "IMB.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BT GROUP PLC ORD 5P",
+        "symbol": "BT.A.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "AVIVA PLC ORD 25P",
+        "symbol": "AV.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "PUBLIC JOINT STOCK COMPANY POLYUS GDR (EACH REPR 0",
+        "symbol": "PLZA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "JARDINE MATHESON HOLDINGS LD ORD US$0.25(SINGAPORE",
+        "symbol": "JAR.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "JARDINE STRATEGIC HOLDINGS LD ORD US$0.05(SINGAPOR",
+        "symbol": "JDS.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ROLLS-ROYCE HOLDINGS PLC ORD SHS 20P",
+        "symbol": "RR.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "RYANAIR HOLDINGS PLC ORD EUR0.006",
+        "symbol": "RYA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ASHTEAD GROUP PLC ORD 10P",
+        "symbol": "AHT.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "MELROSE INDUSTRIES PLC ORDS 48/7P",
+        "symbol": "MRO.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "JUST EAT TAKEAWAY.COM N.V. ORD EUR0.04 (CDI)",
+        "symbol": "JET.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "3I GROUP PLC ORD 73 19/22P",
+        "symbol": "III.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "RENTOKIL INITIAL PLC ORD 1P",
+        "symbol": "RTO.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "KINGSPAN GROUP PLC ORD EUR0.13",
+        "symbol": "KGP.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "COCA-COLA HBC AG ORD CHF6.70 (CDI)",
+        "symbol": "CCH.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SEGRO PLC ORD 10P",
+        "symbol": "SGRO.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "WPP PLC ORD 10P",
+        "symbol": "WPP.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "PERSIMMON PLC ORD 10P",
+        "symbol": "PSN.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HONG KONG LAND HOLDINGS LD ORD US$0.10(BERMUDA REG",
+        "symbol": "HKLB.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "INTERNATIONAL CONSOLIDATED AIRLINES GROUP S.A. ORD",
+        "symbol": "IAG.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "INTERTEK GROUP PLC ORD 1P",
+        "symbol": "ITRK.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SCOTTISH MORTGAGE INVESTMENT TRUST PLC ORD 5P",
+        "symbol": "SMT.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "INFORMA PLC ORD 0.1P",
+        "symbol": "INF.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "OCADO GROUP PLC ORD 2P",
+        "symbol": "OCDO.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "INTERCONTINENTAL HOTELS GROUP PLC ORD 20 340/399P",
+        "symbol": "IHG.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SCHRODERS PLC VTG SHS £1",
+        "symbol": "SDR.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NEXT PLC ORD 10P",
+        "symbol": "NXT.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ANTOFAGASTA PLC ORD 5P",
+        "symbol": "ANTO.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "MONDI PLC ORD EUR 0.20",
+        "symbol": "MNDI.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BARRATT DEVELOPMENTS PLC ORD 10P",
+        "symbol": "BDEV.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SAGE GROUP PLC ORD 1 4/77P",
+        "symbol": "SGE.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HALMA PLC ORD 10P",
+        "symbol": "HLMA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "HARGREAVES LANSDOWN PLC ORD 0.4P",
+        "symbol": "HL.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "AVEVA GROUP PLC ORD 3 5/9P",
+        "symbol": "AVV.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "STANDARD LIFE ABERDEEN PLC ORD 13 61/63P",
+        "symbol": "SLA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "JD SPORTS FASHION PLC ORD 0.25P",
+        "symbol": "JD.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BURBERRY GROUP PLC ORD 0.05P",
+        "symbol": "BRBY.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "FLUTTER ENTERTAINMENT PLC ORD EUR0.09",
+        "symbol": "FLTR.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TAYLOR WIMPEY PLC ORD 1P",
+        "symbol": "TW.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "UNITED UTILITIES GROUP PLC ORD 5P",
+        "symbol": "UU.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BUNZL PLC ORD 32 1/7P",
+        "symbol": "BNZL.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SPIRAX-SARCO ENGINEERING PLC ORD 26 12/13P",
+        "symbol": "SPX.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ADMIRAL GROUP PLC ORD 0.1P",
+        "symbol": "ADM.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SMURFIT KAPPA GROUP PLC ORD EUR0.001",
+        "symbol": "SKG.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SCHRODERS PLC NON-VTG SHS £1",
+        "symbol": "SDRC.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LAND SECURITIES GROUP PLC ORD 10 2/3P",
+        "symbol": "LAND.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SMITHS GROUP PLC ORD 37.5P",
+        "symbol": "SMIN.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SEVERN TRENT PLC ORD 97 17/19P",
+        "symbol": "SVT.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "CRODA INTERNATIONAL PLC ORD 10.609756P",
+        "symbol": "CRDA.XLON",
+        "has_intraday": false,
+        "has_eod": true
+      }
+    ]
+  }
+}

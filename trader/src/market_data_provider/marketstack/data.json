@@ -1,0 +1,39 @@
+{
+  "pagination": { "limit": 100, "offset": 0, "count": 2, "total": 2 },
+  "data": [
+    {
+      "open": 144.38,
+      "high": 146.71,
+      "low": 143.9,
+      "close": 145.91,
+      "volume": 52279761,
+      "adj_high": 146.71,
+      "adj_low": 143.9,
+      "adj_close": 145.91,
+      "adj_open": 144.38,
+      "adj_volume": 52279761,
+      "split_factor": 1,
+      "dividend": 0,
+      "symbol": "AAPL",
+      "exchange": "XNAS",
+      "date": "2023-03-02T00:00:00+0000"
+    },
+    {
+      "open": 246.55,
+      "high": 251.4,
+      "low": 245.61,
+      "close": 251.11,
+      "volume": 24808200,
+      "adj_high": 251.4,
+      "adj_low": 245.61,
+      "adj_close": 251.11,
+      "adj_open": 246.55,
+      "adj_volume": 24833646,
+      "split_factor": 1,
+      "dividend": 0,
+      "symbol": "MSFT",
+      "exchange": "XNAS",
+      "date": "2023-03-02T00:00:00+0000"
+    }
+  ]
+}

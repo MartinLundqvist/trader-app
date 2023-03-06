@@ -1,0 +1,613 @@
+{
+  "pagination": { "limit": 100, "offset": 0, "count": 100, "total": 467 },
+  "data": {
+    "name": "Copenhagen Stock Exchange",
+    "acronym": "OMXC",
+    "mic": "XCSE",
+    "country": "Denmark",
+    "city": "Copenhagen",
+    "website": "WWW.NASDAQOMXNORDIC.COM",
+    "tickers": [
+      {
+        "name": "NOVO NORDISK B A/S",
+        "symbol": "NOVO_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ORSTED A/S",
+        "symbol": "ORSTED.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NORDEA BANK ABP",
+        "symbol": "NDA_DK.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "COLOPLAST B A/S",
+        "symbol": "COLO_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "DSV PANALPINA A/S",
+        "symbol": "DSV.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "A.P. MOLLER - MAERSK B A/S",
+        "symbol": "MAERSK_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "CARLSBERG A A/S",
+        "symbol": "CARL_A.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "CARLSBERG B A/S",
+        "symbol": "CARL_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "A.P. MOLLER - MAERSK A A/S",
+        "symbol": "MAERSK_A.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "VESTAS WIND SYSTEMS A/S",
+        "symbol": "VWS.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GENMAB A/S",
+        "symbol": "GMAB.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NOVOZYMES B A/S",
+        "symbol": "NZYM_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "DANSKE BANK A/S",
+        "symbol": "DANSKE.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "CHR. HANSEN HOLDING A/S",
+        "symbol": "CHR.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TRYG A/S",
+        "symbol": "TRYG.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "DEMANT A/S",
+        "symbol": "DEMANT.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GN STORE NORD A/S",
+        "symbol": "GN.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "H. LUNDBECK A/S",
+        "symbol": "LUN.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "KOBENHAVNS LUFTHAVNE A/S",
+        "symbol": "KBHL.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "AMBU A/S",
+        "symbol": "AMBU_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ROCKWOOL INTERNATIONAL B A/S",
+        "symbol": "ROCK_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ROCKWOOL INTERNATIONAL A A/S",
+        "symbol": "ROCK_A.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ROYAL UNIBREW A/S",
+        "symbol": "RBREW.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "PANDORA A/S",
+        "symbol": "PNDORA.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SIMCORP A/S",
+        "symbol": "SIM.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TOPDANMARK A/S",
+        "symbol": "TOP.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "G4S PLC",
+        "symbol": "G4S.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ISS A/S",
+        "symbol": "ISS.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ALK-ABELLO B A/S",
+        "symbol": "ALK_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "OSSUR HF.",
+        "symbol": "OSSR.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "JYSKE BANK A/S",
+        "symbol": "JYSK.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NETCOMPANY GROUP A/S",
+        "symbol": "NETC.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "JEUDAN A/S",
+        "symbol": "JDAN.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "DFDS A/S",
+        "symbol": "DFDS.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "RINGKJOBING LANDBOBANK A/S",
+        "symbol": "RILBA.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "THE DRILLING COMPANY OF 1972 A/S",
+        "symbol": "DRLCO.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SCHOUW & CO. A/S",
+        "symbol": "SCHO.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "FLSMIDTH & CO. A/S",
+        "symbol": "FLS.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ZEALAND PHARMA A/S",
+        "symbol": "ZEAL.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ALM. BRAND A/S",
+        "symbol": "ALMB.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SCANDINAVIAN TOBACCO GROUP A/S",
+        "symbol": "STG.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SYDBANK A/S",
+        "symbol": "SYDB.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BAVARIAN NORDIC A/S",
+        "symbol": "BAVA.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SPAR NORD BANK A/S",
+        "symbol": "SPNO.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NKT A/S",
+        "symbol": "NKT.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "UNITED INTERNATIONAL ENTERPRISES LTD",
+        "symbol": "UIE.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "CHEMOMETEC A/S",
+        "symbol": "CHEMM.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "PER AARSLEFF HOLDING A/S B",
+        "symbol": "PAAL_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TIVOLI A/S",
+        "symbol": "TIV.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TORM PLC A",
+        "symbol": "TRMD_A.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NILFISK HOLDING A/S",
+        "symbol": "NLFSK.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "D/S NORDEN",
+        "symbol": "DNORD.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "VESTJYSK BANK A/S",
+        "symbol": "VJBA.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SAS AB",
+        "symbol": "SAS_DKK.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NNIT A/S",
+        "symbol": "NNIT.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NTG NORDIC TRANSPORT GROUP A/S",
+        "symbol": "NTG.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ORPHAZYME A/S",
+        "symbol": "ORPHA.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BRDR.HARTMANN A/S",
+        "symbol": "HART.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SP GROUP A/S",
+        "symbol": "SPG.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "H+H INTERNATIONAL A/S",
+        "symbol": "HH.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "MATAS A/S",
+        "symbol": "MATAS.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SOLAR B A/S",
+        "symbol": "SOLAR_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "RTX A/S",
+        "symbol": "RTX.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "JUTLANDER BANK A/S",
+        "symbol": "JUTBK.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GYLDENDAL A A/S",
+        "symbol": "GYLD_A.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SPAREKASSEN SJAELLAND-FYN A/S",
+        "symbol": "SPKSJF.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LAN OG SPAR BANK A/S",
+        "symbol": "LASP.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "CBRAIN A/S",
+        "symbol": "CBRAIN.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GABRIEL HOLDING A/S",
+        "symbol": "GABR.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BANG & OLUFSEN HOLDING A/S",
+        "symbol": "BO.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "DANSKE ANDELSKASSERS BANK A/S",
+        "symbol": "DAB.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "TCM GROUP A/S",
+        "symbol": "TCM.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BANKNORDIK P/F",
+        "symbol": "BNORDIK_CS.XCSE",
+        "has_intraday": false,
+        "has_eod": false
+      },
+      {
+        "name": "JOBINDEX A/S",
+        "symbol": "JOBNDX.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "COLUMBUS A/S",
+        "symbol": "COLUM.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "NORTH MEDIA A/S",
+        "symbol": "NORTHM.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GRONLANDSBANKEN A/S",
+        "symbol": "GRLA.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "PARKEN SPORT & ENTERTAINMENT A/S",
+        "symbol": "PARKEN.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "MT HOJGAARD HOLDING A/S",
+        "symbol": "MTHH.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "FLUGGER GROUP A/S B",
+        "symbol": "FLUG_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "DEN JYSKE SPAREKASSE A/S",
+        "symbol": "DJS.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "PRIME OFFICE A/S",
+        "symbol": "PRIMOF.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SANISTAL A/S",
+        "symbol": "SANI.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "KONSOLIDATOR A/S",
+        "symbol": "KONSOL.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "DJURSLANDS BANK A/S",
+        "symbol": "DJUR.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "PARK STREET NORDICOM A/S A",
+        "symbol": "PSNRDC_A.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "SKJERN BANK A/S",
+        "symbol": "SKJE.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "FYNSKE BANK A/S",
+        "symbol": "FYNBK.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "EGNSINVEST EJD., TYSKLAND A/S",
+        "symbol": "EGNETY.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "KREDITBANKEN A/S",
+        "symbol": "KRE.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "WATURU HOLDING A/S",
+        "symbol": "WATURU.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "BIOPORTO A/S",
+        "symbol": "BIOPOR.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GYLDENDAL B A/S",
+        "symbol": "GYLD_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "GERMAN HIGH STREET PROPERTIES A/S",
+        "symbol": "GERHSP.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ATHENA INVESTMENTS A/S",
+        "symbol": "ATHENA.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LUXOR B A/S",
+        "symbol": "LUXOR_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "LOLLANDS BANK A/S",
+        "symbol": "LOLB.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "FIRSTFARMS A/S",
+        "symbol": "FFARMS.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "ROBLON B A/S",
+        "symbol": "RBLN_B.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      },
+      {
+        "name": "AGAT EJENDOMME A/S",
+        "symbol": "AGAT.XCSE",
+        "has_intraday": false,
+        "has_eod": true
+      }
+    ]
+  }
+}
