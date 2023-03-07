@@ -27,3 +27,13 @@ Finalized a working version of the MarketDataProvider. It is still not abstracte
 The problem that occured was in parsing the JSON date strings from the API to a Date using the Zod package. The solution:
 
 - Use the z.coerce.date() function to when defining the schema
+
+# March 7th
+
+Created a new folder for the python part of the project ./strategies.
+It is not clear to me yet how this will nicely co-exist with in the VSCode workspace, but we will see
+
+- Created a new python project in the ./strategies folder and a virtual environment
+- Created a simple flask server that listens to the localhost:4000/test port and returns a simple JSON object with the request body inside
+
+I also bootstrapped the position_computer service to throw data at the above end point as a test

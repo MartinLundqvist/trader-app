@@ -1,0 +1,6 @@
+POST http://127.0.0.1:4000/test HTTP/1.1
+content-type: application/json
+
+{
+    "query": "query { hello }"
+}
