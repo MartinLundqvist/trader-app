@@ -37,3 +37,7 @@ It is not clear to me yet how this will nicely co-exist with in the VSCode works
 - Created a simple flask server that listens to the localhost:4000/test port and returns a simple JSON object with the request body inside
 
 I also bootstrapped the position_computer service to throw data at the above end point as a test
+
+Later, I implemented a "Bollinger Bands" strategy in the python script using the ta (Technical Analysis) library, as well as a simple plotting script to visualize the results.
+
+In order to collect more data, I implemented pagination support in the MarketDataProvider.

@@ -25,22 +25,38 @@ const getEODDataFromTo = async (
   let results: MarketData = [];
 
   try {
-    const response = await got<MarketstackAPIResponse>(
-      `${BASE_URL}/${END_POINT_EOD}?${AUTHORIZATION}&symbols=${tickers.join(
-        ','
-      )}&date_from=${fromDateToString(date_from)}&date_to=${fromDateToString(
-        date_to
-      )}`,
-      { responseType: 'json' }
-    );
+    // Pagination
+    let done = false;
+    const LIMIT = 100;
+    let offset = 0;
 
-    const data = response?.body;
+    while (!done) {
+      const response = await got<MarketstackAPIResponse>(
+        `${BASE_URL}/${END_POINT_EOD}?${AUTHORIZATION}&symbols=${tickers.join(
+          ','
+        )}&date_from=${fromDateToString(date_from)}&date_to=${fromDateToString(
+          date_to
+        )}&limit=${LIMIT}&offset=${offset}`,
+        { responseType: 'json' }
+      );
 
-    if (!Array.isArray(data.data)) {
-      throw new Error('No data returned from API');
+      const data = response?.body;
+
+      if (!Array.isArray(data.data)) {
+        throw new Error('No data returned from API');
+      }
+
+      results = results.concat(marketDataSchema.parse(data.data));
+
+      console.log(`I am at ${offset} of ${data.pagination.total} records.`);
+
+      if (offset + LIMIT >= data.pagination.total) {
+        done = true;
+        console.log(`Done - I have collected ${results.length} records.`);
+      }
+
+      offset += LIMIT;
     }
-
-    results = marketDataSchema.parse(data.data);
   } catch (error) {
     console.log(error);
   }
