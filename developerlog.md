@@ -15,6 +15,8 @@ Quickly ended up with the problem that I couldn't get the ESM modules to work wi
 
 # March 6th
 
+Finalized a working version of the MarketDataProvider. It is still not abstracted enough, but it works for the Marketstack API. I also added schema validation with Zod as well as a test suite with Jest. Getting Jest to work with ESM modules in Typescript was a bit of a pain, but I got it to work in the end.
+
 ## Learned how to configure Jest to work with ESM modules. You need to:
 
 - Go through the tutorial for Jest and TypeScript: https://jestjs.io/docs/getting-started#using-typescript
