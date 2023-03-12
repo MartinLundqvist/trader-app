@@ -41,3 +41,30 @@ I also bootstrapped the position_computer service to throw data at the above end
 Later, I implemented a "Bollinger Bands" strategy in the python script using the ta (Technical Analysis) library, as well as a simple plotting script to visualize the results.
 
 In order to collect more data, I implemented pagination support in the MarketDataProvider.
+
+# March 12th
+
+Was working several evenings to create an end-to-end workflow from the position_computer -> output chart diagram from the python scripts. Several problems had to be fixed.
+
+## Learned how to configure the mplfinance library to work with the ta library
+
+Most tricky item was how to learn to create additional plots on top of the main candlestick top.
+
+- Need to use the `make_addplot` function to create each additional plot
+- The shape of the data for each additional plot needs to be the same as the main plot
+- The `reindex` function is needed to make sure the data is aligned correctly
+
+## Learned how to make the mplfinance library work in a headless move to create a png file
+
+- Need to use the `savefig` function to save the plot to a file
+- Need to import matplotlib and set the backend to `Agg` before importing mplfinance. (`matplotlib.use('Agg')`)
+
+## Learned how to avoid the Pandas warnings about assigning values to a slice of a dataframe
+
+- Need to use the `loc`or `iloc` functions to assign values to a slice of a dataframe.
+- I finally opted for the `iloc` function, as i need to iterate over array row positions.
+- Then had to use `get_loc`on the df.column.index to get the column position
+
+## Discovered that the Marketplace API has issues with splits and dividends
+
+I have found Tiingo to be a much better API for this purpose, BUT it does not cover stocks from outside the US...
