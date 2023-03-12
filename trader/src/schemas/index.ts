@@ -10,5 +10,7 @@ export const marketDataSchema = z.array(
     volume: z.number(),
     exchange: z.string(),
     date: z.coerce.date(),
+    split_factor: z.optional(z.number()), //TODO: Testing only
+    adj_close: z.optional(z.nullable(z.number())), //TODO: Testing only
   })
 );
