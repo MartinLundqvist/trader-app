@@ -1,21 +1,13 @@
 import got from 'got';
-import { marketDataSchema } from '../schemas/index.js';
-import { MarketData, MarketstackAPIResponse } from '../types/index.js';
-import { fromDateToString } from '../utils/index.js';
+import { marketDataSchema } from '../../schemas/index.js';
+import { MarketData, MarketstackAPIResponse } from '../../types/index.js';
+import { fromDateToString } from '../../utils/index.js';
 import {
   BASE_URL,
-  END_POINT_TICKERS,
   END_POINT_EOD,
   END_POINT_EOD_LATEST,
   AUTHORIZATION,
-} from './marketstack/constants.js';
-
-const getTickersFromExchange = async (mic: string) => {
-  const response = await got(
-    `${BASE_URL}/${END_POINT_TICKERS(mic)}?${AUTHORIZATION}`
-  );
-  return JSON.parse(response.body);
-};
+} from './constants.js';
 
 const getEODDataFromTo = async (
   tickers: string[],
@@ -90,7 +82,6 @@ const getLatestEODData = async (tickers: string[]): Promise<MarketData> => {
 };
 
 const MarketDataProvider = {
-  getTickersFromExchange,
   getEODDataFromTo,
   getLatestEODData,
 };

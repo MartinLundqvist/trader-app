@@ -54,17 +54,35 @@ Most tricky item was how to learn to create additional plots on top of the main 
 - The shape of the data for each additional plot needs to be the same as the main plot
 - The `reindex` function is needed to make sure the data is aligned correctly
 
-## Learned how to make the mplfinance library work in a headless move to create a png file
+## Learned how to make the mplfinance library work in a headless mode to create a png file
 
 - Need to use the `savefig` function to save the plot to a file
 - Need to import matplotlib and set the backend to `Agg` before importing mplfinance. (`matplotlib.use('Agg')`)
 
 ## Learned how to avoid the Pandas warnings about assigning values to a slice of a dataframe
 
-- Need to use the `loc`or `iloc` functions to assign values to a slice of a dataframe.
+- Need to use the `loc`or `iloc` functions to assign values to a dataframe.
 - I finally opted for the `iloc` function, as i need to iterate over array row positions.
 - Then had to use `get_loc`on the df.column.index to get the column position
 
 ## Discovered that the Marketplace API has issues with splits and dividends
 
 I have found Tiingo to be a much better API for this purpose, BUT it does not cover stocks from outside the US...
+
+# March 13
+
+Read up on postgres and timescale. Opted to go for vanille postgres for now - not sure I will need the performance of timescale right now
+Created a simple script for spinning up a postgres db in a docker container locally. Also looked at whether to use an ORM or not, and which to pick. Ended up with Sequelize - let's see if I stay that path. I had a problem with SSL (as always) - ended up disabling SSL on the client side. I should learn how to work with certificates on the server programatically.
+
+Also had issues with importin .json files in ESM mode... Ended up just parsing the files, but I should make an attempt to update to Node 18.
+
+Finally I did implmement a client to interact with the Tiingo API - AND I'm paying 10 bucks / month to circumvent their API rate limits
+
+## Updated to Node 18.5 (latest Hydrogen LTS)
+
+Had to update the tsconfig.json to increase support for ESM and importing the .json files
+
+- Changed to `"module": "NodeNext"` to the tsconfig.json
+- Changed to `"moduleResolution": "nodenext"` to the tsconfig.json
+- Added `"resolveJsonModule": true` to the tsconfig.json
+- Used the "trick" `import json from "./file.json" assert {type: "json"}` to import the .json files - gotta read up on what that actually means

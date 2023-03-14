@@ -1,13 +1,13 @@
 import got from 'got';
-// import { AAPL } from '../market_data_provider/marketstack/AAPLJan2023.js';
-// import { AAPL } from '../market_data_provider/marketstack/AAPL3Months.js';
-import { AAPL } from '../market_data_provider/marketstack/AAPL12Months.js';
-import { MSFT } from '../market_data_provider/marketstack/MSFT12Months.js';
-import { AMZN } from '../market_data_provider/marketstack/AMZN12Months.js';
-import { GOOG } from '../market_data_provider/marketstack/GOOG12Months.js';
-import { VOD } from '../market_data_provider/marketstack/VOD12Months.js';
-import { PEP } from '../market_data_provider/marketstack/PEP12Months.js';
-import { TSLA } from '../market_data_provider/marketstack/TSLA12Months.js';
+// import { AAPL } from '../development_assets/AAPLJan2023.js';
+// import { AAPL } from '../development_assets/AAPL3Months.js';
+import { AAPL } from '../development_assets/AAPL12Months.js';
+import { MSFT } from '../development_assets/MSFT12Months.js';
+import { AMZN } from '../development_assets/AMZN12Months.js';
+import { GOOG } from '../development_assets/GOOG12Months.js';
+import { VOD } from '../development_assets/VOD12Months.js';
+import { PEP } from '../development_assets/PEP12Months.js';
+import { TSLA } from '../development_assets/TSLA12Months.js';
 import { MarketData } from '../types/index.js';
 
 const tickers: { [key: string]: MarketData } = {
