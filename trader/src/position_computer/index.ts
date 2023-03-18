@@ -11,13 +11,19 @@ import { TSLA } from '../development_assets/TSLA12Months.js';
 import { MarketData } from '../types/index.js';
 
 const tickers: { [key: string]: MarketData } = {
-  AAPL: AAPL,
-  MSFT: MSFT,
-  AMZN: AMZN.filter((datum) => datum.date > new Date('2022-06-06')),
-  GOOG: GOOG.filter((datum) => datum.date > new Date('2022-07-18')), // 2022-07-18T00:00:00.000Z stock was split
-  VOD: VOD,
-  PEP: PEP,
-  TSLA: TSLA.filter((datum) => datum.date > new Date('2022-08-25')), // 2022-08-25T00:00:00.000Z stock was split
+  AAPL: AAPL as unknown as MarketData,
+  MSFT: MSFT as unknown as MarketData,
+  AMZN: AMZN.filter(
+    (datum) => datum.date > new Date('2022-06-06')
+  ) as unknown as MarketData,
+  GOOG: GOOG.filter(
+    (datum) => datum.date > new Date('2022-07-18')
+  ) as unknown as MarketData, // 2022-07-18T00:00:00.000Z stock was split
+  VOD: VOD as unknown as MarketData,
+  PEP: PEP as unknown as MarketData,
+  TSLA: TSLA.filter(
+    (datum) => datum.date > new Date('2022-08-25')
+  ) as unknown as MarketData, // 2022-08-25T00:00:00.000Z stock was split
 };
 
 export const getSignal = async (ticker: string) => {

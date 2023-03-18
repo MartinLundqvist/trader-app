@@ -1,0 +1,1 @@
+GET https://api.tiingo.com/tiingo/fundamentals/AAPL/daily?token=xxx&startDate=2023-03-16

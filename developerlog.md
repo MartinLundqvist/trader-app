@@ -86,3 +86,16 @@ Had to update the tsconfig.json to increase support for ESM and importing the .j
 - Changed to `"moduleResolution": "nodenext"` to the tsconfig.json
 - Added `"resolveJsonModule": true` to the tsconfig.json
 - Used the "trick" `import json from "./file.json" assert {type: "json"}` to import the .json files - gotta read up on what that actually means
+
+# March 18th
+
+Lots of work on the schemas and database models, as well as several utility scripts to collect and parse data. In the end I created two database tables. One containing the tickers of the 3,500 larest US companies, and then one containing 10 years of historical EOD data for all those companies.
+
+## Downloaded significant amount of data for US lsited comapnies
+
+- `top_3500_US.json` contains the list of the 3,500 largest US companies. I cross examined this list against available tickers in the Tiingo API, and ended up with 3,500 tickers. These are imported into the local `tickerdata_3500` table
+- `top_3500/` folder contains one `.json` file for each ticker with 10 years worth of historical data
+
+I created the following index in the `marketdata_3500` table in order to accelerate queries:
+
+- `CREATE INDEX marketdata_3500_symbol_date ON marketdata_3500 (symbol, date)`

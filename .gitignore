@@ -1,4 +1,7 @@
 
+# MacOs .gitignore
+.DS_Store
+
 # Node.js .gitignore
 node_modules
 *.env
