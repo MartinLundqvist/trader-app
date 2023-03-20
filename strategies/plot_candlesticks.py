@@ -43,6 +43,7 @@ def generate_candlestick_chart(df_to_chart: pd.DataFrame):
         # mpf.plot(df, type='candle', addplot=ap_bbs+ap_signals+ap_ma, figscale=1, figratio=(16,9), title=f"\nCandlesticks with Bollinger Bands - {symbol}", style='yahoo', savefig=f"chart_{symbol}.png")
         # mpf.plot(df, type='candle', addplot=ap_bbs+ap_signals+ap_ma, figscale=1, figratio=(16,9), title=f"\nCandlesticks with Bollinger Bands - {symbol}", style='yahoo')
 
+
     except Exception as e:
         print(f'Error while processing {symbol}.')
         print(e)

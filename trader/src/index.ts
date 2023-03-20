@@ -1,7 +1,7 @@
 // import MDP from './market_data_provider/marketstack/index.js';
 import MDP from './market_data_provider/tiingo/index.js';
 import { writeFile } from 'fs/promises';
-import { getSignal } from './position_computer/index.js';
+import { getBacktest, getSignal } from './position_computer/index.js';
 import { tickers } from './constants/100tickers.js';
 import fs from 'fs/promises';
 import { MarketData, Tickers } from './types/index.js';
@@ -15,14 +15,139 @@ import { connectToDB, synchronizeDB } from './database_provider/index.js';
 import MarketDataDB from './database_provider/model_marketdata.js';
 import TickerDB from './database_provider/model_tickers.js';
 
+interface Signal {
+  date: string;
+  symbol: string;
+  signal: string;
+  limit: number;
+  close: number;
+  strength: number;
+}
+
+interface Position {
+  symbol: string;
+  quantity: number;
+  entry_price: number;
+  entry_cost: number;
+  entry_date: string;
+  exit_price: number;
+  exit_date: string;
+  exit_proceeds: number;
+  gain: number;
+  open: boolean;
+}
+
 const runModel = async () => {
-  let data = await getSignal('GOOG');
-  data = await getSignal('AMZN');
-  data = await getSignal('TSLA');
-  data = await getSignal('MSFT');
-  data = await getSignal('PEP');
-  data = await getSignal('VOD');
-  data = await getSignal('AAPL');
+  const tickers = await TickerDB.findAllTickers();
+  const slicedTickers = tickers.slice(0, 250);
+  let results: Signal[] = [];
+
+  for (let ticker of slicedTickers) {
+    let data = (await getSignal(ticker)) as Signal[];
+    results.push(...data);
+  }
+
+  results.sort((a, b) => b.strength - a.strength);
+
+  await writeFile('results.json', JSON.stringify(results));
+};
+
+const runOneBacktest = async () => {
+  const tickers = await TickerDB.findAllTickers();
+  const slicedTickers = tickers.slice(0, 500);
+  const positions: Position[] = [];
+  const investment = 10_000;
+  // const trades: Signal[] = [];
+
+  for (let ticker of slicedTickers) {
+    let data = (await getBacktest(ticker)) as Signal[];
+    let length = data.length;
+    // This simulates the daily operation of the model
+    for (let i = 0; i < length; i++) {
+      // If there is a signal, we want to process it against or current positions
+      if (data[i].signal) {
+        // Do we have an open position in this stock?
+        const position = positions.find(
+          (position) =>
+            position.symbol === data[i].symbol && position.open === true
+        );
+
+        // If we have a position and it is a 'sell' signal, we want to close the position
+        if (position && data[i].signal === 'sell') {
+          // Calculate the proceeds
+          position.exit_proceeds = data[i].close * position.quantity;
+          position.exit_date = data[i].date;
+          position.exit_price = data[i].close;
+          position.gain =
+            (position.exit_proceeds - position.entry_cost) /
+            position.entry_cost;
+          position.open = false;
+          continue;
+        }
+
+        // If we do not have an open position and it is a buy signal, we buy it
+        if (!position && data[i].signal === 'buy') {
+          positions.push({
+            symbol: data[i].symbol,
+            quantity: Math.floor(investment / data[i].close),
+            entry_price: data[i].close,
+            entry_cost: investment,
+            entry_date: data[i].date,
+            exit_price: 0,
+            exit_date: '',
+            exit_proceeds: 0,
+            gain: 0,
+            open: true,
+          });
+        }
+      }
+    }
+    // results.push(...data);
+  }
+  await writeFile('backtest.json', JSON.stringify(positions));
+
+  // Calculate some statistics
+
+  const openPositions = positions.filter((position) => position.open === true);
+  const closedPositions = positions.filter(
+    (position) => position.open === false
+  );
+
+  let totalInvestment = closedPositions.reduce((acc, curr) => {
+    return acc + curr.entry_cost;
+  }, 0);
+  let totalProceeds = closedPositions.reduce((acc, curr) => {
+    return acc + curr.exit_proceeds;
+  }, 0);
+
+  console.log(`Open Positions: ${openPositions.length}`);
+  console.log(`Closed Positions: ${closedPositions.length}`);
+  console.log(`Total Investment: ${totalInvestment}`);
+  console.log(`Total Proceeds: ${totalProceeds}`);
+  console.log(`Total Gain: ${totalProceeds - totalInvestment}`);
+  console.log(
+    `Total Gain %: ${(totalProceeds - totalInvestment) / totalInvestment}`
+  );
+  console.log(
+    `Number of positions with a gain: ${
+      closedPositions.filter((position) => position.gain > 0).length
+    }`
+  );
+  console.log(
+    `Number of positions with a loss: ${
+      closedPositions.filter((position) => position.gain < 0).length
+    }`
+  );
+  console.log(
+    `Best performing position: ${Math.max(
+      ...closedPositions.map((position) => position.gain)
+    )}`
+  );
+  console.log(
+    `Worst performing position: ${Math.min(
+      ...closedPositions.map((position) => position.gain)
+    )}`
+  );
 };
 
 const getTickerData = async () => {
@@ -383,9 +508,11 @@ const seedTop3500MarketDataDB = async () => {
 // testDataBase();
 
 // readAndParse();
-// runModel();
 // getManyTickersData();
 // getTickerData();
 // seedDataBase();
 
 // readAndParseTickerData();
+
+// runModel();
+runOneBacktest();

@@ -99,3 +99,19 @@ Lots of work on the schemas and database models, as well as several utility scri
 I created the following index in the `marketdata_3500` table in order to accelerate queries:
 
 - `CREATE INDEX marketdata_3500_symbol_date ON marketdata_3500 (symbol, date)`
+
+# March 19th
+
+Thinking about how to backtest. I am leaning towards creating a massive database where I run all tickers through the "strategizer". We could create a separate end-point called `backtest` that creates signal back in time. Then I need to simulate the day-to-day decision making.
+
+## Created a backtesting strategy
+
+- Collect marketdata for a list of tickers
+- Iterate through them, and generate a backtesting result for each ticker
+- Store the backtesting result in an array
+- Do some stats on the performance of the backtesting results
+
+## Refactored the python script to be easier to scale
+
+- Created separate file for the "bollinger" strategy scripts
+- Created separate end-points and functions for backtest vs signal

@@ -70,6 +70,7 @@ const findAllTickers = async (): Promise<string[]> => {
   try {
     const result = await TickerModel.findAll({
       attributes: ['symbol'],
+      order: [['market_cap', 'DESC']],
     });
     console.log(`${result.length} records found.`);
     results = result.map((r) => r.dataValues.symbol);
