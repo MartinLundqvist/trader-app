@@ -115,3 +115,42 @@ Thinking about how to backtest. I am leaning towards creating a massive database
 
 - Created separate file for the "bollinger" strategy scripts
 - Created separate end-points and functions for backtest vs signal
+
+# March 27-28th
+
+Lots of trial and error around figuring out how to efficiently do backtesting at scale. I am leaning towards letting the Python world deal with running backtests using the `backtesting` library. I am worried about consistency about whatever the `backtesting` library does, and how the actual trades will be generated in production. I think the next steps now should be:
+
+- Update the "backtesting" end-point that runs the backtesting library on a list of tickers with associated data. It should return a list of backtesting results, such that they can be used to optimize parameters across thousands of tickers
+-
+
+## Figured out how to get Jupyter notebooks to work within the VSCode workspace
+
+- Learned, reasonably, about the issue of hooking up plotting capabilities with the right "backend", but found no good solution.
+- Using `matplotlib.use('MacOSX')` is the "official" solution, but the external Python window hangs and crashes the Python Kernel
+- Using defaults does genereate a graph, but it remains non-interactice (basically a static image)
+- In the meantime, the `backtesting` library automatically loads a `BokehJS` backend which does work beautifully also inline. I will stick with that for the time being.
+
+## Learned how to use the `backtesting` library to do backtesting
+
+- The library is very easy to use, and the documentation is OK.
+- I had to read up on Classes in Python.
+- It was a bit tricky to figure out how to integrate the `ta` library into the `backtesting` concept, but it seems to work now.
+- As a next step, I want to figure out a way in which to code the strategy ONCE and then reuse the logic while both backtesting and running in production.
+
+# March 31st
+
+I've studied more examples of coding trading strategies and integrating them with backtests. These are the criteria for the Python code structure:
+
+- Write the function which generates the signal ONCE.
+- The function should be able to run in both backtesting, optimization and production mode, and should be able to be called with different parameters.
+- This means the function has to return the necessary information to inform a a production trader, as well as a backtester.
+
+Next step is to figure out what the trading API needs. Time to hook up to Alpaca
+
+## Got an Alpaca account and API going
+
+This was a motherf-cker. The Alpaca suggested trading api `@alpacahq/alpaca-trade-api` ended up NOT being ESM modules ready. The alternative community built `@master-chief/alpaca-ts` did not work properly with the latest Node and Typescript versions. I ended up:
+
+- Copy pasting the entire `alpaca-ts` code into my project. That's now in the `src/broker_provider/alpaca` folder.
+- Updating the code to work with the latest Node and Typescript versions
+- Removing some features that I don't think I will use (to limit the amount of refactoring)

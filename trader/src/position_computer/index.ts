@@ -36,7 +36,7 @@ export const getSignal = async (ticker: string) => {
   const tickerData = await MarketDataDB.readData([ticker], fromDate, toDate);
 
   if (tickerData.length >= 50) {
-    const url = 'http://127.0.0.1:4000/bollinger/signal';
+    const url = 'http://127.0.0.1:4000/bollinger_rsi/signal';
     const response = await got
       .post(url, {
         headers: { 'Content-Type': 'application/json' },
@@ -58,7 +58,7 @@ export const getBacktest = async (ticker: string) => {
   const tickerData = await MarketDataDB.readData([ticker], fromDate, toDate);
 
   if (tickerData.length >= 50) {
-    const url = 'http://127.0.0.1:4000/bollinger/backtest';
+    const url = 'http://127.0.0.1:4000/bollinger_rsi/backtest';
     const response = await got
       .post(url, {
         headers: { 'Content-Type': 'application/json' },

@@ -14,6 +14,8 @@ import {
 import { connectToDB, synchronizeDB } from './database_provider/index.js';
 import MarketDataDB from './database_provider/model_marketdata.js';
 import TickerDB from './database_provider/model_tickers.js';
+import Trader from './broker_provider/index.js';
+import { PlaceOrder } from './broker_provider/alpaca/index.js';
 
 interface Signal {
   date: string;
@@ -33,9 +35,28 @@ interface Position {
   exit_price: number;
   exit_date: string;
   exit_proceeds: number;
+  holding_period_days: number;
   gain: number;
   open: boolean;
 }
+
+const fetchAndSaveData = async () => {
+  const tickers = await TickerDB.findAllTickers();
+  const slicedTickers = tickers.slice(5, 6);
+  // const dateOffset = 5 * 365 * 24 * 60 * 60 * 1000; // 5 years
+  const dateOffset = 1 * 365 * 24 * 60 * 60 * 1000; // 1 years
+  // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days
+  const toDate = new Date('2023-03-01');
+  const fromDate = new Date(toDate.getTime() - dateOffset);
+
+  const tickerData = await MarketDataDB.readData(
+    slicedTickers,
+    fromDate,
+    toDate
+  );
+
+  await fs.writeFile('tickerData.json', JSON.stringify(tickerData));
+};
 
 const runModel = async () => {
   const tickers = await TickerDB.findAllTickers();
@@ -54,7 +75,7 @@ const runModel = async () => {
 
 const runOneBacktest = async () => {
   const tickers = await TickerDB.findAllTickers();
-  const slicedTickers = tickers.slice(0, 500);
+  const slicedTickers = tickers.slice(0, 100);
   const positions: Position[] = [];
   const investment = 10_000;
   // const trades: Signal[] = [];
@@ -82,6 +103,10 @@ const runOneBacktest = async () => {
             (position.exit_proceeds - position.entry_cost) /
             position.entry_cost;
           position.open = false;
+          position.holding_period_days =
+            (new Date(data[i].date).getTime() -
+              new Date(position.entry_date).getTime()) /
+            (1000 * 3600 * 24);
           continue;
         }
 
@@ -93,6 +118,7 @@ const runOneBacktest = async () => {
             entry_price: data[i].close,
             entry_cost: investment,
             entry_date: data[i].date,
+            holding_period_days: 0,
             exit_price: 0,
             exit_date: '',
             exit_proceeds: 0,
@@ -119,6 +145,11 @@ const runOneBacktest = async () => {
   let totalProceeds = closedPositions.reduce((acc, curr) => {
     return acc + curr.exit_proceeds;
   }, 0);
+
+  let averageHoldingPeriod =
+    closedPositions.reduce((acc, curr) => {
+      return acc + curr.holding_period_days;
+    }, 0) / closedPositions.length;
 
   console.log(`Open Positions: ${openPositions.length}`);
   console.log(`Closed Positions: ${closedPositions.length}`);
@@ -148,6 +179,7 @@ const runOneBacktest = async () => {
       ...closedPositions.map((position) => position.gain)
     )}`
   );
+  console.log(`Average holding period (days): ${averageHoldingPeriod}`);
 };
 
 const getTickerData = async () => {
@@ -492,6 +524,21 @@ const seedTop3500MarketDataDB = async () => {
   );
 };
 
+const placeTrade = async () => {
+  const trade: PlaceOrder = {
+    symbol: 'AAPL',
+    side: 'buy',
+    type: 'market',
+    time_in_force: 'gtc',
+    qty: 1,
+  };
+
+  const order = await Trader.placeOrder(trade);
+  console.log(order);
+};
+
+placeTrade();
+
 // seedTop3500MarketDataDB();
 
 // seedTop3500TickerDB();
@@ -515,4 +562,6 @@ const seedTop3500MarketDataDB = async () => {
 // readAndParseTickerData();
 
 // runModel();
-runOneBacktest();
+// runOneBacktest();
+
+// fetchAndSaveData();
