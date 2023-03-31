@@ -11,7 +11,7 @@
     "tests_NOTUSED": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:broker": "ts-node --esm ./src/broker_provider/index.ts",
     "dev": "ts-node --esm ./src/index.ts",
-    "build": "tsc"
+    "build": "rm -rf build && tsc"
   },
   "keywords": [],
   "author": "",
