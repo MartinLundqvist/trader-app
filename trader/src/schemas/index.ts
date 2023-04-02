@@ -9,11 +9,11 @@ export const marketDatumSchema = z.object({
   close: z.number(),
   volume: z.number(),
   date: z.coerce.date(),
-  split_factor: z.number(), //TODO: Testing only
-  adj_close: z.number(), //TODO: Testing only
-  adj_high: z.number(), //TODO: Testing only
-  adj_low: z.number(), //TODO: Testing only
-  adj_open: z.number(), //TODO: Testing only
+  split_factor: z.number(),
+  adj_close: z.number(),
+  adj_high: z.number(),
+  adj_low: z.number(),
+  adj_open: z.number(),
 });
 
 export const marketDataSchema = z.array(marketDatumSchema);
@@ -40,3 +40,14 @@ export const fundamentalSchema = z.object({
 });
 
 export const fundamentalsSchema = z.array(fundamentalSchema);
+
+export const strategyResponseSchema = z.array(
+  z.object({
+    id: z.optional(z.string()),
+    date: z.coerce.date(),
+    symbol: z.string(),
+    signal: z.string(),
+    limit: z.nullable(z.number()),
+    graph: z.nullable(z.string()),
+  })
+);

@@ -15,6 +15,7 @@ $py.class
 .Python
 .venv/
 Backtester.html
+strategies/plots
 
 # Test files
 *.png

@@ -1,93 +1,25 @@
 from flask import Flask, request, jsonify
-from plot_candlesticks import generate_candlestick_chart
-from bollinger import bollinger_backtest, bollinger_signal
-from bollinger_rsi import bollinger_rsi_backtest, bollinger_rsi_signal
 app = Flask(__name__)
+from strategies.conservative import get_signal, create_plot
+from utils.data_parser import json_to_df_adjusted
 
-
-@app.route('/bollinger/signal', methods=['POST'])
-def fn_bollinger_signal():
+@app.route('/conservative/signal', methods=['POST'])
+def fn_conservative_signal():
     data = request.get_json()
-    df, sendSignal, sendLimit = bollinger_signal(data)
+    df = json_to_df_adjusted(data)
+    df, result, signal = get_signal(df, backcandles=3)
+    filename = None
 
-    # df.to_csv(f'output.csv')
+    if signal:
+        filename = create_plot(df)
 
-    result = []
-
-    createPNG = False
-
-    if sendSignal != "":
-        print('Sending signal...')
-        createPNG = True
-        i = len(df) - 1
-        result.append({
-            'date': df.index[i].strftime('%Y-%m-%d %H:%M:%S'),
-            'symbol': df['symbol'][i],
-            'signal': sendSignal,
-            'limit': sendLimit,
-            'close': df['close'][i],
-            'strength': 1 / ((df['bb_upper'][i]-df['bb_lower'][i])/df['mavg'][i])
-        })
-
-    if createPNG == True:
-        generate_candlestick_chart(df_to_chart = df)
-
-    # print(df)
-    return result
-
-@app.route('/bollinger/backtest', methods=['POST'])
-def fn_bollinger_backtest():
-    print('Executing /backtest')
-    data = request.get_json()
-    df = bollinger_backtest(data)
+    response = result.copy()
+    response['graph'] = filename
+    response['date'] = response.index
+    response['limit'] = response['Limit']
+    response['signal'] = response['Signal']
     
-    # generate_candlestick_chart(df_to_chart = df)
-
-    # Need to bring back the date column again to be able to convert to JSON
-    df['date'] = df.index.astype(str)
-    return df.to_json(orient='records')
-
-@app.route('/bollinger_rsi/signal', methods=['POST'])
-def fn_bollinger_rsi_signal():
-    data = request.get_json()
-    df, sendSignal, sendLimit = bollinger_rsi_signal(data)
-
-    # df.to_csv(f'output.csv')
-
-    result = []
-
-    createPNG = False
-
-    if sendSignal != "":
-        print('Sending signal...')
-        createPNG = True
-        i = len(df) - 1
-        result.append({
-            'date': df.index[i].strftime('%Y-%m-%d %H:%M:%S'),
-            'symbol': df['symbol'][i],
-            'signal': sendSignal,
-            'limit': sendLimit,
-            'close': df['close'][i],
-            'strength': 1 / ((df['bb_upper'][i]-df['bb_lower'][i])/df['mavg'][i])
-        })
-
-    if createPNG == True:
-        generate_candlestick_chart(df_to_chart = df)
-
-    # print(df)
-    return result
-
-@app.route('/bollinger_rsi/backtest', methods=['POST'])
-def fn_bollinger_rsi_backtest():
-    print('Executing /backtest')
-    data = request.get_json()
-    df = bollinger_rsi_backtest(data)
-    
-    # generate_candlestick_chart(df_to_chart = df)
-
-    # Need to bring back the date column again to be able to convert to JSON
-    df['date'] = df.index.astype(str)
-    return df.to_json(orient='records')
+    return response.to_json(orient='records', date_format='iso')
 
 if __name__ == '__main__':
     app.run(debug=True, port=4000)

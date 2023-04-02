@@ -1,11 +1,13 @@
 import got from 'got';
 import MarketDataDB from '../database_provider/model_marketdata.js';
+import { strategyResponseSchema } from '../schemas/index.js';
+import { StrategyResponse } from '../types/index.js';
 // import { AAPL } from '../development_assets/AAPLJan2023.js';
 // import { AAPL } from '../development_assets/AAPL3Months.js';
 // import { AAPL } from '../development_assets/AAPL12Months.js';
 // import { MSFT } from '../development_assets/MSFT12Months.js';
 // import { AMZN } from '../development_assets/AMZN12Months.js';
-import { GOOG } from '../development_assets/GOOG12Months.js';
+// import { GOOG } from '../development_assets/GOOG12Months.js';
 // import { VOD } from '../development_assets/VOD12Months.js';
 // import { PEP } from '../development_assets/PEP12Months.js';
 // import { TSLA } from '../development_assets/TSLA12Months.js';
@@ -27,16 +29,25 @@ import { GOOG } from '../development_assets/GOOG12Months.js';
 //   ) as unknown as MarketData, // 2022-08-25T00:00:00.000Z stock was split
 // };
 
-export const getSignal = async (ticker: string) => {
-  const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
+// const url = 'http://127.0.0.1:4000/bollinger_rsi/signal'
+const url = 'http://127.0.0.1:4000/conservative/signal';
+
+export const getSignal = async (
+  ticker: string
+): Promise<StrategyResponse | null> => {
+  const dateOffset = 400 * 24 * 60 * 60 * 1000; // 400 days
+  // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
   // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days
   const toDate = new Date('2023-03-01');
   const fromDate = new Date(toDate.getTime() - dateOffset);
 
+  console.log(`Getting signal for ${ticker} from ${fromDate} to ${toDate}.`);
+
   const tickerData = await MarketDataDB.readData([ticker], fromDate, toDate);
 
-  if (tickerData.length >= 50) {
-    const url = 'http://127.0.0.1:4000/bollinger_rsi/signal';
+  if (tickerData.length < 200) return null;
+
+  try {
     const response = await got
       .post(url, {
         headers: { 'Content-Type': 'application/json' },
@@ -44,10 +55,15 @@ export const getSignal = async (ticker: string) => {
       })
       .json();
 
-    return response;
+    const parsed = strategyResponseSchema.parse(response);
+
+    return parsed;
+  } catch (err) {
+    console.log('Error in getSignal: ', ticker);
+    // console.log(err);
   }
 
-  return [];
+  return null;
 };
 export const getBacktest = async (ticker: string) => {
   // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
