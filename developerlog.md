@@ -154,3 +154,29 @@ This was a motherf-cker. The Alpaca suggested trading api `@alpacahq/alpaca-trad
 - Copy pasting the entire `alpaca-ts` code into my project. That's now in the `src/broker_provider/alpaca` folder.
 - Updating the code to work with the latest Node and Typescript versions
 - Removing some features that I don't think I will use (to limit the amount of refactoring)
+
+# April 1st - 2nd
+
+Created a standardized jupyter notebook that contains a set of functions that can be abstracted and used in production.
+This turned out to throw me into several dark rabbit holes, but as always I learned tonnes and think I am back on track.
+The biggest time consumer was getting stuck with technical analyses trying to create a God-like algorithm that would work perfectly on the two stocks used for experimentation. Don't do that again...
+
+## Learned how to use the plotly library to create interactive plots
+
+- Use the `go.Layout` to configure several plots on the same page each sharing a fraction of the panel (`domain`)
+- Use the `fig_update_xaxes`and `fig_update_yaxes` to create a crosshair that cuts across all the plots
+- Learned that the `go` library utilizes CSS standard color nomentaclure, so I can use `darkorange` to set the color of the line
+  ... and much more
+
+## Learned a lot more about how do to pandas dataframe manipulations
+
+- Use the `df.loc[df['column_name'] == some_value, 'another_column_name'] = new_value` to conditionally set `another_column_name` to `new_value` if `column_name` is `some_value`
+- Make sure indexes are aligned if you want to apply a new pd.Series to an existing pd.DataFrame. Use the `new_series = pd.Series(new_series_values, index=df.index)` to create a new pd.Series with the same index as the existing dataframe `df`
+
+## Decided the strategy going forward for this trading bot
+
+- Look for really rare and specific patterns in the market data
+- Test against MANY MANY equities every day
+- Suggest trades every evening CET to the user. The user decides which trades to make, and how much money to invest in them.
+
+This should form a reasonable start

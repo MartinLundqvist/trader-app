@@ -42,20 +42,23 @@ interface Position {
 
 const fetchAndSaveData = async () => {
   const tickers = await TickerDB.findAllTickers();
-  const slicedTickers = tickers.slice(5, 6);
+  const dateOffset = 10 * 365 * 24 * 60 * 60 * 1000; // 10 years
   // const dateOffset = 5 * 365 * 24 * 60 * 60 * 1000; // 5 years
-  const dateOffset = 1 * 365 * 24 * 60 * 60 * 1000; // 1 years
+  // const dateOffset = 1 * 365 * 24 * 60 * 60 * 1000; // 1 years
   // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days
   const toDate = new Date('2023-03-01');
   const fromDate = new Date(toDate.getTime() - dateOffset);
+  // const slicedTickers = tickers.slice(5, 6);
 
-  const tickerData = await MarketDataDB.readData(
-    slicedTickers,
-    fromDate,
-    toDate
-  );
+  let nrTickersToFetch = 10;
 
-  await fs.writeFile('tickerData.json', JSON.stringify(tickerData));
+  for (let ticker of tickers) {
+    const tickerData = await MarketDataDB.readData([ticker], fromDate, toDate);
+
+    await fs.writeFile(`${ticker}_10y.json`, JSON.stringify(tickerData));
+    nrTickersToFetch--;
+    if (nrTickersToFetch === 0) break;
+  }
 };
 
 const runModel = async () => {
@@ -537,7 +540,7 @@ const placeTrade = async () => {
   console.log(order);
 };
 
-placeTrade();
+// placeTrade();
 
 // seedTop3500MarketDataDB();
 
@@ -564,4 +567,4 @@ placeTrade();
 // runModel();
 // runOneBacktest();
 
-// fetchAndSaveData();
+fetchAndSaveData();
