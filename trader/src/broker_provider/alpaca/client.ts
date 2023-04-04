@@ -33,6 +33,8 @@ import {
   NewsPage,
   LatestTrade,
   Endpoints,
+  LastQuote_v2,
+  LastTrade_v2,
 } from './entities.js';
 
 import {
@@ -66,6 +68,8 @@ import {
   ClosePositions,
   GetNews,
   GetLatestTrade,
+  GetLastQuote_v2,
+  GetLastTrade_v2,
 } from './params.js';
 
 const unifetch = fetch;
@@ -401,6 +405,22 @@ export class AlpacaClient {
     return await this.request({
       method: 'GET',
       url: `${this.baseURLs.rest.market_data_v1}/last_quote/stocks/${params.symbol}`,
+    });
+  }
+
+  async getLastQuote_v2(params: GetLastQuote_v2): Promise<LastQuote_v2> {
+    console.log(
+      `${this.baseURLs.rest.market_data_v2}/stocks/${params.symbol}/quotes/latest`
+    );
+    return await this.request({
+      method: 'GET',
+      url: `${this.baseURLs.rest.market_data_v2}/stocks/${params.symbol}/quotes/latest`,
+    });
+  }
+  async getLastTrade_v2(params: GetLastTrade_v2): Promise<LastTrade_v2> {
+    return await this.request({
+      method: 'GET',
+      url: `${this.baseURLs.rest.market_data_v2}/stocks/${params.symbol}/trades/latest`,
     });
   }
 

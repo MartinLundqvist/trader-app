@@ -189,3 +189,19 @@ The next step is to create a few functions for ensureing the market database is 
 One thing I did was to update the custom database index to become a unique index. `CREATE UNIQUE INDEX marketdata_3500_symbol_date ON marketdata_3500 (symbol, date)`. This should help ensure that I can use UPSERTs to update the database. I made sure no duplicate entries were present in the database, and then I created a new index (deleting the old first).
 
 Now, functions for making trades and for updating the database have been developed. I successfully placed some 50 trades to the Alpaca paper account.
+
+# April 4th
+
+Had issues with getting the positions to be accepted by Alpaca, but it turned out I had a bit of stuff to learn.
+
+## How shorts work at Alpaca (at least)
+
+- In order to define stop_loss and take_profit, you need to defined the `order_class` as `bracket`.
+- The stop_loss level needs to be 0.01 lower or higher than the "base_price" (the price at which the order was placed). But how can I know the base_price?
+- Implemented a function that fetches the latest quote and latest trade. I use the latest trade price to define the base_price. This seems to work.
+- Also updaed the time_in_force to `gtc` (good til canceled) to avoid stop_loss/take_profit cancelling after COB
+
+Next steps:
+
+- The market data fetcher is very slow. Try replacing it with Alpacas own "Multi Snapshots" end-point (https://alpaca.markets/docs/api-references/market-data-api/stock-pricing-data/historical/#bar). Make sure to get the adjusted prices too though. That might be the issue here.
+- Adjust the Strategies template so that it suggests a relative stop_loss and take_profit to the current price.

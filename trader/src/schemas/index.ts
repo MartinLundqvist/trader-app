@@ -52,6 +52,21 @@ export const strategyResponseSchema = z.array(
   })
 );
 
+export const quoteSchema = z.object({
+  symbol: z.string(),
+  quote: z.object({
+    t: z.coerce.date(),
+    ax: z.string(),
+    ap: z.number(),
+    as: z.number(),
+    bx: z.string(),
+    bp: z.number(),
+    bs: z.number(),
+    c: z.array(z.string()),
+    z: z.string(),
+  }),
+});
+
 // export const brokerAccountSchema = z.object({
 //   id: z.string(),
 //   account_number: z.string(),

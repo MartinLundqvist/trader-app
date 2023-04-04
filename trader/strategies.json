@@ -1,0 +1,920 @@
+[
+  [
+    {
+      "id": "02ca1072-ec19-4008-9fad-367dba41c8e5",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "JNJ",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_JNJ"
+    },
+    {
+      "id": "a3b98b86-a518-4f98-a2f2-21cbcacf03bd",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "JNJ",
+      "signal": "Sell",
+      "limit": 156.85,
+      "graph": "conservative_2023-04-04_JNJ"
+    }
+  ],
+  [
+    {
+      "id": "6b3672c0-1491-4363-9c0b-53b9d8539b8a",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "UNH",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_UNH"
+    },
+    {
+      "id": "e0f97ceb-e61b-4d76-9d05-7cda6e50c365",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "UNH",
+      "signal": "Sell",
+      "limit": 494.19,
+      "graph": "conservative_2023-04-04_UNH"
+    }
+  ],
+  [
+    {
+      "id": "d71d39a5-144b-4686-840a-0f589881a899",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "HD",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_HD"
+    },
+    {
+      "id": "ac8e811e-232b-4946-a3b4-beee3c8099d6",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "HD",
+      "signal": "Sell",
+      "limit": 297.73,
+      "graph": "conservative_2023-04-04_HD"
+    }
+  ],
+  [
+    {
+      "id": "b96355cc-d5ce-4b3b-9129-3236db4f7988",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "CVX",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_CVX"
+    },
+    {
+      "id": "9daa595a-a882-490f-9514-4bd3b6d7fd1a",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "CVX",
+      "signal": "Sell",
+      "limit": 169.95,
+      "graph": "conservative_2023-04-04_CVX"
+    }
+  ],
+  [
+    {
+      "id": "ff4c3d2d-9451-4ab2-921d-a248976907b9",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "PFE",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_PFE"
+    },
+    {
+      "id": "151be3b0-ed56-4d75-8fba-280e46ac35e6",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "PFE",
+      "signal": "Sell",
+      "limit": 41.35,
+      "graph": "conservative_2023-04-04_PFE"
+    }
+  ],
+  [
+    {
+      "id": "37fd9d26-ebc7-4a4f-8a55-6f2e2a6a46fb",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "GILD",
+      "signal": "Sell",
+      "limit": 82.97,
+      "graph": "conservative_2023-04-04_GILD"
+    },
+    {
+      "id": "764c6a54-ca8a-451a-bd0c-da74b00534fc",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "GILD",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_GILD"
+    }
+  ],
+  [
+    {
+      "id": "e3ca1594-4f44-402c-98dd-668bbd46e7a1",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "NOW",
+      "signal": "Sell",
+      "limit": 464.72,
+      "graph": "conservative_2023-04-04_NOW"
+    },
+    {
+      "id": "93d79662-8d81-4a4e-a484-5cd85a84b843",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "NOW",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_NOW"
+    }
+  ],
+  [
+    {
+      "id": "55cc03f9-f31e-46ab-9e59-f0c9da47b1ec",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "OXY",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_OXY"
+    },
+    {
+      "id": "53dca105-4cd6-4a6d-bba2-3713767be574",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "OXY",
+      "signal": "Sell",
+      "limit": 65.18,
+      "graph": "conservative_2023-04-04_OXY"
+    }
+  ],
+  [
+    {
+      "id": "9ba486e8-ae42-46ab-b828-1627821ed050",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "APH",
+      "signal": "Sell",
+      "limit": 81.72,
+      "graph": "conservative_2023-04-04_APH"
+    },
+    {
+      "id": "96feb5e0-cbfb-46a2-a3cd-24c60c2234fd",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "APH",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_APH"
+    }
+  ],
+  [
+    {
+      "id": "db62aaee-27b2-4136-9865-5d53b9623740",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "SNOW",
+      "signal": "Sell",
+      "limit": 154.29,
+      "graph": "conservative_2023-04-04_SNOW"
+    },
+    {
+      "id": "e7cc305b-bb66-4b22-a9f0-0608c0b40f59",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "SNOW",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_SNOW"
+    }
+  ],
+  [
+    {
+      "id": "82ddec7e-38af-4ade-9123-dcbd46a4f9ba",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "YUM",
+      "signal": "Sell",
+      "limit": 132.08,
+      "graph": "conservative_2023-04-04_YUM"
+    },
+    {
+      "id": "5811fc3f-a83c-408e-956a-1e546269b74b",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "YUM",
+      "signal": "Sell",
+      "limit": 133.21,
+      "graph": "conservative_2023-04-04_YUM"
+    }
+  ],
+  [
+    {
+      "id": "ecdb837d-f592-4fae-b0f3-c9629a137e4d",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "DLTR",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_DLTR"
+    },
+    {
+      "id": "5150c3b7-30ce-42ce-93d8-04d09229ae05",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "DLTR",
+      "signal": "Sell",
+      "limit": 148.01,
+      "graph": "conservative_2023-04-04_DLTR"
+    }
+  ],
+  [
+    {
+      "id": "86531d03-3bfc-4dad-9087-c0cbdc65c383",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "KEYS",
+      "signal": "Sell",
+      "limit": 161.48,
+      "graph": "conservative_2023-04-04_KEYS"
+    },
+    {
+      "id": "d69135c9-754f-4bfe-8aab-d487fd5df2b0",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "KEYS",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_KEYS"
+    }
+  ],
+  [
+    {
+      "id": "b266ef9e-413c-48cc-b236-a4e614b68a97",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "ZM",
+      "signal": "Sell",
+      "limit": 73.84,
+      "graph": "conservative_2023-04-04_ZM"
+    },
+    {
+      "id": "79311c11-8c85-4278-bde2-ac71ab54234f",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "ZM",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_ZM"
+    }
+  ],
+  [
+    {
+      "id": "7de3b859-e05f-4267-ab81-3c38e4a7ea2c",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "U",
+      "signal": "Sell",
+      "limit": 32.44,
+      "graph": "conservative_2023-04-04_U"
+    },
+    {
+      "id": "f23b921c-c25b-4303-8fe4-86d33d3e2f43",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "U",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_U"
+    }
+  ],
+  [
+    {
+      "id": "f87fbc31-2802-40b8-a7cc-d45b1d3b1803",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "COLM",
+      "signal": "Sell",
+      "limit": 90.24,
+      "graph": "conservative_2023-04-04_COLM"
+    },
+    {
+      "id": "be484f52-7e07-43ba-b9cc-2254732be8ac",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "COLM",
+      "signal": "Sell",
+      "limit": 91.61,
+      "graph": "conservative_2023-04-04_COLM"
+    }
+  ],
+  [
+    {
+      "id": "5d65aa25-863d-4493-9d09-325a2f3fb63b",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "NOVT",
+      "signal": "Sell",
+      "limit": 159.09,
+      "graph": "conservative_2023-04-04_NOVT"
+    },
+    {
+      "id": "0551adbc-bfd6-40f6-b928-fef52f9bfcb0",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "NOVT",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_NOVT"
+    }
+  ],
+  [
+    {
+      "id": "3b2f9b0a-ab60-4885-a3b3-9ef95ae9065e",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "ENSG",
+      "signal": "Sell",
+      "limit": 95.54,
+      "graph": "conservative_2023-04-04_ENSG"
+    },
+    {
+      "id": "efeb2418-3a14-4b2b-aeba-71d1c0c407b8",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "ENSG",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_ENSG"
+    }
+  ],
+  [
+    {
+      "id": "cf6eef43-172c-4b37-b272-c275dd06e245",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "DRVN",
+      "signal": "Sell",
+      "limit": 30.31,
+      "graph": "conservative_2023-04-04_DRVN"
+    },
+    {
+      "id": "be6127c8-99aa-422c-ac36-455132ffd475",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "DRVN",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_DRVN"
+    }
+  ],
+  [
+    {
+      "id": "db5d3573-4b40-4a64-bd61-08f7183dc03c",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "WEN",
+      "signal": "Sell",
+      "limit": 22.28,
+      "graph": "conservative_2023-04-04_WEN"
+    },
+    {
+      "id": "d4b885eb-9599-4e3d-a4a1-754f45f89ffc",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "WEN",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_WEN"
+    }
+  ],
+  [
+    {
+      "id": "5f6a959d-a82e-42ec-9c6c-891b8c3a5c8a",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "IART",
+      "signal": "Sell",
+      "limit": 57.41,
+      "graph": "conservative_2023-04-04_IART"
+    },
+    {
+      "id": "b89cbbd3-c4e1-4f70-9ad3-c91e4a4586ab",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "IART",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_IART"
+    }
+  ],
+  [
+    {
+      "id": "8b97d3e0-b531-4cdb-ae76-92d0645138a4",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "FIVN",
+      "signal": "Sell",
+      "limit": 72.29,
+      "graph": "conservative_2023-04-04_FIVN"
+    },
+    {
+      "id": "5f97641a-6017-43ae-b7dc-11b18e6ec12a",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "FIVN",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_FIVN"
+    }
+  ],
+  [
+    {
+      "id": "12733520-4fb0-491e-b629-54e22f2264b8",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "PYCR",
+      "signal": "Sell",
+      "limit": 26.52,
+      "graph": "conservative_2023-04-04_PYCR"
+    },
+    {
+      "id": "fab4918e-97e1-4d4a-9b80-23d451895581",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "PYCR",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_PYCR"
+    }
+  ],
+  [
+    {
+      "id": "08416013-77c5-44d0-a7f5-2b816ee56183",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "HAE",
+      "signal": "Sell",
+      "limit": 82.75,
+      "graph": "conservative_2023-04-04_HAE"
+    },
+    {
+      "id": "0bdc2520-00bf-43ce-8667-339fc2828942",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "HAE",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_HAE"
+    }
+  ],
+  [
+    {
+      "id": "ba76d51a-03be-4958-9d23-a389862914e0",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "EXTR",
+      "signal": "Sell",
+      "limit": 19.12,
+      "graph": "conservative_2023-04-04_EXTR"
+    },
+    {
+      "id": "bc460135-6cce-4983-bf52-3256abaf56d6",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "EXTR",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_EXTR"
+    }
+  ],
+  [
+    {
+      "id": "a865f98b-14d1-4506-8d9a-a503d4f42e78",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "PSMT",
+      "signal": "Sell",
+      "limit": 71.48,
+      "graph": "conservative_2023-04-04_PSMT"
+    },
+    {
+      "id": "92f3da29-2ec4-4e20-a3e8-e952d75a0003",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "PSMT",
+      "signal": "Sell",
+      "limit": 71.94,
+      "graph": "conservative_2023-04-04_PSMT"
+    }
+  ],
+  [
+    {
+      "id": "5c4e7c15-eb1e-4a69-859d-4059a38acf85",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "PACB",
+      "signal": "Sell",
+      "limit": 11.58,
+      "graph": "conservative_2023-04-04_PACB"
+    },
+    {
+      "id": "253dd663-57f4-48ab-acad-f256248462b6",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "PACB",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_PACB"
+    }
+  ],
+  [
+    {
+      "id": "77a4697a-c71a-497a-aae8-bba81f98e4ed",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "MGPI",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_MGPI"
+    },
+    {
+      "id": "f8d1d033-3f29-4827-b633-2985b190de96",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "MGPI",
+      "signal": "Sell",
+      "limit": 98.88,
+      "graph": "conservative_2023-04-04_MGPI"
+    }
+  ],
+  [
+    {
+      "id": "7c886b5c-ece9-4f0a-856d-56997e761023",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "CENT",
+      "signal": "Sell",
+      "limit": 41.55,
+      "graph": "conservative_2023-04-04_CENT"
+    },
+    {
+      "id": "91186dc5-a49f-4a80-8e09-4ea40ecdf4c2",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "CENT",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_CENT"
+    }
+  ],
+  [
+    {
+      "id": "c737051e-48b2-4c1a-94c8-ae923f547207",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "BGCP",
+      "signal": "Buy",
+      "limit": 4.62,
+      "graph": "conservative_2023-04-04_BGCP"
+    },
+    {
+      "id": "78796e83-4c3e-4980-a203-9944557b8bd4",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "BGCP",
+      "signal": "Buy",
+      "limit": 4.55,
+      "graph": "conservative_2023-04-04_BGCP"
+    }
+  ],
+  [
+    {
+      "id": "6352f71c-e904-4667-a462-9d633f6a3b36",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "SEAT",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_SEAT"
+    },
+    {
+      "id": "737fab59-3278-48ee-9e47-ff1ff66d99b5",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "SEAT",
+      "signal": "Sell",
+      "limit": 8.1,
+      "graph": "conservative_2023-04-04_SEAT"
+    }
+  ],
+  [
+    {
+      "id": "1ed2ed94-bf2a-4974-afb8-dad8a3ebf6cb",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "ICHR",
+      "signal": "Sell",
+      "limit": 32.74,
+      "graph": "conservative_2023-04-04_ICHR"
+    },
+    {
+      "id": "e1c6073b-f74d-4e6a-80ae-757c7ec3e509",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "ICHR",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_ICHR"
+    }
+  ],
+  [
+    {
+      "id": "f1054a6f-fa95-4f83-b984-78b2d7912dcc",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "KIND",
+      "signal": "Sell",
+      "limit": 2.15,
+      "graph": "conservative_2023-04-04_KIND"
+    },
+    {
+      "id": "99fd344c-c204-4ad0-8cb8-6ff3d54cbbd1",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "KIND",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_KIND"
+    }
+  ],
+  [
+    {
+      "id": "b10f5ab9-01fd-4268-87f1-97f6cb05de64",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "MPLN",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_MPLN"
+    },
+    {
+      "id": "74f6336b-ad85-4182-a289-a70e391330e1",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "MPLN",
+      "signal": "Sell",
+      "limit": 1.17,
+      "graph": "conservative_2023-04-04_MPLN"
+    }
+  ],
+  [
+    {
+      "id": "3f32314a-e374-4c3d-b8ce-689069856ae8",
+      "date": "2023-03-31T00:00:00.000Z",
+      "symbol": "LYEL",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_LYEL"
+    },
+    {
+      "id": "206cf536-2a66-47b4-a554-b063f6005a24",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "LYEL",
+      "signal": "Sell",
+      "limit": 2.59,
+      "graph": "conservative_2023-04-04_LYEL"
+    }
+  ],
+  [
+    {
+      "id": "8ccad413-5fdc-473c-a679-13d29022daaf",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "CHRS",
+      "signal": "Sell",
+      "limit": 7.48,
+      "graph": "conservative_2023-04-04_CHRS"
+    },
+    {
+      "id": "754fb5c5-d95a-48a7-b799-df50b05d8e35",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "CHRS",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_CHRS"
+    }
+  ],
+  [
+    {
+      "id": "1860c397-f01d-4acf-9aed-9346557ef92c",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "DWAC",
+      "signal": "Sell",
+      "limit": 15.25,
+      "graph": "conservative_2023-04-04_DWAC"
+    },
+    {
+      "id": "15edbc69-daf8-43d4-9a67-4789703d79e3",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "DWAC",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_DWAC"
+    }
+  ],
+  [
+    {
+      "id": "8a2d2865-01ce-4266-b18d-12a375a29eff",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "SLGC",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_SLGC"
+    },
+    {
+      "id": "fc3998b9-6e60-421f-b866-58fdd58381be",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "SLGC",
+      "signal": "Sell",
+      "limit": 2.73,
+      "graph": "conservative_2023-04-04_SLGC"
+    }
+  ],
+  [
+    {
+      "id": "68c2ba81-52a6-4b29-82be-d41fa18580c7",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "ARCT",
+      "signal": "Sell",
+      "limit": 25.7,
+      "graph": "conservative_2023-04-04_ARCT"
+    },
+    {
+      "id": "47564fd8-7ba1-4679-acfd-6af562ef3d60",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "ARCT",
+      "signal": "Sell",
+      "limit": 27.03,
+      "graph": "conservative_2023-04-04_ARCT"
+    }
+  ],
+  [
+    {
+      "id": "da6b9ce8-1efd-4bd5-b0e0-02f92efcfc97",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "BFLY",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_BFLY"
+    },
+    {
+      "id": "ba806599-8775-41f2-a02c-dffef62bab0f",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "BFLY",
+      "signal": "Sell",
+      "limit": 2.27,
+      "graph": "conservative_2023-04-04_BFLY"
+    }
+  ],
+  [
+    {
+      "id": "67474cb0-5945-4d84-b8d2-950debd148e5",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "RELL",
+      "signal": "Sell",
+      "limit": 23.04,
+      "graph": "conservative_2023-04-04_RELL"
+    },
+    {
+      "id": "4d0cd2b1-1f0f-47be-90b3-bc52e9800a12",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "RELL",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_RELL"
+    }
+  ],
+  [
+    {
+      "id": "b7c068d9-3aec-494c-8d1d-b81eeeabed80",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "BBAI",
+      "signal": "Sell",
+      "limit": 3.13,
+      "graph": "conservative_2023-04-04_BBAI"
+    },
+    {
+      "id": "299861f4-4733-421c-997d-24a37cba3072",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "BBAI",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_BBAI"
+    }
+  ],
+  [
+    {
+      "id": "d2c47583-802b-419b-a027-cd0ebbc42eb4",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "CTXR",
+      "signal": "Sell",
+      "limit": 1.34,
+      "graph": "conservative_2023-04-04_CTXR"
+    },
+    {
+      "id": "f9324b2e-7b8d-4ead-bbca-e99d0406ad5f",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "CTXR",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_CTXR"
+    }
+  ],
+  [
+    {
+      "id": "9a39afc7-5407-4495-82c7-96d1e1179a1b",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "YMAB",
+      "signal": "Sell",
+      "limit": 5.7,
+      "graph": "conservative_2023-04-04_YMAB"
+    },
+    {
+      "id": "a011e56a-4c6f-461e-930d-7e7c1ca487d9",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "YMAB",
+      "signal": "Sell",
+      "limit": 5.75,
+      "graph": "conservative_2023-04-04_YMAB"
+    }
+  ],
+  [
+    {
+      "id": "b4486b8f-a3af-41af-babd-a2294f72e873",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "CDLX",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_CDLX"
+    },
+    {
+      "id": "c9100f08-0a73-4c01-9ac8-458d620d7aa5",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "CDLX",
+      "signal": "Sell",
+      "limit": 6.24,
+      "graph": "conservative_2023-04-04_CDLX"
+    }
+  ],
+  [
+    {
+      "id": "4bd65764-6bae-4336-8e61-8039aea9e33e",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "PRTK",
+      "signal": "Sell",
+      "limit": 2.8,
+      "graph": "conservative_2023-04-04_PRTK"
+    },
+    {
+      "id": "1bee4a1a-9516-400f-a997-b8560292ebf6",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "PRTK",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_PRTK"
+    }
+  ],
+  [
+    {
+      "id": "ba99b777-cc8c-4454-96b4-581fbba6a9ee",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "CLSD",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_CLSD"
+    },
+    {
+      "id": "12706048-5d8e-409a-b1ee-0501a525faca",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "CLSD",
+      "signal": "Sell",
+      "limit": 1.35,
+      "graph": "conservative_2023-04-04_CLSD"
+    }
+  ],
+  [
+    {
+      "id": "c86097a8-34fe-46b3-9b4b-9eb6b1e8ef4c",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "VTSI",
+      "signal": "Sell",
+      "limit": 5.455,
+      "graph": "conservative_2023-04-04_VTSI"
+    },
+    {
+      "id": "841e6d98-64ca-4c55-96c8-0577b20d627b",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "VTSI",
+      "signal": "Sell",
+      "limit": 5.25,
+      "graph": "conservative_2023-04-04_VTSI"
+    }
+  ],
+  [
+    {
+      "id": "bb58553d-b70a-44d5-9880-64c6b913ee15",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "CRVS",
+      "signal": "Sell",
+      "limit": 0.9951,
+      "graph": "conservative_2023-04-04_CRVS"
+    },
+    {
+      "id": "20303e06-f031-4e72-a196-083e4c5bc6ec",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "CRVS",
+      "signal": "Sell",
+      "limit": 1.08,
+      "graph": "conservative_2023-04-04_CRVS"
+    }
+  ],
+  [
+    {
+      "id": "9e5b0c73-1821-4f0a-99e5-d4a8df1df469",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "UAVS",
+      "signal": "Sell",
+      "limit": 0.4952,
+      "graph": "conservative_2023-04-04_UAVS"
+    },
+    {
+      "id": "995fe2d3-6c63-40f3-807c-c04ab36909a0",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "UAVS",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_UAVS"
+    }
+  ],
+  [
+    {
+      "id": "ffae91ac-4502-427d-bf67-ea77fef2b6fd",
+      "date": "2023-04-03T00:00:00.000Z",
+      "symbol": "MARK",
+      "signal": "Sell",
+      "limit": 1.48,
+      "graph": "conservative_2023-04-04_MARK"
+    },
+    {
+      "id": "4ca7af62-37e8-4105-aac7-bd1b4b04af2a",
+      "date": "2023-04-04T00:00:00.000Z",
+      "symbol": "MARK",
+      "signal": "",
+      "limit": null,
+      "graph": "conservative_2023-04-04_MARK"
+    }
+  ]
+]

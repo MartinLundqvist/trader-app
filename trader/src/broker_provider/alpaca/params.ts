@@ -105,8 +105,14 @@ export interface GetBars_v1 {
 export interface GetLastQuote_v1 {
   symbol: string;
 }
+export interface GetLastQuote_v2 {
+  symbol: string;
+}
 
 export interface GetLastTrade_v1 {
+  symbol: string;
+}
+export interface GetLastTrade_v2 {
   symbol: string;
 }
 

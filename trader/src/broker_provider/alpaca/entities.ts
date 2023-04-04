@@ -757,6 +757,34 @@ export interface LastQuote_v1 {
 }
 
 /**
+ * v2 Last quote details for a symbol
+ */
+export interface LastQuote_v2 {
+  /** Quote symbol. */
+  symbol: string;
+  quote: {
+    /** Timestamp in Date format. */
+    t: Date;
+    /** Ask exchange. */
+    ax: string;
+    /** Ask price. */
+    ap: number;
+    /** Ask size. */
+    as: number;
+    /** Bid exchange. */
+    bx: string;
+    /** Bid price. */
+    bp: number;
+    /** Bid size. */
+    bs: number;
+    /** Quote conditions. */
+    c: string[];
+    /** Tape */
+    z: string;
+  };
+}
+
+/**
  * Last trade details for a symbol
  */
 export interface LastTrade_v1 {
@@ -802,6 +830,43 @@ export interface LastTrade_v1 {
      * epoch timestamp in nanoseconds
      */
     timestamp: number;
+  };
+}
+
+/**
+ * Last trade details for a symbol
+ */
+export interface LastTrade_v2 {
+  symbol: string;
+  trade: {
+    /**
+     * last trade date
+     */
+    t: Date;
+    /**
+     * last trade exchange
+     */
+    x: string;
+    /**
+     * last trade price
+     */
+    p: number;
+    /**
+     * last trade volume size
+     */
+    s: number;
+    /**
+     * last trade conditions
+     */
+    c: string[];
+    /**
+     * last trade id
+     */
+    i: number;
+    /**
+     * last trade tape
+     */
+    z: string;
   };
 }
 

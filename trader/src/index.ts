@@ -31,7 +31,7 @@ const runModel = async (): Promise<StrategyResponse[]> => {
     `Tested ${slicedTickers.length} tickers and found ${results.length} signals.`
   );
 
-  await writeFile('results.json', JSON.stringify(results));
+  await writeFile(`strategies.json`, JSON.stringify(results));
 
   return results;
 };
@@ -70,21 +70,27 @@ const placeTrades = async (
   const failedOrders: any = [];
 
   for (let trade of trades) {
-    const { side, limit } = parseSignal(trade);
+    // The limit here is redundant
+    let { side, limit } = parseSignal(trade);
 
     console.log(side, limit);
     if (!side || !limit) continue;
 
     let stop_loss = 0;
     let take_profit = 0;
+    let latest_trade = await Trader.getLastTrade_v2({
+      symbol: trade[0].symbol,
+    });
+
+    console.log(latest_trade.trade.p);
 
     if (side === 'buy') {
-      stop_loss = limit * 0.97;
-      take_profit = limit * 1.1;
+      stop_loss = Number((latest_trade.trade.p * 0.97).toFixed(2));
+      take_profit = Number((latest_trade.trade.p * 1.1).toFixed(2));
     }
     if (side === 'sell') {
-      stop_loss = limit * 1.03;
-      take_profit = limit * 0.9;
+      stop_loss = Number((latest_trade.trade.p * 1.03).toFixed(2));
+      take_profit = Number((latest_trade.trade.p * 0.9).toFixed(2));
     }
 
     const order = {
@@ -92,7 +98,8 @@ const placeTrades = async (
       side: side,
       qty: Math.ceil(position_size / limit),
       type: 'market',
-      time_in_force: 'day',
+      time_in_force: 'gtc',
+      order_class: 'bracket',
       stop_loss: {
         stop_price: stop_loss,
       },
@@ -110,7 +117,8 @@ const placeTrades = async (
         side: side,
         qty: Math.ceil(position_size / limit),
         type: 'market',
-        time_in_force: 'day',
+        time_in_force: 'gtc',
+        order_class: 'bracket',
         stop_loss: {
           stop_price: stop_loss,
         },
@@ -131,8 +139,13 @@ const placeTrades = async (
   await writeFile('failed_orders.json', JSON.stringify(failedOrders));
 };
 
+const getOrders = async () => {
+  const orders = await Trader.getOrders({ status: 'closed' });
+  console.log(orders);
+};
+
 const readStrategies = async () => {
-  const file = await readFile('test_strategies.json', 'utf8');
+  const file = await readFile('strategies.json', 'utf8');
   const data = JSON.parse(file);
   return data as StrategyResponse[];
 };
@@ -141,7 +154,8 @@ const readStrategies = async () => {
 
 // refreshMarketData();
 // runModel();
-// const trades = await readStrategies();
-// const account = await Trader.getAccountConfigurations();
+const trades = await readStrategies();
+placeTrades(trades, 0.25);
+// getOrders();
 // console.log(account);
-// placeTrades(trades, 0.5);
+// const account = await Trader.getAccountConfigurations();
