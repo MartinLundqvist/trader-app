@@ -205,3 +205,4 @@ Next steps:
 
 - The market data fetcher is very slow. Try replacing it with Alpacas own "Multi Snapshots" end-point (https://alpaca.markets/docs/api-references/market-data-api/stock-pricing-data/historical/#bar). Make sure to get the adjusted prices too though. That might be the issue here.
 - Adjust the Strategies template so that it suggests a relative stop_loss and take_profit to the current price.
+- Also add to the "failed orders" object so that the error message is appended to it
