@@ -38,7 +38,7 @@ export const getSignal = async (
   const dateOffset = 400 * 24 * 60 * 60 * 1000; // 400 days
   // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
   // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days
-  const toDate = new Date('2023-03-01');
+  const toDate = new Date();
   const fromDate = new Date(toDate.getTime() - dateOffset);
 
   console.log(`Getting signal for ${ticker} from ${fromDate} to ${toDate}.`);

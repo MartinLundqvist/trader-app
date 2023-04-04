@@ -2,6 +2,7 @@ import { sequelize } from './index.js';
 import { DataTypes, ModelDefined, Op, Optional } from 'sequelize';
 import { MarketData, MarketDatum } from '../types/index.js';
 import { marketDataSchema } from '../schemas/index.js';
+import { z } from 'zod';
 
 type MarketModelCreationAttributes = Optional<MarketDatum, 'id'>;
 
@@ -69,8 +70,11 @@ const MarketModel: ModelDefined<MarketDatum, MarketModelCreationAttributes> =
 
 const createData = async (data: MarketData) => {
   try {
-    const result = await MarketModel.bulkCreate(data);
+    const result = await MarketModel.bulkCreate(data, {
+      ignoreDuplicates: true,
+    });
     console.log(`${result.length} records created.`);
+    console.log(`${data.length - result.length} records skipped.`);
   } catch (err) {
     console.log(`Error while creating bulk data`);
     console.log(err);
@@ -120,10 +124,29 @@ const recreateTable = async () => {
   }
 };
 
+const getLatestDate = async (): Promise<Date> => {
+  let date = new Date();
+
+  const schema = z.coerce.date();
+
+  try {
+    const result = await MarketModel.max('date');
+    date = schema.parse(result);
+  } catch (err) {
+    console.log(`Error while fetching latest date`);
+    console.log(err);
+  }
+
+  console.log(`Latest date: ${date}`);
+
+  return date;
+};
+
 const MarketDataDB = {
   createData,
   readData,
   recreateTable,
+  getLatestDate,
 };
 
 export default MarketDataDB;

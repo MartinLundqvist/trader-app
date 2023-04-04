@@ -7,7 +7,7 @@ from utils.data_parser import json_to_df_adjusted
 def fn_conservative_signal():
     data = request.get_json()
     df = json_to_df_adjusted(data)
-    df, result, signal = get_signal(df, backcandles=3)
+    df, result, signal = get_signal(df, backcandles=2)
     filename = None
 
     if signal:

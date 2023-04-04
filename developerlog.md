@@ -180,3 +180,12 @@ The biggest time consumer was getting stuck with technical analyses trying to cr
 - Suggest trades every evening CET to the user. The user decides which trades to make, and how much money to invest in them.
 
 This should form a reasonable start
+
+# April 3rd
+
+So, last night I reached a milestone. We can now through any number of tickers into the getSignal function, and the Python Flask service will return a list of signals, as well as a reference to a plot (.html) in the cases where a signal has been found.
+The next step is to create a few functions for ensureing the market database is up to date.
+
+One thing I did was to update the custom database index to become a unique index. `CREATE UNIQUE INDEX marketdata_3500_symbol_date ON marketdata_3500 (symbol, date)`. This should help ensure that I can use UPSERTs to update the database. I made sure no duplicate entries were present in the database, and then I created a new index (deleting the old first).
+
+Now, functions for making trades and for updating the database have been developed. I successfully placed some 50 trades to the Alpaca paper account.
