@@ -9,6 +9,7 @@ import MarketDataProvider from './market_data_provider/tiingo/index.js';
 import Trader from './broker_provider/index.js';
 import { parseSignal } from './utils/index.js';
 import { strategyResponseSchema } from './schemas/index.js';
+import { Announcement } from './broker_provider/alpaca/entities.js';
 
 // Throw the data at the strategies and collect signals
 const runModel = async (): Promise<StrategyResponse[]> => {
@@ -175,23 +176,49 @@ const TEST_ReadMarketDataFromAlpavantage = async () => {
 
 // runModel();
 
-try {
-  const cas = await Trader.getAnnouncements({
-    ca_types: ['dividend', 'merger', 'spinoff', 'split'],
-    since: new Date('2023-01-01'),
-    until: new Date('2023-03-01'),
-  });
+const getCorporateActions = async () => {
+  try {
+    const cas = await Trader.getAnnouncements({
+      ca_types: ['dividend', 'merger', 'spinoff', 'split'],
+      since: new Date('2023-01-01'),
+      until: new Date('2023-03-01'),
+    });
 
-  console.log(cas[0]);
-  console.log(cas[1]);
-  console.log(cas[2]);
-  console.log(cas[3]);
+    console.log(cas[0]);
+    console.log(cas[1]);
+    console.log(cas[2]);
+    console.log(cas[3]);
 
-  // await writeFile('cas.json', JSON.stringify(cas));
-} catch (err) {
-  console.log(err);
-}
+    await writeFile('cas.json', JSON.stringify(cas));
+  } catch (err) {
+    console.log(err);
+  }
+};
 
+const CA_tests = async () => {
+  const cas = JSON.parse(await readFile('cas.json', 'utf-8')) as Announcement[];
+
+  const searchFor = [
+    'AAPL',
+    'AMZN',
+    'BRK-B',
+    'GOOG',
+    'JNJ',
+    'META',
+    'MSFT',
+    'NVDA',
+    'TSLA',
+    'V',
+  ];
+
+  const filtered = cas.filter((a) => searchFor.includes(a.initiating_symbol));
+
+  await writeFile('cas_filtered.json', JSON.stringify(filtered));
+
+  console.log(filtered);
+};
+
+CA_tests();
 // refreshMarketData();
 // runModel();
 // const trades = await readStrategies();
