@@ -1,3 +1,5 @@
+import { CorporateAction } from './params.js';
+
 export interface Endpoints {
   rest: {
     beta: 'https://data.alpaca.markets/v1beta1';
@@ -579,6 +581,45 @@ export interface RawBar {
   /** Volume. */
   v: number;
 }
+/** A Raw MultiBar for a symbol */
+export interface RawMultiBar {
+  /** Timestamp in RFC-3339 format with nanosecond precision. */
+  t: string;
+  /** Open price. */
+  o: number;
+  /** High price. */
+  h: number;
+  /** Low price. */
+  l: number;
+  /** Close price. */
+  c: number;
+  /** Volume. */
+  v: number;
+  /** Number of trades */
+  n: number;
+  /** Volum weighted average price */
+  vw: number;
+}
+
+/** A MultiBar for a symbol */
+export interface MultiBar {
+  /** Timestamp in RFC-3339 format with nanosecond precision. */
+  t: Date;
+  /** Open price. */
+  o: number;
+  /** High price. */
+  h: number;
+  /** Low price. */
+  l: number;
+  /** Close price. */
+  c: number;
+  /** Volume. */
+  v: number;
+  /** Number of trades */
+  n: number;
+  /** Volum weighted average price */
+  vw: number;
+}
 
 /** A page of one or many bars. */
 export interface RawPageOfBars {
@@ -586,6 +627,12 @@ export interface RawPageOfBars {
   bars: RawBar[];
   /** Symbol that was queried. */
   symbol: string;
+  /** Token that can be used to query the next page. */
+  next_page_token: string;
+}
+export interface RawPageOfMultiBars {
+  /** Object of multibars. */
+  bars: Record<string, RawMultiBar[]>;
   /** Token that can be used to query the next page. */
   next_page_token: string;
 }
@@ -618,6 +665,14 @@ export interface PageOfBars {
   bars: Bar[];
   /** Symbol that was queried. */
   symbol: string;
+  /** Token that can be used to query the next page. */
+  next_page_token: string;
+}
+export interface PageOfMultiBars {
+  /** Get the raw data as it came from Alpaca. */
+  raw(): RawPageOfMultiBars;
+  /** Object of mutlibars. */
+  bars: Record<string, MultiBar[]>;
   /** Token that can be used to query the next page. */
   next_page_token: string;
 }
@@ -1936,4 +1991,56 @@ export interface Message {
   code?: number;
   msg: string;
   [key: string]: any;
+}
+
+export interface RawAnnouncement {
+  corporate_action_id: string;
+  ca_type: string;
+  ca_sub_type: string;
+  initiating_symbol: string;
+  initiating_original_cusip: string;
+  target_symbol: string;
+  target_original_cusip: string;
+  declaration_date: string | null;
+  effective_date: string;
+  ex_date: string;
+  record_date: string;
+  payable_date: string;
+  cash: string;
+  old_rate: string;
+  new_rate: string;
+}
+
+export type DividendSubType = 'cash' | 'stock';
+export type MergerSubType = 'merger_update' | 'merger_completion';
+export type SpinoffSubType = 'spinoff';
+export type SplitSubType =
+  | 'stock_split'
+  | 'unit_split'
+  | 'reverse_split'
+  | 'recapitalization';
+
+export type CorporateActionSubType =
+  | DividendSubType
+  | MergerSubType
+  | SpinoffSubType
+  | SplitSubType;
+
+export interface Announcement {
+  raw(): RawAnnouncement;
+  corporate_action_id: string;
+  ca_type: CorporateAction;
+  ca_sub_type: CorporateActionSubType;
+  initiating_symbol: string;
+  initiating_original_cusip: string;
+  target_symbol: string;
+  target_original_cusip: string;
+  declaration_date: Date | null;
+  effective_date: Date;
+  ex_date: Date;
+  record_date: Date;
+  payable_date: Date;
+  cash: number;
+  old_rate: number;
+  new_rate: number;
 }

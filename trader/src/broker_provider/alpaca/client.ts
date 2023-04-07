@@ -35,6 +35,8 @@ import {
   Endpoints,
   LastQuote_v2,
   LastTrade_v2,
+  PageOfMultiBars,
+  Announcement,
 } from './entities.js';
 
 import {
@@ -70,6 +72,8 @@ import {
   GetLatestTrade,
   GetLastQuote_v2,
   GetLastTrade_v2,
+  GetMultiBars,
+  GetAnnouncements,
 } from './params.js';
 
 const unifetch = fetch;
@@ -333,6 +337,35 @@ export class AlpacaClient {
     )!;
   }
 
+  async getAnnouncements(params: GetAnnouncements): Promise<Announcement[]> {
+    let ca_types = '';
+
+    function formatDate(date: Date): string {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+
+      return `${year}-${month}-${day}`;
+    }
+
+    if (params.ca_types && Array.isArray(params.ca_types)) {
+      ca_types = params.ca_types.join(',');
+    }
+
+    return parse.announcements(
+      await this.request({
+        method: 'GET',
+        url: `${this.baseURLs.rest.account}/corporate_actions/announcements`,
+        data: {
+          ...params,
+          ca_types,
+          since: formatDate(params.since),
+          until: formatDate(params.until),
+        },
+      })
+    )!;
+  }
+
   getAccountConfigurations(): Promise<AccountConfigurations> {
     return this.request({
       method: 'GET',
@@ -450,6 +483,15 @@ export class AlpacaClient {
         method: 'GET',
         url: `${this.baseURLs.rest.market_data_v2}/stocks/${params.symbol}/bars`,
         data: { ...params, symbol: undefined },
+      })
+    )!;
+  }
+  async getMultiBars(params: GetMultiBars): Promise<PageOfMultiBars> {
+    return parse.pageOfMultiBars(
+      await this.request({
+        method: 'GET',
+        url: `${this.baseURLs.rest.market_data_v2}/stocks/bars`,
+        data: { ...params, symbols: params.symbols.join(',') },
       })
     )!;
   }

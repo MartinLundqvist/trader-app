@@ -150,12 +150,52 @@ const readStrategies = async () => {
   return data as StrategyResponse[];
 };
 
+const TEST_ReadMarketDataFromAlpavantage = async () => {
+  const tickers = await TickerDB.findAllTickers();
+  const lastestDate = await MarketDataDB.getLatestDate();
+  const oneDayOffset = 1000 * 60 * 60 * 24;
+  const fromDate = new Date(lastestDate.getTime() + oneDayOffset);
+  const toDate = new Date(Date.now() - 60 * 60 * 1000);
+
+  try {
+    const bars = await Trader.getMultiBars({
+      // symbols: tickers.slice(0, 100),
+      symbols: tickers,
+      timeframe: '1Day',
+      limit: 10_000,
+      start: fromDate,
+      end: toDate,
+    });
+
+    await writeFile('bars.json', JSON.stringify(bars));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // runModel();
+
+try {
+  const cas = await Trader.getAnnouncements({
+    ca_types: ['dividend', 'merger', 'spinoff', 'split'],
+    since: new Date('2023-01-01'),
+    until: new Date('2023-03-01'),
+  });
+
+  console.log(cas[0]);
+  console.log(cas[1]);
+  console.log(cas[2]);
+  console.log(cas[3]);
+
+  // await writeFile('cas.json', JSON.stringify(cas));
+} catch (err) {
+  console.log(err);
+}
 
 // refreshMarketData();
 // runModel();
-const trades = await readStrategies();
-placeTrades(trades, 0.25);
+// const trades = await readStrategies();
+// placeTrades(trades, 0.25);
 // getOrders();
 // console.log(account);
 // const account = await Trader.getAccountConfigurations();

@@ -35,7 +35,14 @@ import {
   RawTradeUpdate,
   RawLatestTrade,
   LatestTrade,
+  RawPageOfMultiBars,
+  PageOfMultiBars,
+  MultiBar,
+  RawAnnouncement,
+  Announcement,
+  CorporateActionSubType,
 } from './entities.js';
+import { CorporateAction } from './params.js';
 
 function account(rawAccount: RawAccount): Account | undefined {
   if (!rawAccount) {
@@ -359,6 +366,65 @@ function pageOfBars(page: RawPageOfBars): PageOfBars | undefined {
     throw new Error(`PageOfTrades parsing failed "${err}"`);
   }
 }
+function pageOfMultiBars(
+  page: RawPageOfMultiBars
+): PageOfMultiBars | undefined {
+  if (!page) {
+    return undefined;
+  }
+
+  const bars: Record<string, MultiBar[]> = {};
+
+  try {
+    Object.keys(page.bars).forEach((symbol) => {
+      bars[symbol] = page.bars[symbol].map((bar) => ({
+        raw: () => bar,
+        ...bar,
+        t: new Date(bar.t),
+      }));
+    });
+
+    return {
+      raw: () => page,
+      bars,
+      next_page_token: page.next_page_token,
+    };
+  } catch (err) {
+    throw new Error(`pageOfMultiBars parsing failed "${err}"`);
+  }
+}
+
+function announcements(raw: RawAnnouncement[]): Announcement[] | undefined {
+  if (!raw || raw.length === 0) {
+    return undefined;
+  }
+
+  const result: Announcement[] = [];
+
+  try {
+    raw.forEach((announcement) => {
+      result.push({
+        ...announcement,
+        raw: () => announcement,
+        ca_type: announcement.ca_type as CorporateAction,
+        ca_sub_type: announcement.ca_sub_type as CorporateActionSubType,
+        declaration_date: announcement.declaration_date
+          ? new Date(announcement.declaration_date)
+          : null,
+        effective_date: new Date(announcement.effective_date),
+        record_date: new Date(announcement.record_date),
+        payable_date: new Date(announcement.payable_date),
+        ex_date: new Date(announcement.ex_date),
+        cash: Number(announcement.cash),
+        old_rate: Number(announcement.old_rate),
+        new_rate: Number(announcement.new_rate),
+      });
+    });
+    return result;
+  } catch (err) {
+    throw new Error(`Announcement parsing failed "${err}"`);
+  }
+}
 
 function snapshot(raw: RawSnapshot): Snapshot | undefined {
   if (!raw) {
@@ -470,8 +536,10 @@ export default {
   pageOfTrades,
   pageOfQuotes,
   pageOfBars,
+  pageOfMultiBars,
   snapshot,
   snapshots,
   trade_update,
   latestTrade,
+  announcements,
 };

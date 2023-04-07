@@ -91,6 +91,18 @@ export interface GetBars {
   timeframe: BarsTimeframe;
   adjustment?: 'all' | 'dividend' | 'raw' | 'split';
 }
+export interface GetMultiBars {
+  symbols: string[];
+  timeframe: BarsTimeframe;
+  start: Date;
+  end: Date;
+  limit?: number;
+  page_token?: string;
+  asof?: string;
+  adjustment?: 'all' | 'dividend' | 'raw' | 'split';
+  feed?: DataSource;
+  currency?: string;
+}
 
 export interface GetBars_v1 {
   timeframe: BarsV1Timeframe;
@@ -222,4 +234,20 @@ export interface GetNews {
   include_content?: boolean;
   exclude_contentless?: boolean;
   page_token?: string;
+}
+
+export type CorporateAction = 'dividend' | 'merger' | 'spinoff' | 'split';
+export type CorporateActionDateType =
+  | 'ex-date'
+  | 'payable_date'
+  | 'record_date'
+  | 'declaration_date';
+
+export interface GetAnnouncements {
+  ca_types: CorporateAction[];
+  since: Date;
+  until: Date;
+  symbol?: string;
+  cusip?: string;
+  date_type?: CorporateActionDateType;
 }
