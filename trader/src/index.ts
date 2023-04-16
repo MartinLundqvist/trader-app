@@ -42,9 +42,10 @@ const refreshMarketData = async () => {
   const oneDayOffset = 1000 * 60 * 60 * 24;
   const fromDate = new Date(lastestDate.getTime() + oneDayOffset);
   const toDate = new Date();
+
   const tickers = await TickerDB.findAllTickers();
 
-  const data = await MarketDataProvider.getEODDataFromTo(
+  const data = await MarketDataProvider.getMultipleEODDataFromTo(
     tickers,
     fromDate,
     toDate
@@ -52,7 +53,7 @@ const refreshMarketData = async () => {
 
   // For testing, write data to a file
   // await writeFile(
-  //   `marketdata_${toDate.toISOString()}.json`,
+  //   `marketdata_test_${toDate.toISOString()}.json`,
   //   JSON.stringify(data)
   // );
 
@@ -218,7 +219,7 @@ const CA_tests = async () => {
   console.log(filtered);
 };
 
-CA_tests();
+// CA_tests();
 // refreshMarketData();
 // runModel();
 // const trades = await readStrategies();
