@@ -2,7 +2,7 @@
 
 import { readFile, writeFile } from 'fs/promises';
 import TickerDB from './database_provider/model_tickers.js';
-import { getSignal } from './position_computer/index.js';
+import { getSignal, getData } from './position_computer/index.js';
 import { StrategyResponse } from './types/index.js';
 import MarketDataDB from './database_provider/model_marketdata.js';
 import MarketDataProvider from './market_data_provider/tiingo/index.js';
@@ -35,6 +35,11 @@ const runModel = async (): Promise<StrategyResponse[]> => {
   await writeFile(`strategies.json`, JSON.stringify(results));
 
   return results;
+};
+
+const getOneFullStrategy = async (ticker: string) => {
+  let data = await getData(ticker);
+  await writeFile(`${ticker}.json`, JSON.stringify(data));
 };
 
 const refreshMarketData = async () => {
@@ -221,6 +226,7 @@ const CA_tests = async () => {
 
 // CA_tests();
 // refreshMarketData();
+getOneFullStrategy('AAPL');
 // runModel();
 // const trades = await readStrategies();
 // placeTrades(trades, 0.25);

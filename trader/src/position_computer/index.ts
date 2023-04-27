@@ -30,11 +30,11 @@ import { StrategyResponse } from '../types/index.js';
 // };
 
 // const url = 'http://127.0.0.1:4000/bollinger_rsi/signal'
-const url = 'http://127.0.0.1:4000/conservative/signal';
 
 export const getSignal = async (
   ticker: string
 ): Promise<StrategyResponse | null> => {
+  const url = 'http://127.0.0.1:4000/conservative/signal';
   const dateOffset = 400 * 24 * 60 * 60 * 1000; // 400 days
   // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
   // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days
@@ -65,6 +65,41 @@ export const getSignal = async (
 
   return null;
 };
+
+export const getData = async (ticker: string): Promise<any> => {
+  const url = 'http://127.0.0.1:4000/conservative';
+  const dateOffset = 400 * 24 * 60 * 60 * 1000; // 400 days
+  // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
+  // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days
+  const toDate = new Date();
+  const fromDate = new Date(toDate.getTime() - dateOffset);
+
+  console.log(`Getting signal for ${ticker} from ${fromDate} to ${toDate}.`);
+
+  const tickerData = await MarketDataDB.readData([ticker], fromDate, toDate);
+
+  if (tickerData.length < 200) return null;
+
+  try {
+    const response = await got
+      .post(url, {
+        headers: { 'Content-Type': 'application/json' },
+        json: tickerData,
+      })
+      .json();
+
+    // const parsed = strategyResponseSchema.parse(response);
+    const parsed = response;
+
+    return parsed;
+  } catch (err) {
+    console.log('Error in getData: ', ticker);
+    // console.log(err);
+  }
+
+  return null;
+};
+
 export const getBacktest = async (ticker: string) => {
   // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
   // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days
