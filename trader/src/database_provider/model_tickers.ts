@@ -146,40 +146,12 @@ const recreateTable = async () => {
   }
 };
 
-// TODO: This doesn't work
-// const getExchanges = async (asset_types = ['']): Promise<unknown[]> => {
-//   // let result: string[] = [];
-//   let data: unknown[] = [];
-
-//   try {
-//     data = await TickerModel.findAll({
-//       attributes: ['DISTINCT', ' TickerModel.exchange'],
-//       where: {
-//         asset_type: { [Op.or]: asset_types },
-//       },
-//     });
-//     console.log(`${data.length} records found.`);
-//   } catch (err) {
-//     console.log(`Error while fetching data for ${JSON.stringify(asset_types)}`);
-//     console.log(err);
-//   }
-// try {
-//   // result = tickersSchema.parse(data);
-// } catch (err) {
-//   console.log(`Error while validating data`);
-//   console.log(err);
-// }
-
-//   return data;
-// };
-
 const TickerDB = {
   createData,
   findTickersFrom,
   findDataByTickers,
   recreateTable,
   findAllTickers,
-  // getExchanges,
 };
 
 export default TickerDB;

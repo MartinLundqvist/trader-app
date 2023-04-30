@@ -38,7 +38,7 @@ const Chart = (): JSX.Element => {
   let isDragging = '';
 
   useEffect(() => {
-    console.log('Rerendering....');
+    // console.log('Rerendering....');
     if (!chartRef.current) return;
 
     const instance = chartRef.current.getEchartsInstance();
@@ -83,26 +83,27 @@ const Chart = (): JSX.Element => {
     updatePosition(isDragging, event);
   };
   const handleDataZoom = (event: ECDataZoomEvent) => {
-    console.log(event);
+    // console.log(event);
     let start = 0;
     let end = 100;
 
-    if (event.batch && event.batch[0].start) {
+    if (event.batch && event.batch[0].start !== undefined) {
       start = event.batch[0].start;
       end = event.batch[0].end;
     }
 
-    if (event.batch && event.batch[0].startValue) {
+    if (event.batch && event.batch[0].startValue !== undefined) {
       start = event.batch[0].startValue;
       end = event.batch[0].endValue;
     }
 
-    if (event.start && event.end) {
+    if (event.start !== undefined && event.end !== undefined) {
       start = event.start;
       end = event.end;
     }
 
     if (start !== undefined && end !== undefined) {
+      // console.log('Setting zoom', start, end);
       setStartZoom(start);
       setEndZoom(end);
     }

@@ -3,36 +3,81 @@
 import { readFile, writeFile } from 'fs/promises';
 import TickerDB from './database_provider/model_tickers.js';
 import { getSignal, getData } from './position_computer/index.js';
-import { StrategyResponse } from './types/index.js';
+import { Strategies } from './types/index.js';
 import MarketDataDB from './database_provider/model_marketdata.js';
 import MarketDataProvider from './market_data_provider/tiingo/index.js';
 import Trader from './broker_provider/index.js';
 import { parseSignal } from './utils/index.js';
-import { strategyResponseSchema } from './schemas/index.js';
+import { strategiesSchema } from './schemas/index.js';
 import { Announcement } from './broker_provider/alpaca/entities.js';
+import StrategyDB from './database_provider/model_strategies.js';
 
 // Throw the data at the strategies and collect signals
-const runModel = async (): Promise<StrategyResponse[]> => {
+// const runModelOld = async (): Promise<Strategies> => {
+//   const tickers = await TickerDB.findAllTickers();
+//   const slicedTickers = tickers;
+//   let results: Strategies = [];
+
+//   for (let ticker of slicedTickers) {
+//     let data = await getSignal(ticker);
+
+//     if (!data) {
+//       console.log('No data received:', ticker);
+//       continue;
+//     }
+
+//     if (data.signal !== '') results.push(data);
+//   }
+
+//   console.log(
+//     `Tested ${slicedTickers.length} tickers and found ${results.length} signals.`
+//   );
+
+//   await writeFile(`strategies.json`, JSON.stringify(results));
+
+//   return results;
+// };
+
+const runModel = async (): Promise<Strategies> => {
   const tickers = await TickerDB.findAllTickers();
   const slicedTickers = tickers;
-  let results: StrategyResponse[] = [];
+  const tickerQueue = [...slicedTickers];
+  const concurrency = 100;
+  let results: Strategies = [];
 
-  for (let ticker of slicedTickers) {
-    let data = await getSignal(ticker);
+  const getNextTickerBatch = () => {
+    if (tickerQueue.length === 0) return null;
+    return tickerQueue.splice(0, concurrency);
+  };
 
-    if (!data) {
-      console.log('No data received:', ticker);
-      continue;
+  const runPromisesBatch = async (tickerBatch: string[]) => {
+    const promisesBatch = tickerBatch.map((ticker) => getSignal(ticker));
+    return await Promise.all(promisesBatch);
+  };
+
+  let batch = getNextTickerBatch();
+  let index = 1;
+
+  while (batch) {
+    console.log(`Running batch ${index} with ${batch.length} tickers...`);
+    const batchResults = (await runPromisesBatch(batch)).flat();
+    for (let result of batchResults) {
+      if (result && result.signal !== '') {
+        results.push(result);
+      }
     }
 
-    if (data.some((d) => d.signal)) results.push(data);
+    batch = getNextTickerBatch();
+    index++;
   }
 
   console.log(
     `Tested ${slicedTickers.length} tickers and found ${results.length} signals.`
   );
 
-  await writeFile(`strategies.json`, JSON.stringify(results));
+  // await writeFile(`strategies.json`, JSON.stringify(results));
+
+  await StrategyDB.createData(results);
 
   return results;
 };
@@ -66,7 +111,7 @@ const refreshMarketData = async () => {
 };
 
 const placeTrades = async (
-  trades: StrategyResponse[],
+  trades: Strategies[],
   share_of_wallet: number
 ): Promise<any> => {
   const account = await Trader.getAccount();
@@ -154,7 +199,7 @@ const getOrders = async () => {
 const readStrategies = async () => {
   const file = await readFile('strategies.json', 'utf8');
   const data = JSON.parse(file);
-  return data as StrategyResponse[];
+  return data as Strategies[];
 };
 
 const TEST_ReadMarketDataFromAlpavantage = async () => {
@@ -226,10 +271,10 @@ const CA_tests = async () => {
 
 // CA_tests();
 // refreshMarketData();
-getOneFullStrategy('JPM');
-// runModel();
+// getOneFullStrategy('JPM');
 // const trades = await readStrategies();
 // placeTrades(trades, 0.25);
 // getOrders();
 // console.log(account);
 // const account = await Trader.getAccountConfigurations();
+runModel();

@@ -1,11 +1,11 @@
-import { StrategyResponse } from '../types/index.js';
+import { Strategies } from '../types/index.js';
 
 export const fromDateToString = (date: Date) => {
   return date.toISOString().split('T')[0];
 };
 
 export const parseSignal = (
-  trade: StrategyResponse
+  trade: Strategies
 ): { side: 'buy' | 'sell' | null; limit: number | null } => {
   let side: 'buy' | 'sell' | null = null;
   let limit: number | null = null;

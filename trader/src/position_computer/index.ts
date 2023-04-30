@@ -1,7 +1,7 @@
 import got from 'got';
 import MarketDataDB from '../database_provider/model_marketdata.js';
-import { strategyResponseSchema } from '../schemas/index.js';
-import { StrategyResponse } from '../types/index.js';
+import { strategiesSchema, strategySchema } from '../schemas/index.js';
+import { Strategies, Strategy } from '../types/index.js';
 // import { AAPL } from '../development_assets/AAPLJan2023.js';
 // import { AAPL } from '../development_assets/AAPL3Months.js';
 // import { AAPL } from '../development_assets/AAPL12Months.js';
@@ -31,9 +31,7 @@ import { StrategyResponse } from '../types/index.js';
 
 // const url = 'http://127.0.0.1:4000/bollinger_rsi/signal'
 
-export const getSignal = async (
-  ticker: string
-): Promise<StrategyResponse | null> => {
+export const getSignal = async (ticker: string): Promise<Strategy | null> => {
   const url = 'http://127.0.0.1:4000/conservative/signal';
   const dateOffset = 400 * 24 * 60 * 60 * 1000; // 400 days
   // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
@@ -55,7 +53,10 @@ export const getSignal = async (
       })
       .json();
 
-    const parsed = strategyResponseSchema.parse(response);
+    // console.log(response);
+
+    // const parsed = strategiesSchema.parse(response);
+    const parsed = strategySchema.parse(response);
 
     return parsed;
   } catch (err) {

@@ -41,16 +41,19 @@ export const fundamentalSchema = z.object({
 
 export const fundamentalsSchema = z.array(fundamentalSchema);
 
-export const strategyResponseSchema = z.array(
-  z.object({
-    id: z.optional(z.string()),
-    date: z.coerce.date(),
-    symbol: z.string(),
-    signal: z.string(),
-    limit: z.nullable(z.number()),
-    graph: z.nullable(z.string()),
-  })
-);
+export const strategySchema = z.object({
+  id: z.optional(z.string()),
+  name: z.string(),
+  date: z.coerce.date(),
+  symbol: z.string(),
+  signal: z.string(),
+  limit: z.nullable(z.number()),
+  stop_loss: z.nullable(z.number()),
+  take_profit: z.nullable(z.number()),
+  // graph: z.nullable(z.string()),
+});
+
+export const strategiesSchema = z.array(strategySchema);
 
 export const quoteSchema = z.object({
   symbol: z.string(),

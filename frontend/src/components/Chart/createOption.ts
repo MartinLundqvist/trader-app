@@ -12,6 +12,8 @@ export const createOption = (
   startZoom = 0,
   endZoom = 100
 ): EChartsOption => {
+  // console.log('createOption', stopLoss, takeProfit, startZoom, endZoom);
+
   const upColor = '#00da3c';
   const downColor = '#ec0000';
 

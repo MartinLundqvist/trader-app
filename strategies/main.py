@@ -1,5 +1,5 @@
 from utils.data_parser import json_to_df_adjusted
-from strategies.conservative import get_signal, create_plot
+from strategies.conservative import get_signal
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 
@@ -11,16 +11,19 @@ def fn_conservative_signal():
     df, result, signal = get_signal(df, backcandles=2)
     filename = None
 
-    if signal:
-        filename = create_plot(df)
+    # if signal:
+    #     filename = create_plot(df)
 
     response = result.copy()
-    response['graph'] = filename
-    response['date'] = response.index
+    # response['graph'] = filename
+    response['date'] = response.name
     response['limit'] = response['Limit']
     response['signal'] = response['Signal']
+    response['stop_loss'] = response['Stop_loss']
+    response['take_profit'] = response['Take_profit']
 
-    return response.to_json(orient='records', date_format='iso')
+    # return response.to_json(orient='records', date_format='iso')
+    return response.to_json()
 
 
 @app.route('/conservative', methods=['POST'])
