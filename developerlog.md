@@ -206,3 +206,17 @@ Next steps:
 - The market data fetcher is very slow. Try replacing it with Alpacas own "Multi Bars" endpoint (https://alpaca.markets/docs/api-references/market-data-api/stock-pricing-data/historical/). It allows for multiple tickers and I can specify "all" corporate actions to be adjusted for. In theory I could then send two bulk requests.
 - Adjust the Strategies template so that it suggests a relative stop_loss and take_profit to the current price.
 - Also add to the "failed orders" object so that the error message is appended to it
+
+# April 30th
+
+Lot's been going on. First, rather than replacing the Tiingo market fetcher, I am now throttling batches of calls to the API.
+Then I have added an end-point to the strategy services that returns the entire data frame, rather than just the strategy signals. This allows for rendering stuff in the front-end.
+
+## Learned how to set up interactive chart using ECharts
+
+Basically, it all came down to a couple of things:
+
+- Listening to mouse events on the chart instance. To check which graphical element was pressed,use the `on` listener vanilla style. However for then checking movement and release of the mouse button outside of any graphical element, you have to use the `getZr().on` listener.
+- There are native methods for converting pixels to axes values. Use `convertFromPixel` to convert from pixels to axes values, and `convertToPixel` to convert from axes values to pixels.
+- Dynamic updating of the `option` object. Here I am using useEffect to keep track of the values.
+- The thing that was the most annoying to fix, is dealing with all the ways in which the Zoom window can change. Depending on whether you zoom with the slider, the crosshair or the mouse etc the event object has different shapes. I need to store the zoom (start, end) values so that the zoom window doesn't reset every time the user interacts with the chart.

@@ -226,7 +226,7 @@ const CA_tests = async () => {
 
 // CA_tests();
 // refreshMarketData();
-getOneFullStrategy('AAPL');
+getOneFullStrategy('JPM');
 // runModel();
 // const trades = await readStrategies();
 // placeTrades(trades, 0.25);

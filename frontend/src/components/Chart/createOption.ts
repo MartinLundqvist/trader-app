@@ -1,9 +1,17 @@
 // import { EChartsOption } from 'echarts-for-react';
-import { CandlestickSeriesOption, EChartsOption } from 'echarts';
-import json from '../../development_assets/AAPL.json';
-import { EventRounded } from '@mui/icons-material';
+import { EChartsOption, MarkPointComponentOption } from 'echarts';
+// import json from '../../development_assets/AAPL.json';
+import json from '../../development_assets/JPM.json';
 
-export const createOption = (): EChartsOption => {
+export const STOP_LOSS_LINE = 'Stop Loss';
+export const TAKE_PROFIT_LINE = 'Take Profit';
+
+export const createOption = (
+  stopLoss = 0,
+  takeProfit = 0,
+  startZoom = 0,
+  endZoom = 100
+): EChartsOption => {
   const upColor = '#00da3c';
   const downColor = '#ec0000';
 
@@ -21,9 +29,27 @@ export const createOption = (): EChartsOption => {
   let sma_slowData = json.map((entry) => entry.SMA_slow);
   let sma_fastData = json.map((entry) => entry.SMA_fast);
   let volumeData: any[] = [];
+  let signalMarkPoints: MarkPointComponentOption['data'] = [];
 
   for (let i = 0; i < json.length; i++) {
     volumeData.push([i, json[i].volume, json[i].close < json[i].open ? 1 : -1]);
+    if (json[i].Signal !== '') {
+      signalMarkPoints.push({
+        name: json[i].Signal,
+        value: json[i].Signal,
+        xAxis: json[i].date.split('T')[0],
+        yAxis: json[i].close,
+        symbolRotate: json[i].Signal === 'Buy' ? 180 : 0,
+        symbolSize: 40,
+        itemStyle: {
+          color: 'orange',
+        },
+        label: {
+          show: true,
+          position: json[i].Signal === 'Buy' ? 'insideBottom' : 'insideTop',
+        },
+      });
+    }
   }
 
   let option: EChartsOption = {
@@ -89,13 +115,13 @@ export const createOption = (): EChartsOption => {
     },
     grid: [
       {
-        left: '10%',
-        right: '8%',
+        left: '5%',
+        right: '15%',
         height: '50%',
       },
       {
-        left: '10%',
-        right: '8%',
+        left: '5%',
+        right: '15%',
         top: '63%',
         height: '16%',
       },
@@ -147,18 +173,19 @@ export const createOption = (): EChartsOption => {
       {
         type: 'inside',
         xAxisIndex: [0, 1],
-        start: 0,
-        end: 100,
+        start: startZoom,
+        end: endZoom,
       },
       {
         show: true,
         xAxisIndex: [0, 1],
         type: 'slider',
         top: '85%',
-        start: 0,
-        end: 100,
+        start: startZoom,
+        end: endZoom,
       },
     ],
+
     series: [
       {
         name: 'AAPL',
@@ -170,6 +197,45 @@ export const createOption = (): EChartsOption => {
           borderColor: undefined,
           borderColor0: undefined,
         },
+        markPoint: {
+          data: signalMarkPoints,
+          symbol: 'pin',
+        },
+        markLine: {
+          symbol: 'none', // Remove the default symbols at the end of the lines
+          data: [
+            {
+              name: TAKE_PROFIT_LINE,
+
+              yAxis: takeProfit, // Your take-profit value
+              lineStyle: {
+                color: 'green',
+                width: 2,
+                type: 'solid',
+              },
+              label: {
+                formatter: 'Take Profit: {c}',
+                position: 'end',
+                // fontSize: 14,
+              },
+            },
+            {
+              name: STOP_LOSS_LINE,
+              yAxis: stopLoss, // Your stop-loss value
+              lineStyle: {
+                color: 'red',
+                width: 2,
+                type: 'solid',
+              },
+              label: {
+                formatter: 'Stop Loss: {c}',
+                position: 'end',
+                // fontSize: 14,
+              },
+            },
+          ],
+        },
+
         tooltip: {
           formatter: (param: any) => {
             param = param[0];
@@ -186,8 +252,10 @@ export const createOption = (): EChartsOption => {
       {
         name: 'BB Higher',
         type: 'line',
+        symbol: 'none',
         data: bb_highData as any[],
         smooth: true,
+        color: 'black',
         lineStyle: {
           opacity: 0.5,
         },
@@ -195,8 +263,10 @@ export const createOption = (): EChartsOption => {
       {
         name: 'BB Lower',
         type: 'line',
+        symbol: 'none',
         data: bb_lowData as any[],
         smooth: true,
+        color: 'black',
         lineStyle: {
           opacity: 0.5,
         },
@@ -204,6 +274,7 @@ export const createOption = (): EChartsOption => {
       {
         name: 'Slow SMA',
         type: 'line',
+        symbol: 'none',
         data: sma_slowData as any[],
         smooth: true,
         lineStyle: {
@@ -213,6 +284,7 @@ export const createOption = (): EChartsOption => {
       {
         name: 'Fast SMA',
         type: 'line',
+        symbol: 'none',
         data: sma_fastData as any[],
         smooth: true,
         lineStyle: {

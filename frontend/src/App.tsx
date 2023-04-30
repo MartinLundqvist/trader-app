@@ -37,14 +37,14 @@ function App() {
   return (
     <>
       <AppBar
-        position='fixed'
-        sx={{
-          width: `calc(100% - ${navWidth}px)`,
-        }}
+      // position='fixed'
+      // sx={{
+      //   width: `calc(100% - ${navWidth}px)`,
+      // }}
       >
         <Toolbar>
           <Typography variant='h6' noWrap component='div'>
-            Responsive drawer
+            Trader
           </Typography>
         </Toolbar>
       </AppBar>
