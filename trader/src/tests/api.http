@@ -1,0 +1,8 @@
+GET http://localhost:4001/api/strategies
+
+
+###
+GET http://localhost:4001/api/signals/conservative
+
+###
+GET http://localhost:4001/api/signals/conservative/JPM

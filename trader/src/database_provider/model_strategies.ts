@@ -64,12 +64,16 @@ const findAllStrategies = async (): Promise<string[]> => {
   let results: string[] = [];
 
   try {
-    const result = await StrategyModel.findAll({
+    const data = await StrategyModel.findAll({
       attributes: ['name'],
       order: [['name', 'DESC']],
     });
-    console.log(`${result.length} records found.`);
-    results = result.map((r) => r.dataValues.name);
+
+    console.log(`${data.length} records found.`);
+
+    results = Array.from(
+      new Set(data.map((entry) => entry.getDataValue('name')))
+    );
   } catch (err) {
     console.log(`Error while fetching data`);
     console.log(err);

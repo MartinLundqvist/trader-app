@@ -10,7 +10,7 @@
     "test": "jest",
     "tests_NOTUSED": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:broker": "ts-node --esm ./src/broker_provider/index.ts",
-    "dev": "ts-node --esm ./src/index.ts",
+    "dev": "nodemon --esm ./src/index.ts",
     "build": "rm -rf build && tsc"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
   "type": "module",
   "devDependencies": {
     "@jest/globals": "^29.5.0",
+    "@types/express": "^4.17.17",
     "@types/node": "^18.14.5",
     "@types/qs": "^6.9.7",
     "jest": "^29.5.0",
@@ -29,6 +30,7 @@
   "dependencies": {
     "bottleneck": "^2.19.5",
     "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "got": "^12.5.3",
     "pg": "^8.10.0",
     "pg-hstore": "^2.3.4",
