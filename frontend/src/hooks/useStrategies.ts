@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
-import json from '../development_assets/strategies.json';
+import { useQuery } from '@tanstack/react-query';
+
+const getStrategies = async () => {
+  const url = import.meta.env.VITE_API_URL;
+  const response = await fetch(`${url}/strategies`);
+
+  if (!response.ok) return Promise.reject(new Error('Error calling API'));
+
+  return response.json() as Promise<string[]>;
+};
 
 export const useStrategies = () => {
-  const [data, setData] = useState<any[]>([]);
+  const { error, data, isLoading } = useQuery({
+    queryKey: ['strategies'],
+    queryFn: getStrategies,
+  });
 
-  useEffect(() => {
-    setData(json);
-  }, []);
-
-  const strategies = data.map((s) => ({
-    symbol: s[0].symbol,
-    graph: s[0].graph,
-  }));
-
-  return { strategies };
+  return { strategies: data, isLoading, error };
 };

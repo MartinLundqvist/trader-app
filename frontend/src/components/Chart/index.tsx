@@ -2,6 +2,9 @@ import ReactEChart from 'echarts-for-react';
 import { ECElementEvent } from 'echarts';
 import { useEffect, useRef, useState } from 'react';
 import { STOP_LOSS_LINE, TAKE_PROFIT_LINE, createOption } from './createOption';
+import { useTickerSignals } from '../../hooks/useTickerSignals';
+import { Alert, CircularProgress } from '@mui/material';
+import { useTrader } from '../../contexts/TraderContext';
 
 interface ECDataZoomEvent {
   type: string;
@@ -34,6 +37,8 @@ const Chart = (): JSX.Element => {
   const [startZoom, setStartZoom] = useState<number>(0);
   const [endZoom, setEndZoom] = useState<number>(100);
   const chartRef = useRef<ReactEChart>(null);
+  const { ticker, strategy } = useTrader();
+  const { tickerSignals, isLoading, error } = useTickerSignals();
 
   let isDragging = '';
 
@@ -125,11 +130,25 @@ const Chart = (): JSX.Element => {
     }
   };
 
+  if (ticker === '') return <Alert severity='info'>Select a ticker</Alert>;
+
+  if (isLoading) return <CircularProgress />;
+
+  if (error) return <Alert severity='error'>Error: {error.message}</Alert>;
+
+  if (!tickerSignals) return <Alert severity='warning'>No data found</Alert>;
+
   return (
     <ReactEChart
       ref={chartRef}
       style={{ width: '100%', height: '600px' }}
-      option={createOption(stopLoss, takeProfit, startZoom, endZoom)}
+      option={createOption(
+        tickerSignals,
+        stopLoss,
+        takeProfit,
+        startZoom,
+        endZoom
+      )}
     />
   );
 };

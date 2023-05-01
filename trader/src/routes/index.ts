@@ -25,7 +25,7 @@ routes.get('/signals/:strategyName', async (req, res) => {
   }
 });
 
-routes.get('/signals/:strategyName/:ticker', async (req, res) => {
+routes.get('/tickerdata/:strategyName/:ticker', async (req, res) => {
   try {
     const results = await getData(req.params.ticker);
     res.send(results);

@@ -1,12 +1,11 @@
-// import { EChartsOption } from 'echarts-for-react';
 import { EChartsOption, MarkPointComponentOption } from 'echarts';
-// import json from '../../development_assets/AAPL.json';
-import json from '../../development_assets/JPM.json';
+import { TickerSignal } from '../../hooks/useTickerSignals';
 
 export const STOP_LOSS_LINE = 'Stop Loss';
 export const TAKE_PROFIT_LINE = 'Take Profit';
 
 export const createOption = (
+  data: TickerSignal[],
   stopLoss = 0,
   takeProfit = 0,
   startZoom = 0,
@@ -17,38 +16,40 @@ export const createOption = (
   const upColor = '#00da3c';
   const downColor = '#ec0000';
 
-  let categoryData = json.map((entry) => entry.date.split('T')[0]);
+  let symbol = data[0].symbol;
 
-  let candlestickData = json.map((entry) => [
-    entry.open,
-    entry.close,
-    entry.high,
-    entry.low,
+  let categoryData = data.map((entry) => entry.date.split('T')[0]);
+
+  let candlestickData = data.map((entry) => [
+    entry.Open,
+    entry.Close,
+    entry.High,
+    entry.Low,
   ]);
 
-  let bb_highData = json.map((entry) => entry.BB_high);
-  let bb_lowData = json.map((entry) => entry.BB_low);
-  let sma_slowData = json.map((entry) => entry.SMA_slow);
-  let sma_fastData = json.map((entry) => entry.SMA_fast);
+  let bb_highData = data.map((entry) => entry.BB_high);
+  let bb_lowData = data.map((entry) => entry.BB_low);
+  let sma_slowData = data.map((entry) => entry.SMA_slow);
+  let sma_fastData = data.map((entry) => entry.SMA_fast);
   let volumeData: any[] = [];
   let signalMarkPoints: MarkPointComponentOption['data'] = [];
 
-  for (let i = 0; i < json.length; i++) {
-    volumeData.push([i, json[i].volume, json[i].close < json[i].open ? 1 : -1]);
-    if (json[i].Signal !== '') {
+  for (let i = 0; i < data.length; i++) {
+    volumeData.push([i, data[i].Volume, data[i].Close < data[i].Open ? 1 : -1]);
+    if (data[i].Signal !== '') {
       signalMarkPoints.push({
-        name: json[i].Signal,
-        value: json[i].Signal,
-        xAxis: json[i].date.split('T')[0],
-        yAxis: json[i].close,
-        symbolRotate: json[i].Signal === 'Buy' ? 180 : 0,
+        name: data[i].Signal,
+        value: data[i].Signal,
+        xAxis: data[i].date.split('T')[0],
+        yAxis: data[i].Close,
+        symbolRotate: data[i].Signal === 'Buy' ? 180 : 0,
         symbolSize: 40,
         itemStyle: {
           color: 'orange',
         },
         label: {
           show: true,
-          position: json[i].Signal === 'Buy' ? 'insideBottom' : 'insideTop',
+          position: data[i].Signal === 'Buy' ? 'insideBottom' : 'insideTop',
         },
       });
     }
@@ -56,6 +57,9 @@ export const createOption = (
 
   let option: EChartsOption = {
     animation: false,
+    title: {
+      text: `Signals for ${symbol}`,
+    },
     legend: {
       bottom: 10,
       left: 'center',
