@@ -1,11 +1,12 @@
+// import { StrategyTickerData } from '@trader-app/shared';
 import { EChartsOption, MarkPointComponentOption } from 'echarts';
-import { TickerSignal } from '../../hooks/useTickerSignals';
-
+// import { TickerSignal } from '../../hooks/useTickerSignals';
+import { StrategyTickerData } from '@trader/types';
 export const STOP_LOSS_LINE = 'Stop Loss';
 export const TAKE_PROFIT_LINE = 'Take Profit';
 
 export const createOption = (
-  data: TickerSignal[],
+  data: StrategyTickerData,
   stopLoss = 0,
   takeProfit = 0,
   startZoom = 0,
@@ -16,9 +17,11 @@ export const createOption = (
   const upColor = '#00da3c';
   const downColor = '#ec0000';
 
-  let symbol = data[0].symbol;
+  // let symbol = data[0].symbol;
 
-  let categoryData = data.map((entry) => entry.date.split('T')[0]);
+  let categoryData = data.map(
+    (entry) => entry.date.toISOString().split('T')[0]
+  );
 
   let candlestickData = data.map((entry) => [
     entry.Open,
@@ -40,7 +43,7 @@ export const createOption = (
       signalMarkPoints.push({
         name: data[i].Signal,
         value: data[i].Signal,
-        xAxis: data[i].date.split('T')[0],
+        xAxis: data[i].date.toISOString().split('T')[0],
         yAxis: data[i].Close,
         symbolRotate: data[i].Signal === 'Buy' ? 180 : 0,
         symbolSize: 40,
@@ -57,9 +60,9 @@ export const createOption = (
 
   let option: EChartsOption = {
     animation: false,
-    title: {
-      text: `Signals for ${symbol}`,
-    },
+    // title: {
+    //   text: `Signals for ${symbol}`,
+    // },
     legend: {
       bottom: 10,
       left: 'center',
@@ -220,7 +223,7 @@ export const createOption = (
                 type: 'solid',
               },
               label: {
-                formatter: 'Take Profit: {c}',
+                formatter: 'TP: {c}',
                 position: 'end',
                 // fontSize: 14,
               },
@@ -234,7 +237,7 @@ export const createOption = (
                 type: 'solid',
               },
               label: {
-                formatter: 'Stop Loss: {c}',
+                formatter: 'SL: {c}',
                 position: 'end',
                 // fontSize: 14,
               },

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+// This is the shape of the data in the core application database table "marketdata_3500"
 export const marketDatumSchema = z.object({
   id: z.optional(z.string()),
   symbol: z.string(),
@@ -18,6 +19,7 @@ export const marketDatumSchema = z.object({
 
 export const marketDataSchema = z.array(marketDatumSchema);
 
+// This is the shape of the data in the core application datatabase table "tickerdata_3500"
 export const tickerSchema = z.object({
   id: z.optional(z.string()),
   name: z.string(),
@@ -32,17 +34,10 @@ export const tickerSchema = z.object({
 
 export const tickersSchema = z.array(tickerSchema);
 
-export const fundamentalSchema = z.object({
+// This is the shape of the data in the core application database table "strategyruns"
+export const strategySignalSchema = z.object({
   id: z.optional(z.string()),
-  date: z.coerce.date(),
-  market_cap: z.number(),
-  symbol: z.string(),
-});
-
-export const fundamentalsSchema = z.array(fundamentalSchema);
-
-export const strategySchema = z.object({
-  id: z.optional(z.string()),
+  // strategy_id: z.string(), //Not used yet!!
   name: z.string(),
   date: z.coerce.date(),
   symbol: z.string(),
@@ -50,25 +45,113 @@ export const strategySchema = z.object({
   limit: z.nullable(z.number()),
   stop_loss: z.nullable(z.number()),
   take_profit: z.nullable(z.number()),
-  // graph: z.nullable(z.string()),
+});
+
+export const strategySignalsSchema = z.array(strategySignalSchema);
+
+// Not used yet: This is the shape of the data in the core application database table "strategies"
+export const strategySchema = z.object({
+  id: z.optional(z.string()),
+  name: z.string(),
+  description_short: z.string(),
+  description_long: z.string(),
 });
 
 export const strategiesSchema = z.array(strategySchema);
 
-export const quoteSchema = z.object({
+// Not used yet: This is the shape of the data returned when requesting the strategy run ouput for a ticker over a given timeframe
+export const strategyTickerDatumSchema = z.object({
+  id: z.optional(z.string()),
   symbol: z.string(),
-  quote: z.object({
-    t: z.coerce.date(),
-    ax: z.string(),
-    ap: z.number(),
-    as: z.number(),
-    bx: z.string(),
-    bp: z.number(),
-    bs: z.number(),
-    c: z.array(z.string()),
-    z: z.string(),
-  }),
+  date: z.coerce.date(),
+  Close: z.number(),
+  Open: z.number(),
+  High: z.number(),
+  Low: z.number(),
+  Volume: z.number(),
+  BB_high: z.nullable(z.number()),
+  BB_low: z.nullable(z.number()),
+  SMA_slow: z.nullable(z.number()),
+  SMA_fast: z.nullable(z.number()),
+  Signal: z.string(),
+  Limit: z.nullable(z.number()),
+  Stop_loss: z.nullable(z.number()),
+  Take_profit: z.nullable(z.number()),
 });
+
+export const strategyTickerDataSchema = z.array(strategyTickerDatumSchema);
+
+// import { z } from 'zod';
+
+// export const marketDatumSchema = z.object({
+//   id: z.optional(z.string()),
+//   symbol: z.string(),
+//   open: z.number(),
+//   high: z.number(),
+//   low: z.number(),
+//   close: z.number(),
+//   volume: z.number(),
+//   date: z.coerce.date(),
+//   split_factor: z.number(),
+//   adj_close: z.number(),
+//   adj_high: z.number(),
+//   adj_low: z.number(),
+//   adj_open: z.number(),
+// });
+
+// export const marketDataSchema = z.array(marketDatumSchema);
+
+// export const tickerSchema = z.object({
+//   id: z.optional(z.string()),
+//   name: z.string(),
+//   market_cap: z.coerce.number(),
+//   symbol: z.string(),
+//   exchange: z.string(),
+//   asset_type: z.string(),
+//   price_currency: z.string(),
+//   start_date: z.nullable(z.coerce.date()),
+//   end_date: z.nullable(z.coerce.date()),
+// });
+
+// export const tickersSchema = z.array(tickerSchema);
+
+// export const fundamentalSchema = z.object({
+//   id: z.optional(z.string()),
+//   date: z.coerce.date(),
+//   market_cap: z.number(),
+//   symbol: z.string(),
+// });
+
+// export const fundamentalsSchema = z.array(fundamentalSchema);
+
+// export const strategySchema = z.object({
+//   id: z.optional(z.string()),
+//   name: z.string(),
+//   date: z.coerce.date(),
+//   symbol: z.string(),
+//   signal: z.string(),
+//   limit: z.nullable(z.number()),
+//   stop_loss: z.nullable(z.number()),
+//   take_profit: z.nullable(z.number()),
+//   // graph: z.nullable(z.string()),
+// });
+
+// export const strategiesSchema = z.array(strategySchema);
+
+// export const quoteSchema = z.object({
+//   symbol: z.string(),
+//   quote: z.object({
+//     t: z.coerce.date(),
+//     ax: z.string(),
+//     ap: z.number(),
+//     as: z.number(),
+//     bx: z.string(),
+//     bp: z.number(),
+//     bs: z.number(),
+//     c: z.array(z.string()),
+//     z: z.string(),
+//   }),
+// });
 
 // export const brokerAccountSchema = z.object({
 //   id: z.string(),

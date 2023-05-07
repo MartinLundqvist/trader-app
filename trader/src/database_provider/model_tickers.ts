@@ -1,7 +1,13 @@
+// import { Ticker, Tickers } from '@trader-app/shared/types/index.js';
+// import { Ticker, Tickers } from '@trader-app/shared';
+import { tickersSchema } from '../schemas/index.js';
+import { Ticker, Tickers } from '../types/index.js';
 import { sequelize } from './index.js';
 import { DataTypes, ModelDefined, Op, Optional } from 'sequelize';
-import { Ticker, Tickers } from '../types/index.js';
-import { tickersSchema } from '../schemas/index.js';
+// import { tickersSchema } from '@trader-app/shared/src/schemas.js';
+// import { tickersSchema } from '@trader-app/shared/schemas/index.js';
+// import { Ticker, Tickers } from '../types/index.js';
+// import { tickersSchema } from '../schemas/index.js';
 
 type TickerModelCreationAttributes = Optional<Ticker, 'id'>;
 

@@ -1,34 +1,40 @@
-import { AppBar, Box, Toolbar, Typography } from '@mui/material';
+import { AppBar, Container, Grid, Toolbar, Typography } from '@mui/material';
 
 import Chart from './components/Chart';
-import SymbolSelector from './components/SymbolSelector';
-import StrategySelector from './components/StrategySelector';
-
-const navWidth = 240;
+import Trade from './components/Trade';
+import Strategy from './components/Strategy';
+import Selectors from './components/Selectors';
 
 function App() {
   return (
     <>
-      <AppBar>
-        <Toolbar>
-          <Typography variant='h6' noWrap component='div'>
-            Trader
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Box component='nav' sx={{ width: navWidth }}>
-        <Toolbar />
-        <Toolbar sx={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-          <Typography variant='h6'>Select strategy</Typography>
-          <StrategySelector />
-          <Typography variant='h6'>Select symbol</Typography>
-          <SymbolSelector />
-        </Toolbar>
-      </Box>
-      <Box position='absolute' sx={{ top: '0', left: navWidth, right: `0` }}>
-        <Toolbar />
-        <Chart />
-      </Box>
+      <Container maxWidth='xl'>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <AppBar position='relative'>
+              <Toolbar>
+                <Typography variant='h6'>Trader</Typography>
+              </Toolbar>
+            </AppBar>
+          </Grid>
+          <Grid item xs={2}>
+            <Selectors />
+          </Grid>
+          <Grid item xs={10}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Strategy />
+              </Grid>
+              <Grid item xs={8}>
+                <Chart />
+              </Grid>
+              <Grid item xs={4}>
+                <Trade />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Container>
     </>
   );
 }

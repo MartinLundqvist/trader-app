@@ -1,18 +1,18 @@
-import {
-  Fundamentals,
-  MarketData,
-  TiingoAPIResponse,
-} from '../../types/index.js';
+// import {
+//   Fundamentals,
+//   MarketData,
+//   TiingoAPIResponse,
+// } from '../../types/index.js';
 import got, { OptionsOfJSONResponseBody } from 'got';
-import {
-  AUTHORIZATION,
-  DAILY_URL,
-  END_POINT_DAILY,
-  END_POINT_EOD,
-  FUNDAMENTALS_URL,
-} from './constants.js';
+import { AUTHORIZATION, DAILY_URL, END_POINT_EOD } from './constants.js';
 import { fromDateToString } from '../../utils/index.js';
-import { fundamentalsSchema, marketDataSchema } from '../../schemas/index.js';
+// import { MarketData } from '@trader-app/shared/types/index.js';
+import { MarketData, TiingoAPIResponse } from '../../types/index.js';
+import { marketDataSchema } from '../../schemas/index.js';
+// import { MarketData } from '@trader-app/shared';
+// import { marketDataSchema } from '@trader-app/shared/src/schemas.js';
+// import { marketDataSchema } from '@trader-app/shared/schemas/index.js';
+// import { fundamentalsSchema, marketDataSchema } from '../../schemas/index.js';
 
 const getMultipleEODDataFromTo = async (
   tickers: string[],
@@ -104,58 +104,58 @@ const getEODDataFromTo = async (
   return results;
 };
 
-// TODO: Clean up and type up
-const getFundamentalsFrom = async (tickers: string[], dateFrom: Date) => {
-  const results: Fundamentals = [];
+// // TODO: Clean up and type up
+// const getFundamentalsFrom = async (tickers: string[], dateFrom: Date) => {
+//   const results: Fundamentals = [];
 
-  for (let ticker of tickers) {
-    console.log(`Fetching data for ${ticker}...`);
+//   for (let ticker of tickers) {
+//     console.log(`Fetching data for ${ticker}...`);
 
-    try {
-      const url = `${FUNDAMENTALS_URL}/${ticker}/${END_POINT_DAILY}?${AUTHORIZATION}&startDate=${fromDateToString(
-        dateFrom
-      )}&format=json`;
-      const options: OptionsOfJSONResponseBody = {
-        responseType: 'json',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
+//     try {
+//       const url = `${FUNDAMENTALS_URL}/${ticker}/${END_POINT_DAILY}?${AUTHORIZATION}&startDate=${fromDateToString(
+//         dateFrom
+//       )}&format=json`;
+//       const options: OptionsOfJSONResponseBody = {
+//         responseType: 'json',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//       };
 
-      console.log(url);
+//       console.log(url);
 
-      const response = await got<unknown>(url, options);
+//       const response = await got<unknown>(url, options);
 
-      const data = response?.body;
+//       const data = response?.body;
 
-      if (!Array.isArray(data)) {
-        throw new Error('No data returned from API');
-      }
+//       if (!Array.isArray(data)) {
+//         throw new Error('No data returned from API');
+//       }
 
-      // results.push(...data);
+//       // results.push(...data);
 
-      for (let datum of data) {
-        datum.market_cap = datum.marketCap;
-        datum.symbol = ticker;
-      }
+//       for (let datum of data) {
+//         datum.market_cap = datum.marketCap;
+//         datum.symbol = ticker;
+//       }
 
-      let parsed = fundamentalsSchema.parse(data);
+//       let parsed = fundamentalsSchema.parse(data);
 
-      if (parsed.length > 0) {
-        results.push(...parsed);
-      }
-    } catch (error) {
-      console.log(`Error while fetching data for ${ticker}`);
-      console.log(error);
-    }
-  }
+//       if (parsed.length > 0) {
+//         results.push(...parsed);
+//       }
+//     } catch (error) {
+//       console.log(`Error while fetching data for ${ticker}`);
+//       console.log(error);
+//     }
+//   }
 
-  return results;
-};
+//   return results;
+// };
 
 const MarketDataProvider = {
   getEODDataFromTo,
-  getFundamentalsFrom,
+  // getFundamentalsFrom,
   getMultipleEODDataFromTo,
 };
 

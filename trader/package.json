@@ -2,10 +2,7 @@
   "name": "trader",
   "version": "1.0.0",
   "description": "",
-  "exports": "./build/index.js",
-  "engines": {
-    "node": ">=16.0.0"
-  },
+  "private": true,
   "scripts": {
     "test": "jest",
     "tests_NOTUSED": "node --experimental-vm-modules node_modules/jest/bin/jest.js",

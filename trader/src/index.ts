@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { routes } from './routes/index.js';
 import { config } from 'dotenv';
+import StrategyDB from './database_provider/model_strategy.js';
 config();
 
 const PORT = Number(process.env.PORT) || 4001;

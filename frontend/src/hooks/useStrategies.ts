@@ -1,4 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { strategiesSchema } from '@trader/schemas';
+import { Strategies } from '@trader/types';
+import { useTrader } from '../contexts/TraderContext';
 
 const getStrategies = async () => {
   const url = import.meta.env.VITE_API_URL;
@@ -6,14 +9,21 @@ const getStrategies = async () => {
 
   if (!response.ok) return Promise.reject(new Error('Error calling API'));
 
-  return response.json() as Promise<string[]>;
+  const data = await response.json();
+
+  const parsed = strategiesSchema.parse(data);
+
+  return parsed;
 };
 
 export const useStrategies = () => {
-  const { error, data, isLoading } = useQuery({
+  const { strategy } = useTrader();
+  const { error, data, isLoading } = useQuery<Strategies, Error>({
     queryKey: ['strategies'],
     queryFn: getStrategies,
   });
 
-  return { strategies: data, isLoading, error };
+  const currentStrategy = data?.find((s) => s.name === strategy) || null;
+
+  return { currentStrategy, strategies: data, isLoading, error };
 };

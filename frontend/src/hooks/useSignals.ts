@@ -1,34 +1,39 @@
-import { useQuery } from '@tanstack/react-query';
+import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
 import { useTrader } from '../contexts/TraderContext';
-
-export interface Signal {
-  id: string;
-  name: string;
-  date: Date;
-  symbol: string;
-  signal: string;
-  limit: number;
-  stop_loss: number;
-  take_profit: number;
-}
+import { StrategySignals } from '@trader/types';
+import { strategySignalsSchema } from '@trader/schemas';
 
 // TODO: Refactor to the same pattern as useStrategies and useTickerSignals
-const getSignals = async (strategy: string): Promise<Signal[]> => {
-  const url = import.meta.env.VITE_API_URL;
-  const response = await fetch(`${url}/signals/${strategy}`);
-  const data = await response.json();
+const getSignals = async ({ queryKey }: QueryFunctionContext) => {
+  const [_, strategy] = queryKey;
 
-  return data as Signal[];
+  if (strategy === '') return [];
+
+  const url = import.meta.env.VITE_API_URL;
+
+  const response = await fetch(`${url}/signals/${strategy}`);
+  if (!response.ok) throw new Error('Error calling API');
+  const data = await response.json();
+  const parsedData = strategySignalsSchema.parse(data);
+
+  // console.log(data);
+
+  return parsedData;
 };
 
 export const useSignals = () => {
   // const queryClient = useQueryClient();
-  const { strategy } = useTrader();
+  const { strategy, ticker } = useTrader();
 
-  const { error, data, isLoading } = useQuery({
+  const { error, data, isLoading } = useQuery<StrategySignals, Error>({
     queryKey: ['signals', strategy],
-    queryFn: () => getSignals(strategy),
+    queryFn: getSignals,
   });
 
-  return { signals: data, isLoading, error };
+  const currentSignal =
+    ticker !== ''
+      ? data?.find((signal) => signal.symbol === ticker) || null
+      : null;
+
+  return { currentSignal, signals: data, isLoading, error };
 };

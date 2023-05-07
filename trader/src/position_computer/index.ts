@@ -1,7 +1,26 @@
 import got from 'got';
 import MarketDataDB from '../database_provider/model_marketdata.js';
-import { strategiesSchema, strategySchema } from '../schemas/index.js';
-import { Strategies, Strategy } from '../types/index.js';
+import { StrategySignal, StrategyTickerData } from '../types/index.js';
+import {
+  strategySignalSchema,
+  strategyTickerDataSchema,
+} from '../schemas/index.js';
+import { writeFile } from 'fs/promises';
+// import { StrategySignal, StrategyTickerData } from '@trader-app/shared';
+// import {
+//   strategySignalSchema,
+//   strategyTickerDataSchema,
+// } from '@trader-app/shared/src/schemas.js';
+// import {
+//   StrategySignal,
+//   StrategyTickerData,
+// } from '@trader-app/shared/types/index.js';
+// import {
+//   strategySignalSchema,
+//   strategyTickerDataSchema,
+// } from '@trader-app/shared/schemas/index.js';
+// import { strategiesSchema, strategySchema } from '../schemas/index.js';
+// import { Strategies, Strategy } from '../types/index.js';
 // import { AAPL } from '../development_assets/AAPLJan2023.js';
 // import { AAPL } from '../development_assets/AAPL3Months.js';
 // import { AAPL } from '../development_assets/AAPL12Months.js';
@@ -31,7 +50,9 @@ import { Strategies, Strategy } from '../types/index.js';
 
 // const url = 'http://127.0.0.1:4000/bollinger_rsi/signal'
 
-export const getSignal = async (ticker: string): Promise<Strategy | null> => {
+export const getSignal = async (
+  ticker: string
+): Promise<StrategySignal | null> => {
   const url = 'http://127.0.0.1:4000/conservative/signal';
   const dateOffset = 400 * 24 * 60 * 60 * 1000; // 400 days
   // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
@@ -56,7 +77,7 @@ export const getSignal = async (ticker: string): Promise<Strategy | null> => {
     // console.log(response);
 
     // const parsed = strategiesSchema.parse(response);
-    const parsed = strategySchema.parse(response);
+    const parsed = strategySignalSchema.parse(response);
 
     return parsed;
   } catch (err) {
@@ -67,7 +88,9 @@ export const getSignal = async (ticker: string): Promise<Strategy | null> => {
   return null;
 };
 
-export const getData = async (ticker: string): Promise<any> => {
+export const getData = async (
+  ticker: string
+): Promise<StrategyTickerData | null> => {
   const url = 'http://127.0.0.1:4000/conservative';
   const dateOffset = 400 * 24 * 60 * 60 * 1000; // 400 days
   // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
@@ -89,12 +112,15 @@ export const getData = async (ticker: string): Promise<any> => {
       })
       .json();
 
-    // const parsed = strategyResponseSchema.parse(response);
-    const parsed = response;
+    // console.log(response);
+    // await writeFile('./response.json', JSON.stringify(response));
+    const parsed = strategyTickerDataSchema.parse(response);
+    // const parsed = response;
 
     return parsed;
   } catch (err) {
     console.log('Error in getData: ', ticker);
+    // await writeFile('./error.json', JSON.stringify(err));
     // console.log(err);
   }
 

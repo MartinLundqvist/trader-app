@@ -1,8 +1,16 @@
+// import { MarketData, MarketDatum } from '@trader-app/shared';
+// import { MarketData, MarketDatum } from '@trader-app/shared/types/index.js';
 import { sequelize } from './index.js';
 import { DataTypes, ModelDefined, Op, Optional } from 'sequelize';
+// import { MarketData, MarketDatum } from '@trader-app/shared/types/index.js';
+// import { marketDataSchema } from '@trader-app/shared/schemas/index.js';
+// import { MarketData, MarketDatum } from '../types/index.js';
+// import { marketDataSchema } from '../schemas/index.js';
+import { z } from 'zod';
 import { MarketData, MarketDatum } from '../types/index.js';
 import { marketDataSchema } from '../schemas/index.js';
-import { z } from 'zod';
+// import { marketDataSchema } from '@trader-app/shared/src/schemas.js';
+// import { marketDataSchema } from '@trader-app/shared/schemas/index.js';
 
 type MarketModelCreationAttributes = Optional<MarketDatum, 'id'>;
 

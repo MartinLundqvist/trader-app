@@ -1,20 +1,26 @@
 import ReactEChart from 'echarts-for-react';
 import { ECElementEvent } from 'echarts';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { STOP_LOSS_LINE, TAKE_PROFIT_LINE, createOption } from './createOption';
 import { useTickerSignals } from '../../hooks/useTickerSignals';
-import { Alert, CircularProgress } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Typography,
+} from '@mui/material';
 import { useTrader } from '../../contexts/TraderContext';
+import { TraderPaper } from '../../elements';
+import { useStrategies } from '../../hooks/useStrategies';
+import { useSignals } from '../../hooks/useSignals';
 
 interface ECDataZoomEvent {
   type: string;
-  // percentage of zoom start position, 0 - 100
   start: number;
-  // percentage of zoom finish position, 0 - 100
   end: number;
-  // data value of zoom start position; only exists in zoom event of triggered by toolbar
   startValue: number;
-  // data value of zoom finish position; only exists in zoom event of triggered by toolbar
   endValue: number;
   batch: {
     dataZoomId: string;
@@ -37,82 +43,104 @@ const Chart = (): JSX.Element => {
   const [startZoom, setStartZoom] = useState<number>(0);
   const [endZoom, setEndZoom] = useState<number>(100);
   const chartRef = useRef<ReactEChart>(null);
-  const { ticker, strategy } = useTrader();
+  const { ticker, setCurrentTrade } = useTrader();
+  const { currentSignal } = useSignals();
   const { tickerSignals, isLoading, error } = useTickerSignals();
 
-  let isDragging = '';
+  const isDragging = useRef<string>('');
 
-  useEffect(() => {
-    // console.log('Rerendering....');
-    if (!chartRef.current) return;
+  const attachEventHandlers = useCallback((chart: ReactEChart) => {
+    const instance = chart.getEchartsInstance();
 
-    const instance = chartRef.current.getEchartsInstance();
+    const handleMouseDown = (event: ECElementEvent) => {
+      if (event.name === TAKE_PROFIT_LINE || event.name === STOP_LOSS_LINE) {
+        isDragging.current = event.name;
+      }
+    };
 
-    // Need to use get the ZRenderer instance to get the mousemove event outside graphical elements
-    instance.getZr().on('mousemove', (event: ECElementEvent) => {
-      handleMouseMove(event);
-    });
+    const handleMouseUp = (event: ECElementEvent) => {
+      isDragging.current = '';
+    };
+
+    const handleMouseMove = (event: ECElementEvent) => {
+      if (isDragging.current === '') return;
+      updatePosition(isDragging.current, event);
+    };
+
+    const handleDataZoom = (event: ECDataZoomEvent) => {
+      let start = 0;
+      let end = 100;
+
+      if (event.batch && event.batch[0].start !== undefined) {
+        start = event.batch[0].start;
+        end = event.batch[0].end;
+      }
+
+      if (event.batch && event.batch[0].startValue !== undefined) {
+        start = event.batch[0].startValue;
+        end = event.batch[0].endValue;
+      }
+
+      if (event.start !== undefined && event.end !== undefined) {
+        start = event.start;
+        end = event.end;
+      }
+
+      if (start !== undefined && end !== undefined) {
+        setStartZoom(start);
+        setEndZoom(end);
+      }
+    };
+
+    // Need to use get the ZRenderer instance to get the mousemove and mouseup events outside graphical elements
+    instance.getZr().on('mousemove', handleMouseMove);
+    instance.getZr().on('mouseup', handleMouseUp);
 
     // Here we use the default handler to get the mousedown event inside graphical elements
     // else we won't be able to get the name of the element
-    instance.on('mousedown', (event: ECElementEvent) => handleMouseDown(event));
-    instance
-      .getZr()
-      .on('mouseup', (event: ECElementEvent) => handleMouseUp(event));
+    instance.on('mousedown', handleMouseDown);
     instance.on('datazoom', (event: unknown) =>
       handleDataZoom(event as ECDataZoomEvent)
     );
 
     return () => {
-      if (instance && instance.getZr()) {
-        instance.getZr().off('mousemove', handleMouseMove);
-        instance.off('mousedown', handleMouseDown);
-        instance.getZr().off('mouseup', handleMouseUp);
-        instance.off('datazoom', handleDataZoom);
-      }
+      console.log('Removing event handlers');
+      instance.getZr().off('mousemove', handleMouseMove);
+      instance.off('mousedown', handleMouseDown);
+      instance.getZr().off('mouseup', handleMouseUp);
+      instance.off('datazoom', handleDataZoom);
     };
   }, []);
 
-  const handleMouseDown = (event: ECElementEvent) => {
-    if (event.name === TAKE_PROFIT_LINE || event.name === STOP_LOSS_LINE) {
-      isDragging = event.name;
-    }
-  };
+  useEffect(() => {
+    // This is an annyoing hack to get the chart ref upon first render
 
-  const handleMouseUp = (event: ECElementEvent) => {
-    isDragging = '';
-  };
+    let removeEventHandlers = () => {};
 
-  const handleMouseMove = (event: ECElementEvent) => {
-    if (isDragging === '') return;
-    updatePosition(isDragging, event);
-  };
-  const handleDataZoom = (event: ECDataZoomEvent) => {
-    // console.log(event);
-    let start = 0;
-    let end = 100;
+    const getRef = () => {
+      if (!chartRef.current) {
+        setTimeout(() => {
+          getRef();
+        }, 100);
+      } else {
+        removeEventHandlers = attachEventHandlers(chartRef.current);
+      }
+    };
 
-    if (event.batch && event.batch[0].start !== undefined) {
-      start = event.batch[0].start;
-      end = event.batch[0].end;
-    }
+    getRef();
 
-    if (event.batch && event.batch[0].startValue !== undefined) {
-      start = event.batch[0].startValue;
-      end = event.batch[0].endValue;
-    }
+    return () => {
+      if (!chartRef.current) return;
+      removeEventHandlers();
+    };
+  }, [ticker]);
 
-    if (event.start !== undefined && event.end !== undefined) {
-      start = event.start;
-      end = event.end;
-    }
+  useEffect(() => {
+    if (!currentSignal) return;
 
-    if (start !== undefined && end !== undefined) {
-      // console.log('Setting zoom', start, end);
-      setStartZoom(start);
-      setEndZoom(end);
-    }
-  };
+    setTakeProfit(currentSignal.take_profit || 0);
+    setStopLoss(currentSignal.stop_loss || 0);
+  }, [currentSignal]);
 
   const updatePosition = (LINE: string, event: ECElementEvent) => {
     if (!chartRef.current) return;
@@ -130,6 +158,17 @@ const Chart = (): JSX.Element => {
     }
   };
 
+  const handleUpdateTrade = () => {
+    setCurrentTrade({
+      take_profit: takeProfit,
+      stop_loss: stopLoss,
+      limit: currentSignal?.limit || 0,
+      id: 'Anything',
+      symbol: ticker,
+      strategy_id: currentSignal?.id || '',
+    });
+  };
+
   if (ticker === '') return <Alert severity='info'>Select a ticker</Alert>;
 
   if (isLoading) return <CircularProgress />;
@@ -139,17 +178,31 @@ const Chart = (): JSX.Element => {
   if (!tickerSignals) return <Alert severity='warning'>No data found</Alert>;
 
   return (
-    <ReactEChart
-      ref={chartRef}
-      style={{ width: '100%', height: '600px' }}
-      option={createOption(
-        tickerSignals,
-        stopLoss,
-        takeProfit,
-        startZoom,
-        endZoom
-      )}
-    />
+    <TraderPaper>
+      <Box gap={2}>
+        <Typography>Candlesticks and signals for {ticker}</Typography>
+
+        <ReactEChart
+          ref={chartRef}
+          style={{ width: '100%', minHeight: '500px' }}
+          option={createOption(
+            tickerSignals,
+            stopLoss,
+            takeProfit,
+            startZoom,
+            endZoom
+          )}
+        />
+        <Divider />
+        <Button
+          variant='contained'
+          sx={{ marginTop: '1rem' }}
+          onClick={handleUpdateTrade}
+        >
+          Update Trade
+        </Button>
+      </Box>
+    </TraderPaper>
   );
 };
 
