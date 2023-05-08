@@ -5,11 +5,14 @@ import {
   CardActions,
   CardContent,
   Chip,
+  CircularProgress,
   Grid,
   Typography,
 } from '@mui/material';
+import { useRefreshSignals } from '../../hooks/useRefreshSignals';
 
 const Strategies = (): JSX.Element => {
+  const { triggerRefresh, isLoading, error } = useRefreshSignals();
   return (
     <Grid container spacing={2}>
       <Grid item xs={4}>
@@ -60,7 +63,13 @@ const Strategies = (): JSX.Element => {
             </Box>
           </CardContent>
           <CardActions>
-            <Button variant='contained'>Refresh data</Button>
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <Button variant='contained' onClick={triggerRefresh}>
+                Refresh data
+              </Button>
+            )}
           </CardActions>
         </Card>
       </Grid>
