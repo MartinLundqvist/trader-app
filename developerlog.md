@@ -220,3 +220,14 @@ Basically, it all came down to a couple of things:
 - There are native methods for converting pixels to axes values. Use `convertFromPixel` to convert from pixels to axes values, and `convertToPixel` to convert from axes values to pixels.
 - Dynamic updating of the `option` object. Here I am using useEffect to keep track of the values.
 - The thing that was the most annoying to fix, is dealing with all the ways in which the Zoom window can change. Depending on whether you zoom with the slider, the crosshair or the mouse etc the event object has different shapes. I need to store the zoom (start, end) values so that the zoom window doesn't reset every time the user interacts with the chart.
+
+# May 6-7th
+
+A tonne of work has gone in. I struggled a lot with getting the event listeners to work properly. Issue was related to the echart reference (a useref) taking a while to be available. Then there was also a lot of trial and error with how to work with the MUI library.
+
+## Learned how to manage event listeners on "slow" elements
+
+- Configure the useRef as per normal
+- Use the useEffect hook to add the event listener to the element
+- In the useEffect hook, add a recursive function that keeps calling itself with 100ms delay until the element is available (`if (!ref.current)` and so on).
+- Then in the clean-up function, remove the event listeners as per usual, but check if the element actually exists first.
