@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import { useTrader } from '../../contexts/TraderContext';
 import { TraderPaper } from '../../elements';
-import { useStrategies } from '../../hooks/useStrategies';
 import { useSignals } from '../../hooks/useSignals';
 
 interface ECDataZoomEvent {
@@ -184,7 +183,7 @@ const Chart = (): JSX.Element => {
 
         <ReactEChart
           ref={chartRef}
-          style={{ width: '100%', minHeight: '500px' }}
+          style={{ width: '100%', minHeight: '450px' }}
           option={createOption(
             tickerSignals,
             stopLoss,
