@@ -9,18 +9,14 @@ import {
   Typography,
 } from '@mui/material';
 
-import Chart from './components/Chart';
-import Trade from './components/Trade';
-import Strategy from './components/Strategy';
-import Selectors from './components/Selectors';
 import Signals from './pages/Signals';
 import { SyntheticEvent, useState } from 'react';
+import Strategies from './pages/Strategies';
 
 function App() {
   const [tab, setTab] = useState(0);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
-    console.log(newValue);
     setTab(newValue);
   };
 
@@ -41,7 +37,7 @@ function App() {
             <Divider sx={{ marginBottom: '1rem' }} />
           </Grid>
         </Grid>
-        {tab === 0 && <div>Not implemented</div>}
+        {tab === 0 && <Strategies />}
         {tab === 1 && <Signals />}
       </Container>
     </>
