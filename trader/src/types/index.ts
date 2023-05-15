@@ -32,6 +32,7 @@ import {
   strategiesSchema,
   strategyTickerDatumSchema,
   strategyTickerDataSchema,
+  marketDataInformationSchema,
 } from '../schemas/index.js';
 
 import { z } from 'zod';
@@ -40,6 +41,7 @@ export type MarketDatum = z.infer<typeof marketDatumSchema>;
 export type MarketData = z.infer<typeof marketDataSchema>;
 export type Ticker = z.infer<typeof tickerSchema>;
 export type Tickers = z.infer<typeof tickersSchema>;
+export type MarketDataInformation = z.infer<typeof marketDataInformationSchema>;
 export type StrategySignal = z.infer<typeof strategySignalSchema>;
 export type StrategySignals = z.infer<typeof strategySignalsSchema>;
 export type Strategy = z.infer<typeof strategySchema>;

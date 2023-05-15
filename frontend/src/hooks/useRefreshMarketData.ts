@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useRefreshSignals = () => {
+export const useRefreshMarketData = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [data, setData] = useState<any | null>(null);
@@ -11,7 +11,7 @@ export const useRefreshSignals = () => {
 
     try {
       const url = import.meta.env.VITE_API_URL;
-      const response = await fetch(`${url}/strategies/refresh/conservative`);
+      const response = await fetch(`${url}/marketdata/refresh`);
 
       if (!response.ok) throw new Error('Error calling API');
 

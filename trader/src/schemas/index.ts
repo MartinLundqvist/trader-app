@@ -34,6 +34,11 @@ export const tickerSchema = z.object({
 
 export const tickersSchema = z.array(tickerSchema);
 
+export const marketDataInformationSchema = z.object({
+  number_of_symbols: z.number(),
+  last_updated: z.coerce.date(),
+});
+
 // This is the shape of the data in the core application database table "strategyruns"
 export const strategySignalSchema = z.object({
   id: z.optional(z.string()),
@@ -55,6 +60,8 @@ export const strategySchema = z.object({
   name: z.string(),
   description_short: z.string(),
   description_long: z.string(),
+  last_run_date: z.coerce.date(),
+  last_run_ticker_count: z.number(),
 });
 
 export const strategiesSchema = z.array(strategySchema);

@@ -26,6 +26,14 @@ const StrategyModel: ModelDefined<Strategy, StrategyModelCreationAttributes> =
         type: DataTypes.STRING,
         defaultValue: '',
       },
+      last_run_date: {
+        type: DataTypes.DATE,
+        defaultValue: new Date(),
+      },
+      last_run_ticker_count: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
     },
     {
       tableName: 'strategies',
@@ -56,6 +64,7 @@ const findAllStrategies = async (): Promise<Strategies> => {
   } catch (err) {
     console.log(`Error while fetching data`);
     console.log(err);
+    throw new Error(`Error while fetching data`);
   }
 
   try {
@@ -68,6 +77,30 @@ const findAllStrategies = async (): Promise<Strategies> => {
   // console.log(results);
 
   return results;
+};
+
+const updateStrategy = async (
+  name: string,
+  last_run_date: Date,
+  last_run_ticker_count: number
+) => {
+  try {
+    const result = await StrategyModel.update(
+      {
+        last_run_date: last_run_date,
+        last_run_ticker_count: last_run_ticker_count,
+      },
+      {
+        where: {
+          name: name,
+        },
+      }
+    );
+    console.log(`${result.length} records updated.`);
+  } catch (err) {
+    console.log(`Error while updating data`);
+    console.log(err);
+  }
 };
 
 const recreateTable = async () => {
@@ -83,6 +116,7 @@ const recreateTable = async () => {
 const StrategyDB = {
   createData,
   findAllStrategies,
+  updateStrategy,
   recreateTable,
 };
 

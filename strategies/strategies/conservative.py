@@ -20,8 +20,7 @@ macd_window_fast = 12
 macd_window_signal = 9
 limit = 0.00
 stop_loss = 0.01  # This is in fractions of the current closing price
-take_profit_long = 0.1
-take_profit_short = 0.9
+take_profit = 0.1
 quantity = 0.9
 
 
@@ -115,7 +114,7 @@ def process_buy(row: pd.Series):
     row['Stop_loss'] = row['Close'] * (1-stop_loss)
     # row['Stop_loss']=row['Close'] - (row['BB_high'] - row['BB_low']) * stop_loss
     row['Quantity'] = quantity
-    row['Take_profit'] = row['Close'] * (1 + take_profit_long)
+    row['Take_profit'] = row['Close'] * (1 + take_profit)
     return row
 
 
@@ -124,7 +123,7 @@ def process_sell(row: pd.Series):
     row['Stop_loss'] = row['Close'] * (1+stop_loss)
     # row['Stop_loss']=row['Close'] + (row['BB_high'] - row['BB_low']) * stop_loss
     row['Quantity'] = quantity
-    row['Take_profit'] = row['Close'] * (1 - take_profit_short)
+    row['Take_profit'] = row['Close'] * (1 - take_profit)
     return row
 
 

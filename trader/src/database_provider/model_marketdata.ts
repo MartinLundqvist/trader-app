@@ -76,16 +76,23 @@ const MarketModel: ModelDefined<MarketDatum, MarketModelCreationAttributes> =
     }
   );
 
-const createData = async (data: MarketData) => {
+const createData = async (data: MarketData): Promise<string> => {
+  let message = '';
+
   try {
     const result = await MarketModel.bulkCreate(data, {
       ignoreDuplicates: true,
     });
-    console.log(`${result.length} records created.`);
-    console.log(`${data.length - result.length} records skipped.`);
+    message = `${result.length} records created. ${
+      data.length - result.length
+    } records skipped.`;
+    console.log(message);
+    return message;
   } catch (err) {
-    console.log(`Error while creating bulk data`);
+    message = `Error while creating bulk data`;
+    console.log(message);
     console.log(err);
+    return message;
   }
 };
 
@@ -143,9 +150,10 @@ const getLatestDate = async (): Promise<Date> => {
   } catch (err) {
     console.log(`Error while fetching latest date`);
     console.log(err);
+    throw new Error('Error while fetching latest date');
   }
 
-  console.log(`Latest date: ${date}`);
+  // console.log(`Latest date: ${date}`);
 
   return date;
 };

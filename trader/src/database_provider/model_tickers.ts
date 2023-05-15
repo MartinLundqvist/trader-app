@@ -152,12 +152,28 @@ const recreateTable = async () => {
   }
 };
 
+const getNrTickers = async (): Promise<number> => {
+  let result = 0;
+
+  try {
+    result = await TickerModel.count();
+    console.log(`${result} records found.`);
+  } catch (err) {
+    console.log(`Error while counting records`);
+    console.log(err);
+    throw new Error(`Error while counting records`);
+  }
+
+  return result;
+};
+
 const TickerDB = {
   createData,
   findTickersFrom,
   findDataByTickers,
   recreateTable,
   findAllTickers,
+  getNrTickers,
 };
 
 export default TickerDB;

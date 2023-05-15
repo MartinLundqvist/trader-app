@@ -3,8 +3,14 @@ import StrategySignalDB from '../database_provider/model_strategySignal.js';
 import { getData, getSignal } from '../position_computer/index.js';
 import StrategyDB from '../database_provider/model_strategy.js';
 import TickerDB from '../database_provider/model_tickers.js';
-import { StrategySignals } from '../types/index.js';
+import {
+  MarketData,
+  MarketDataInformation,
+  StrategySignals,
+} from '../types/index.js';
 import { writeFile } from 'fs/promises';
+import MarketDataDB from '../database_provider/model_marketdata.js';
+import MarketDataProvider from '../market_data_provider/tiingo/index.js';
 
 export const routes = router();
 
@@ -13,9 +19,9 @@ routes.get('/strategies', async (req, res) => {
   try {
     const results = await StrategyDB.findAllStrategies();
 
-    res.send(results);
+    res.status(200).send(results);
   } catch (err) {
-    res.send({ error: 'Error while fetching strategies' });
+    res.status(500).send({ error: 'Error while fetching strategies' });
   }
 });
 
@@ -25,9 +31,9 @@ routes.get('/signals/:strategyName', async (req, res) => {
     const results = await StrategySignalDB.findLatestSignalsForStrategy(
       req.params.strategyName
     );
-    res.send(results);
+    res.status(200).send(results);
   } catch (err) {
-    res.send({ error: 'Error while fetching signals' });
+    res.status(500).send({ error: 'Error while fetching signals' });
   }
 });
 
@@ -37,9 +43,9 @@ routes.get('/tickerdata/:strategyName/:ticker', async (req, res) => {
   );
   try {
     const results = await getData(req.params.ticker);
-    res.send(results);
+    res.status(200).send(results);
   } catch (err) {
-    res.send({
+    res.status(500).send({
       error: `Error while fetching signals for ticker ${req.params.ticker}`,
     });
   }
@@ -47,13 +53,13 @@ routes.get('/tickerdata/:strategyName/:ticker', async (req, res) => {
 
 routes.get('/strategies/refresh/:strategyName', async (req, res) => {
   console.log(`Refreshing strategy ${req.params.strategyName}`);
-  try {
-    const tickers = await TickerDB.findAllTickers();
-    const slicedTickers = tickers.slice(0, 100);
-    const tickerQueue = [...slicedTickers];
-    const concurrency = 100;
-    let results: StrategySignals = [];
+  const tickers = await TickerDB.findAllTickers();
+  const slicedTickers = tickers;
+  const tickerQueue = [...slicedTickers];
+  const concurrency = 100;
+  let results: StrategySignals = [];
 
+  try {
     const getNextTickerBatch = () => {
       if (tickerQueue.length === 0) return null;
       return tickerQueue.splice(0, concurrency);
@@ -84,15 +90,74 @@ routes.get('/strategies/refresh/:strategyName', async (req, res) => {
       `Tested ${slicedTickers.length} tickers and found ${results.length} signals.`
     );
 
-    await writeFile('strategies.json', JSON.stringify(results));
+    // await writeFile('strategies.json', JSON.stringify(results));
 
-    res.send({
+    await StrategySignalDB.createData(results);
+
+    await StrategyDB.updateStrategy(
+      req.params.strategyName,
+      new Date(),
+      results.length
+    );
+
+    res.status(200).send({
       message: `Tested ${slicedTickers.length} tickers and found ${results.length} signals.`,
     });
   } catch (err) {
     console.log(err);
-    res.send({ error: 'Error while refreshing strategy' });
+    res.status(500).send({ error: 'Error while refreshing strategy' });
   }
+});
 
-  // await StrategySignalDB.createData(results);
+routes.get('/marketdata/refresh', async (req, res) => {
+  try {
+    const lastestDate = await MarketDataDB.getLatestDate();
+    const oneDayOffset = 1000 * 60 * 60 * 24;
+    const fromDate = new Date(lastestDate.getTime() + oneDayOffset);
+    const toDate = new Date();
+
+    const tickers = await TickerDB.findAllTickers();
+
+    const data = await MarketDataProvider.getMultipleEODDataFromTo(
+      tickers,
+      fromDate,
+      toDate
+    );
+
+    // const data: MarketData = [];
+
+    // For testing, write data to a file
+    // await writeFile(
+    //   `marketdata_test_${toDate.toISOString()}.json`,
+    //   JSON.stringify(data)
+    // );
+
+    let message = await MarketDataDB.createData(data);
+    // let message = 'Market data refreshed';
+
+    res.status(200).send({ message });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: 'Error while refreshing market data' });
+  }
+});
+
+routes.get('/marketdata/information', async (req, res) => {
+  let result: MarketDataInformation;
+
+  try {
+    const number_of_symbols = await TickerDB.getNrTickers();
+    const last_updated = await MarketDataDB.getLatestDate();
+
+    result = {
+      number_of_symbols,
+      last_updated,
+    };
+
+    res.status(200).send(result);
+  } catch (err) {
+    res
+      .status(500)
+      .send({ error: 'Error while fetching market data information' });
+  }
 });

@@ -1,78 +1,32 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Chip,
-  CircularProgress,
-  Grid,
-  Typography,
-} from '@mui/material';
-import { useRefreshSignals } from '../../hooks/useRefreshSignals';
+import { Alert, CircularProgress, Grid } from '@mui/material';
+import { Strategy } from './Strategy';
+import { useStrategies } from '../../hooks/useStrategies';
+import { MarketData } from './MarketData';
 
 const Strategies = (): JSX.Element => {
-  const { triggerRefresh, isLoading, error } = useRefreshSignals();
+  const {
+    strategies,
+    isLoading: isLoadingStrategies,
+    error: errorStrategies,
+  } = useStrategies();
+
+  if (isLoadingStrategies) return <CircularProgress />;
+
+  if (errorStrategies)
+    return <Alert severity='error'>Error: {errorStrategies.message}</Alert>;
+
+  if (!strategies) return <Alert severity='warning'>No strategies found</Alert>;
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={4}>
-        <Card elevation={3}>
-          <CardContent>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Typography color='HighlightText' gutterBottom>
-                Marketdata
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='body2' component='span'>
-                  Last updated
-                </Typography>
-                <Chip label='2 days ago' color='primary' />
-              </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='body2' component='span'>
-                  # Tickers
-                </Typography>
-                <Chip label='3,505' color='primary' />
-              </Box>
-            </Box>
-          </CardContent>
-          <CardActions>
-            <Button variant='contained'>Refresh data</Button>
-          </CardActions>
-        </Card>
+        <MarketData />
       </Grid>
-      <Grid item xs={4}>
-        <Card elevation={3}>
-          <CardContent>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Typography color='HighlightText' gutterBottom>
-                Strategy: conservative
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='body2' component='span'>
-                  Last updated
-                </Typography>
-                <Chip label='2 days ago' color='primary' />
-              </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant='body2' component='span'>
-                  # Signals
-                </Typography>
-                <Chip label='3,505' color='primary' />
-              </Box>
-            </Box>
-          </CardContent>
-          <CardActions>
-            {isLoading ? (
-              <CircularProgress />
-            ) : (
-              <Button variant='contained' onClick={triggerRefresh}>
-                Refresh data
-              </Button>
-            )}
-          </CardActions>
-        </Card>
-      </Grid>
+      {strategies.map((s) => (
+        <Grid item xs={4} key={s.id}>
+          <Strategy strategy={s} />
+        </Grid>
+      ))}
     </Grid>
   );
 };
