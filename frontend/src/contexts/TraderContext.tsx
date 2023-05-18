@@ -1,15 +1,6 @@
 import { Trade } from '@trader/types';
 import { createContext, useContext, useState } from 'react';
 
-// interface Trade {
-//   id: string;
-//   symbol: string;
-//   strategy_id: string;
-//   take_profit: number;
-//   stop_loss: number;
-//   limit: number;
-// }
-
 interface ITraderContext {
   strategy: string;
   setStrategy: (strategy: string) => void;
