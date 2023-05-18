@@ -11,7 +11,7 @@ const getStrategies = async () => {
 
   const data = await response.json();
 
-  console.log(data);
+  // console.log(data);
 
   const parsed = strategiesSchema.parse(data);
 

@@ -88,6 +88,36 @@ export const strategyTickerDatumSchema = z.object({
 
 export const strategyTickerDataSchema = z.array(strategyTickerDatumSchema);
 
+const twoDecimalSchema = z.number().refine(
+  (value) => {
+    // Convert to string, split by '.', check length of array's second element
+    const decimalPart = value.toString().split('.')[1];
+    return decimalPart ? decimalPart.length <= 2 : true;
+  },
+  {
+    // Custom error message
+    message: 'Maximum of two decimal places allowed',
+  }
+);
+
+export const tradeSchema = z.object({
+  id: z.optional(z.string()),
+  symbol: z.string(),
+  side: z.union([z.literal('buy'), z.literal('sell')]),
+  qty: z.number().int(),
+  type: z.literal('market'),
+  time_in_force: z.literal('gtc'),
+  order_class: z.literal('bracket'),
+  stop_loss: z.object({
+    stop_price: twoDecimalSchema,
+  }),
+  take_profit: z.object({
+    limit_price: twoDecimalSchema,
+  }),
+});
+
+export const tradesSchema = z.array(tradeSchema);
+
 // import { z } from 'zod';
 
 // export const marketDatumSchema = z.object({

@@ -1,5 +1,6 @@
 import {
   Alert,
+  Box,
   CircularProgress,
   FormControl,
   TextField,
@@ -33,8 +34,8 @@ const Trade = (): JSX.Element => {
           type='number'
           label='Take Profit'
           value={
-            currentTrade.take_profit > 0
-              ? currentTrade.take_profit
+            currentTrade.take_profit.limit_price > 0
+              ? currentTrade.take_profit.limit_price
               : currentSignal.take_profit
           }
         />
@@ -42,8 +43,8 @@ const Trade = (): JSX.Element => {
           type='number'
           label='Stop Loss'
           value={
-            currentTrade.stop_loss > 0
-              ? currentTrade.stop_loss
+            currentTrade.stop_loss.stop_price > 0
+              ? currentTrade.stop_loss.stop_price
               : currentSignal.stop_loss
           }
         />

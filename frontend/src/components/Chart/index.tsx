@@ -14,6 +14,7 @@ import {
 import { useTrader } from '../../contexts/TraderContext';
 import { TraderPaper } from '../../elements';
 import { useSignals } from '../../hooks/useSignals';
+import { Trade } from '@trader/types';
 
 interface ECDataZoomEvent {
   type: string;
@@ -158,14 +159,11 @@ const Chart = (): JSX.Element => {
   };
 
   const handleUpdateTrade = () => {
-    setCurrentTrade({
-      take_profit: takeProfit,
-      stop_loss: stopLoss,
-      limit: currentSignal?.limit || 0,
-      id: 'Anything',
-      symbol: ticker,
-      strategy_id: currentSignal?.id || '',
-    });
+    setCurrentTrade((prevTrade) => ({
+      ...prevTrade,
+      take_profit: { limit_price: takeProfit },
+      stop_loss: { stop_price: stopLoss },
+    }));
   };
 
   if (ticker === '') return <Alert severity='info'>Select a ticker</Alert>;
