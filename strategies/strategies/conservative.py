@@ -19,7 +19,7 @@ macd_window_slow = 26
 macd_window_fast = 12
 macd_window_signal = 9
 limit = 0.00
-stop_loss = 0.01  # This is in fractions of the current closing price
+stop_loss = 0.03  # This is in fractions of the current closing price
 take_profit = 0.1
 quantity = 0.9
 

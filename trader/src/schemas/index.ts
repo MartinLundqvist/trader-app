@@ -39,8 +39,9 @@ export const marketDataInformationSchema = z.object({
   last_updated: z.coerce.date(),
 });
 
-// This is the shape of the data in the core application database table "strategyruns"
-export const strategySignalSchema = z.object({
+// The return object from the Python strategy/signal end-point always returns the latest day results, whether there is a signal or not.
+// I might change this in the future, but this means we need an API return schema that can handle both cases.
+export const strategySignalResponseSchema = z.object({
   id: z.optional(z.string()),
   // strategy_id: z.string(), //Not used yet!!
   name: z.string(),
@@ -50,6 +51,29 @@ export const strategySignalSchema = z.object({
   limit: z.nullable(z.number()),
   stop_loss: z.nullable(z.number()),
   take_profit: z.nullable(z.number()),
+  // limit: z.number(),
+  // stop_loss: z.number(),
+  // take_profit: z.number(),
+});
+
+export const strategySignalsResponseSchema = z.array(
+  strategySignalResponseSchema
+);
+
+// This is the shape of the data in the core application database table "strategyruns"
+export const strategySignalSchema = z.object({
+  id: z.optional(z.string()),
+  // strategy_id: z.string(), //Not used yet!!
+  name: z.string(),
+  date: z.coerce.date(),
+  symbol: z.string(),
+  signal: z.string(),
+  // limit: z.nullable(z.number()),
+  // stop_loss: z.nullable(z.number()),
+  // take_profit: z.nullable(z.number()),
+  limit: z.number(),
+  stop_loss: z.number(),
+  take_profit: z.number(),
 });
 
 export const strategySignalsSchema = z.array(strategySignalSchema);

@@ -8,8 +8,8 @@ app = Flask(__name__)
 def fn_conservative_signal():
     data = request.get_json()
     df = json_to_df_adjusted(data)
-    df, result, signal = get_signal(df, backcandles=2)
-    filename = None
+    df, result, signal = get_signal(df, backcandles=1)
+    # filename = None
 
     # if signal:
     #     filename = create_plot(df)

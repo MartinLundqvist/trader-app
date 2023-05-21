@@ -35,5 +35,7 @@ export const useSignals = () => {
       ? data?.find((signal) => signal.symbol === ticker) || null
       : null;
 
+  console.log(currentSignal);
+
   return { currentSignal, signals: data, isLoading, error };
 };

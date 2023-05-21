@@ -2,54 +2,26 @@ import got from 'got';
 import MarketDataDB from '../database_provider/model_marketdata.js';
 import { StrategySignal, StrategyTickerData } from '../types/index.js';
 import {
+  strategySignalResponseSchema,
   strategySignalSchema,
   strategyTickerDataSchema,
 } from '../schemas/index.js';
-import { writeFile } from 'fs/promises';
-// import { StrategySignal, StrategyTickerData } from '@trader-app/shared';
-// import {
-//   strategySignalSchema,
-//   strategyTickerDataSchema,
-// } from '@trader-app/shared/src/schemas.js';
-// import {
-//   StrategySignal,
-//   StrategyTickerData,
-// } from '@trader-app/shared/types/index.js';
-// import {
-//   strategySignalSchema,
-//   strategyTickerDataSchema,
-// } from '@trader-app/shared/schemas/index.js';
-// import { strategiesSchema, strategySchema } from '../schemas/index.js';
-// import { Strategies, Strategy } from '../types/index.js';
-// import { AAPL } from '../development_assets/AAPLJan2023.js';
-// import { AAPL } from '../development_assets/AAPL3Months.js';
-// import { AAPL } from '../development_assets/AAPL12Months.js';
-// import { MSFT } from '../development_assets/MSFT12Months.js';
-// import { AMZN } from '../development_assets/AMZN12Months.js';
-// import { GOOG } from '../development_assets/GOOG12Months.js';
-// import { VOD } from '../development_assets/VOD12Months.js';
-// import { PEP } from '../development_assets/PEP12Months.js';
-// import { TSLA } from '../development_assets/TSLA12Months.js';
-// import { MarketData } from '../types/index.js';
-
-// const tickers: { [key: string]: MarketData } = {
-//   AAPL: AAPL as unknown as MarketData,
-//   MSFT: MSFT as unknown as MarketData,
-//   AMZN: AMZN.filter(
-//     (datum) => datum.date > new Date('2022-06-06')
-//   ) as unknown as MarketData,
-//   GOOG: GOOG.filter(
-//     (datum) => datum.date > new Date('2022-07-18')
-//   ) as unknown as MarketData, // 2022-07-18T00:00:00.000Z stock was split
-//   VOD: VOD as unknown as MarketData,
-//   PEP: PEP as unknown as MarketData,
-//   TSLA: TSLA.filter(
-//     (datum) => datum.date > new Date('2022-08-25')
-//   ) as unknown as MarketData, // 2022-08-25T00:00:00.000Z stock was split
-// };
-
-// const url = 'http://127.0.0.1:4000/bollinger_rsi/signal'
-
+/**
+ * Fetches the latest signal for a specific ticker from the conservative strategy service.
+ *
+ * @param {string} ticker - The ticker symbol of the stock to fetch the signal for.
+ * @returns {Promise<StrategySignal | null>} A promise that resolves to the latest strategy signal
+ * for the specified ticker, or null if the signal cannot be retrieved or if the ticker data length
+ * is less than 200.
+ *
+ * @throws {Error} If there is an error while fetching the signal from the strategy service.
+ *
+ * @example
+ *
+ * getSignal("AAPL")
+ *   .then(signal => console.log(signal))
+ *   .catch(error => console.error(error));
+ */
 export const getSignal = async (
   ticker: string
 ): Promise<StrategySignal | null> => {
@@ -77,18 +49,39 @@ export const getSignal = async (
     // console.log(response);
 
     // const parsed = strategiesSchema.parse(response);
-    const parsed = strategySignalSchema.parse(response);
 
-    return parsed;
+    let parsedResponse = strategySignalResponseSchema.parse(response);
+
+    if (parsedResponse.signal === '') return null;
+
+    let parsedSignal = strategySignalSchema.parse(parsedResponse);
+
+    return parsedSignal;
   } catch (err) {
     console.log('Error in getSignal: ', ticker);
-    // console.log(err);
+    console.log(err);
   }
 
   return null;
 };
 
-export const getData = async (
+/**
+ * Fetches the latest ticker data for a specific ticker from the conservative strategy service.
+ *
+ * @param {string} ticker - The ticker symbol of the stock to fetch the market data for.
+ * @returns {Promise<StrategyTickerData | null>} A promise that resolves to the latest market data
+ * for the specified ticker, or null if the data cannot be retrieved or if the ticker data length
+ * is less than 200.
+ *
+ * @throws {Error} If there is an error while fetching the market data from the strategy service.
+ *
+ * @example
+ *
+ * getTickerData("AAPL")
+ *   .then(data => console.log(data))
+ *   .catch(error => console.error(error));
+ */
+export const getTickerData = async (
   ticker: string
 ): Promise<StrategyTickerData | null> => {
   const url = 'http://127.0.0.1:4000/conservative';
@@ -125,27 +118,4 @@ export const getData = async (
   }
 
   return null;
-};
-
-export const getBacktest = async (ticker: string) => {
-  // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
-  // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days
-  const toDate = new Date('2023-03-01');
-  const fromDate = new Date('2022-03-01');
-
-  const tickerData = await MarketDataDB.readData([ticker], fromDate, toDate);
-
-  if (tickerData.length >= 50) {
-    const url = 'http://127.0.0.1:4000/bollinger_rsi/backtest';
-    const response = await got
-      .post(url, {
-        headers: { 'Content-Type': 'application/json' },
-        json: tickerData,
-      })
-      .json();
-
-    return response;
-  }
-
-  return [];
 };

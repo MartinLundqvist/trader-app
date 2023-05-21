@@ -1,14 +1,9 @@
 import router from 'express';
 import StrategySignalDB from '../database_provider/model_strategySignal.js';
-import { getData, getSignal } from '../position_computer/index.js';
+import { getTickerData, getSignal } from '../position_computer/index.js';
 import StrategyDB from '../database_provider/model_strategy.js';
 import TickerDB from '../database_provider/model_tickers.js';
-import {
-  MarketData,
-  MarketDataInformation,
-  StrategySignals,
-} from '../types/index.js';
-import { writeFile } from 'fs/promises';
+import { MarketDataInformation, StrategySignals } from '../types/index.js';
 import MarketDataDB from '../database_provider/model_marketdata.js';
 import MarketDataProvider from '../market_data_provider/tiingo/index.js';
 
@@ -42,7 +37,7 @@ routes.get('/tickerdata/:strategyName/:ticker', async (req, res) => {
     `Fetching ticker data for strategy ${req.params.strategyName} and ticker ${req.params.ticker}`
   );
   try {
-    const results = await getData(req.params.ticker);
+    const results = await getTickerData(req.params.ticker);
     res.status(200).send(results);
   } catch (err) {
     res.status(500).send({
@@ -77,7 +72,7 @@ routes.get('/strategies/refresh/:strategyName', async (req, res) => {
       console.log(`Running batch ${index} with ${batch.length} tickers...`);
       const batchResults = (await runPromisesBatch(batch)).flat();
       for (let result of batchResults) {
-        if (result && result.signal !== '') {
+        if (result) {
           results.push(result);
         }
       }

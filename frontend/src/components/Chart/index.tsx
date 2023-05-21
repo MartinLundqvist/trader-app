@@ -14,7 +14,7 @@ import {
 import { useTrader } from '../../contexts/TraderContext';
 import { TraderPaper } from '../../elements';
 import { useSignals } from '../../hooks/useSignals';
-import { Trade } from '@trader/types';
+// import { Trade } from '@trader/types';
 
 interface ECDataZoomEvent {
   type: string;
@@ -38,12 +38,13 @@ interface ECDataZoomEvent {
 }
 
 const Chart = (): JSX.Element => {
-  const [takeProfit, setTakeProfit] = useState<number>(160);
-  const [stopLoss, setStopLoss] = useState<number>(150);
+  // const [takeProfit, setTakeProfit] = useState<number>(160);
+  // const [stopLoss, setStopLoss] = useState<number>(150);
   const [startZoom, setStartZoom] = useState<number>(0);
   const [endZoom, setEndZoom] = useState<number>(100);
   const chartRef = useRef<ReactEChart>(null);
-  const { ticker, setCurrentTrade } = useTrader();
+  const { ticker, currentTrade, setCurrentTradeSL, setCurrentTradeTP } =
+    useTrader();
   const { currentSignal } = useSignals();
   const { tickerSignals, isLoading, error } = useTickerSignals();
 
@@ -135,12 +136,12 @@ const Chart = (): JSX.Element => {
     };
   }, [ticker]);
 
-  useEffect(() => {
-    if (!currentSignal) return;
+  // useEffect(() => {
+  //   if (!currentSignal) return;
 
-    setTakeProfit(currentSignal.take_profit || 0);
-    setStopLoss(currentSignal.stop_loss || 0);
-  }, [currentSignal]);
+  //   setTakeProfit(currentSignal.take_profit || 0);
+  //   setStopLoss(currentSignal.stop_loss || 0);
+  // }, [currentSignal]);
 
   const updatePosition = (LINE: string, event: ECElementEvent) => {
     if (!chartRef.current) return;
@@ -151,20 +152,19 @@ const Chart = (): JSX.Element => {
     const [_, newValue] = instance.convertFromPixel('grid', [0, offsetY]);
 
     if (LINE === TAKE_PROFIT_LINE) {
-      setTakeProfit(newValue);
+      // setTakeProfit(newValue);
+      setCurrentTradeTP(newValue);
     }
     if (LINE === STOP_LOSS_LINE) {
-      setStopLoss(newValue);
+      // setStopLoss(newValue);
+      setCurrentTradeSL(newValue);
     }
   };
 
-  const handleUpdateTrade = () => {
-    setCurrentTrade((prevTrade) => ({
-      ...prevTrade,
-      take_profit: { limit_price: takeProfit },
-      stop_loss: { stop_price: stopLoss },
-    }));
-  };
+  // const handleUpdateTrade = () => {
+  //   setCurrentTradeSL(stopLoss);
+  //   setCurrentTradeTP(takeProfit);
+  // };
 
   if (ticker === '') return <Alert severity='info'>Select a ticker</Alert>;
 
@@ -184,20 +184,20 @@ const Chart = (): JSX.Element => {
           style={{ width: '100%', minHeight: '450px' }}
           option={createOption(
             tickerSignals,
-            stopLoss,
-            takeProfit,
+            currentTrade.stop_loss.stop_price,
+            currentTrade.take_profit.limit_price,
             startZoom,
             endZoom
           )}
         />
-        <Divider />
+        {/* <Divider />
         <Button
           variant='contained'
           sx={{ marginTop: '1rem' }}
           onClick={handleUpdateTrade}
         >
           Update Trade
-        </Button>
+        </Button> */}
       </Box>
     </TraderPaper>
   );

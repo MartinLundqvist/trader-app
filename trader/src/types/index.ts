@@ -28,6 +28,8 @@ import {
   tickersSchema,
   strategySignalSchema,
   strategySignalsSchema,
+  strategySignalResponseSchema,
+  strategySignalsResponseSchema,
   strategySchema,
   strategiesSchema,
   strategyTickerDatumSchema,
@@ -44,6 +46,12 @@ export type MarketData = z.infer<typeof marketDataSchema>;
 export type Ticker = z.infer<typeof tickerSchema>;
 export type Tickers = z.infer<typeof tickersSchema>;
 export type MarketDataInformation = z.infer<typeof marketDataInformationSchema>;
+export type StrategySignalResponse = z.infer<
+  typeof strategySignalResponseSchema
+>;
+export type StrategySignalsResponse = z.infer<
+  typeof strategySignalsResponseSchema
+>;
 export type StrategySignal = z.infer<typeof strategySignalSchema>;
 export type StrategySignals = z.infer<typeof strategySignalsSchema>;
 export type Strategy = z.infer<typeof strategySchema>;

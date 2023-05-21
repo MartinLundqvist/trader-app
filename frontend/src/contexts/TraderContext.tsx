@@ -1,5 +1,5 @@
 import { Trade } from '@trader/types';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 interface ITraderContext {
   strategy: string;
@@ -7,7 +7,11 @@ interface ITraderContext {
   ticker: string;
   setTicker: (ticker: string) => void;
   currentTrade: Trade;
-  setCurrentTrade: React.Dispatch<React.SetStateAction<Trade>>;
+  // setCurrentTrade: React.Dispatch<React.SetStateAction<Trade>>;
+  setCurrentTradeSL: (stop_price: number) => void;
+  setCurrentTradeTP: (limit_price: number) => void;
+  setCurrentTradeQty: (qty: number) => void;
+  setCurrentTradeSide: (side: string) => void;
   // setCurrentTrade: (trade: Trade) => void;
   // trades: Trade[];
   // addTrade: (trade: Trade) => void;
@@ -34,7 +38,11 @@ const initialState: ITraderContext = {
     type: 'market',
     time_in_force: 'gtc',
   },
-  setCurrentTrade: () => {},
+  setCurrentTradeSL: () => {},
+  setCurrentTradeTP: () => {},
+  setCurrentTradeQty: () => {},
+  setCurrentTradeSide: () => {},
+  // setCurrentTrade: () => {},
 };
 
 const TraderContext = createContext<ITraderContext>(initialState);
@@ -52,6 +60,47 @@ export const TraderProvider = ({
     initialState.currentTrade
   );
 
+  const setCurrentTradeSL = (stop_price: number) => {
+    let value = Number(Number(stop_price).toFixed(2));
+
+    setCurrentTrade((prev) => ({
+      ...prev,
+      stop_loss: {
+        ...prev.stop_loss,
+        stop_price: value,
+      },
+    }));
+  };
+
+  const setCurrentTradeTP = (limit_price: number) => {
+    let value = Number(Number(limit_price).toFixed(2));
+
+    setCurrentTrade((prev) => ({
+      ...prev,
+      take_profit: {
+        ...prev.take_profit,
+        limit_price: value,
+      },
+    }));
+  };
+
+  const setCurrentTradeQty = (qty: number) => {
+    let value = Number(Number(qty).toFixed(0));
+    setCurrentTrade((prev) => ({
+      ...prev,
+      qty: value,
+    }));
+  };
+
+  const setCurrentTradeSide = (side: string) => {
+    if (side !== 'buy' && side !== 'sell') return;
+
+    setCurrentTrade((prev) => ({
+      ...prev,
+      side,
+    }));
+  };
+
   // console.log(`CONTEXT: Strategy is ${strategy} and ticker is ${ticker}`);
 
   return (
@@ -62,7 +111,11 @@ export const TraderProvider = ({
         ticker,
         setTicker,
         currentTrade,
-        setCurrentTrade,
+        // setCurrentTrade,
+        setCurrentTradeSL,
+        setCurrentTradeTP,
+        setCurrentTradeQty,
+        setCurrentTradeSide,
       }}
     >
       {children}

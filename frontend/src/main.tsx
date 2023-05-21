@@ -5,7 +5,11 @@ import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import TraderProvider from './contexts/TraderContext';
 
-const theme = createTheme();
+const theme = createTheme({
+  typography: {
+    fontSize: 12,
+  },
+});
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
