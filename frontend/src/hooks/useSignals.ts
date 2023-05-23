@@ -28,6 +28,7 @@ export const useSignals = () => {
   const { error, data, isLoading } = useQuery<StrategySignals, Error>({
     queryKey: ['signals', strategy],
     queryFn: getSignals,
+    networkMode: 'offlineFirst',
   });
 
   const currentSignal =

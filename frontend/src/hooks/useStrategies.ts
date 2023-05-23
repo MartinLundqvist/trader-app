@@ -23,6 +23,7 @@ export const useStrategies = () => {
   const { error, data, isLoading } = useQuery<Strategies, Error>({
     queryKey: ['strategies'],
     queryFn: getStrategies,
+    networkMode: 'offlineFirst',
   });
 
   const currentStrategy = data?.find((s) => s.name === strategy) || null;

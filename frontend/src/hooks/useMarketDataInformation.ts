@@ -19,6 +19,7 @@ export const useMarketDataInformation = () => {
   const { error, data, isLoading } = useQuery<MarketDataInformation, Error>({
     queryKey: ['marketdatainformation'],
     queryFn: getMarketDataInformation,
+    networkMode: 'offlineFirst',
   });
 
   return { marketDataInformation: data, isLoading, error };

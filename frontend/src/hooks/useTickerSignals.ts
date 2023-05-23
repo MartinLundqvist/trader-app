@@ -25,6 +25,7 @@ export const useTickerSignals = () => {
   const { data, isLoading, error } = useQuery<StrategyTickerData, Error>({
     queryKey: ['signals', strategy, ticker],
     queryFn: getTickerSignals,
+    networkMode: 'offlineFirst',
   });
 
   return { tickerSignals: data, isLoading, error };
