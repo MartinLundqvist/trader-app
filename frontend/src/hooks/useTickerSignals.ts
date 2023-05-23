@@ -11,12 +11,16 @@ const getTickerSignals = async ({ queryKey }: QueryFunctionContext) => {
   const url = import.meta.env.VITE_API_URL;
 
   const response = await fetch(`${url}/tickerdata/${strategy}/${ticker}`);
+
   if (!response.ok) throw new Error('Error calling API');
 
   const data = await response.json();
-  const parsedData = strategyTickerDataSchema.parse(data);
 
-  return parsedData;
+  const parsedData = strategyTickerDataSchema.safeParse(data);
+
+  if (!parsedData.success) throw new Error('Error parsing response');
+
+  return parsedData.data;
 };
 
 export const useTickerSignals = () => {

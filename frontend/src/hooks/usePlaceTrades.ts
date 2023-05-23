@@ -12,13 +12,15 @@ const postTrades = async (trades: Trade[]) => {
     body: JSON.stringify(trades),
   });
 
-  if (!response.ok) return Promise.reject(new Error('Error calling API'));
+  if (!response.ok) throw new Error('Error calling API');
 
   const data = await response.json();
 
-  const parsedResponse = placeTradesResponseSchema.parse(data);
+  const parsedResponse = placeTradesResponseSchema.safeParse(data);
 
-  return parsedResponse;
+  if (!parsedResponse.success) throw new Error('Error parsing response');
+
+  return parsedResponse.data;
 };
 
 export const usePlaceTrades = () => {

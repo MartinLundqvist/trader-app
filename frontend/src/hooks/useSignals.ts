@@ -12,13 +12,18 @@ const getSignals = async ({ queryKey }: QueryFunctionContext) => {
   const url = import.meta.env.VITE_API_URL;
 
   const response = await fetch(`${url}/signals/${strategy}`);
+
   if (!response.ok) throw new Error('Error calling API');
+
   const data = await response.json();
-  const parsedData = strategySignalsSchema.parse(data);
+
+  const parsedData = strategySignalsSchema.safeParse(data);
+
+  if (!parsedData.success) throw new Error('Error parsing response');
 
   // console.log(data);
 
-  return parsedData;
+  return parsedData.data;
 };
 
 export const useSignals = () => {

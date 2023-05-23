@@ -6,13 +6,15 @@ const getMarketDataInformation = async () => {
   const url = import.meta.env.VITE_API_URL;
   const response = await fetch(`${url}/marketdata/information`);
 
-  if (!response.ok) return Promise.reject(new Error('Error calling API'));
+  if (!response.ok) throw new Error('Error calling API');
 
   const data = await response.json();
 
-  const parsed = marketDataInformationSchema.parse(data);
+  const parsed = marketDataInformationSchema.safeParse(data);
 
-  return parsed;
+  if (!parsed.success) throw new Error('Error parsing response');
+
+  return parsed.data;
 };
 
 export const useMarketDataInformation = () => {

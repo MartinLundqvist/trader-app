@@ -12,7 +12,6 @@ import {
   TableRow,
   Toolbar,
   Typography,
-  alpha,
 } from '@mui/material';
 import { useTrades } from '../../contexts/TradesContext';
 import { TraderPaper } from '../../elements';

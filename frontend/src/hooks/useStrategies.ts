@@ -7,15 +7,17 @@ const getStrategies = async () => {
   const url = import.meta.env.VITE_API_URL;
   const response = await fetch(`${url}/strategies`);
 
-  if (!response.ok) return Promise.reject(new Error('Error calling API'));
+  if (!response.ok) throw new Error('Error calling API');
 
   const data = await response.json();
 
   // console.log(data);
 
-  const parsed = strategiesSchema.parse(data);
+  const parsed = strategiesSchema.safeParse(data);
 
-  return parsed;
+  if (!parsed.success) throw new Error('Error parsing response');
+
+  return parsed.data;
 };
 
 export const useStrategies = () => {
