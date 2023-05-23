@@ -28,7 +28,7 @@ const Trade = (): JSX.Element => {
     setCurrentTradeSymbol,
   } = useTrader();
   const { currentSignal, isLoading, error } = useSignals();
-  const { addTrade, updateTrade, tradeExists } = useTrades();
+  const { getTrade, addTrade, updateTrade, tradeExists } = useTrades();
 
   useEffect(() => {
     handleResetTrade();
@@ -36,11 +36,21 @@ const Trade = (): JSX.Element => {
 
   const handleResetTrade = () => {
     if (!currentSignal) return;
-    setCurrentTradeQty(0);
-    setCurrentTradeSide(currentSignal.signal === 'buy' ? 'buy' : 'sell');
-    setCurrentTradeTP(currentSignal.take_profit);
-    setCurrentTradeSL(currentSignal.stop_loss);
-    setCurrentTradeSymbol(currentSignal.symbol);
+    // If we have a trade for this symbol already, use that one.
+    const localTrade = getTrade(currentSignal.symbol);
+    if (localTrade) {
+      setCurrentTradeQty(localTrade.qty);
+      setCurrentTradeSide(localTrade.side);
+      setCurrentTradeTP(localTrade.take_profit.limit_price);
+      setCurrentTradeSL(localTrade.stop_loss.stop_price);
+      setCurrentTradeSymbol(localTrade.symbol);
+    } else {
+      setCurrentTradeQty(0);
+      setCurrentTradeSide(currentSignal.signal === 'buy' ? 'buy' : 'sell');
+      setCurrentTradeTP(currentSignal.take_profit);
+      setCurrentTradeSL(currentSignal.stop_loss);
+      setCurrentTradeSymbol(currentSignal.symbol);
+    }
   };
 
   const handleManageTrade = () => {
@@ -63,7 +73,7 @@ const Trade = (): JSX.Element => {
   return (
     <TraderPaper>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <FormControl fullWidth sx={{ gap: '1rem' }}>
             <Typography>
               {currentSignal.signal} symbol {currentSignal.symbol} on{' '}
@@ -119,7 +129,7 @@ const Trade = (): JSX.Element => {
             </Box>
           </FormControl>
         </Grid>
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <Typography>Summary</Typography>
           <Divider />
           <Typography>Side: {currentTrade.side}</Typography>
@@ -127,7 +137,7 @@ const Trade = (): JSX.Element => {
             Max profit:{' '}
             {currentTrade.qty * currentTrade.take_profit.limit_price}
           </Typography>
-        </Grid>
+        </Grid> */}
       </Grid>
     </TraderPaper>
   );

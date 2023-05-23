@@ -15,10 +15,10 @@ const Signals = (): JSX.Element => {
           <Grid item xs={12}>
             <Strategy />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={9}>
             <Chart />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Trade />
           </Grid>
         </Grid>

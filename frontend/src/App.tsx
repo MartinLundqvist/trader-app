@@ -13,9 +13,11 @@ import Signals from './pages/Signals';
 import { SyntheticEvent, useState } from 'react';
 import Strategies from './pages/Strategies';
 import Trades from './pages/Trades';
+import { useTrades } from './contexts/TradesContext';
 
 function App() {
   const [tab, setTab] = useState(0);
+  const { trades } = useTrades();
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -34,7 +36,7 @@ function App() {
             <Tabs value={tab} onChange={handleChange}>
               <Tab label='Strategies' value={0} />
               <Tab label='Signals' value={1} />
-              <Tab label='Trades' value={2} />
+              <Tab label={`Trades (${trades.length})`} value={2} />
             </Tabs>
             <Divider sx={{ marginBottom: '1rem' }} />
           </Grid>

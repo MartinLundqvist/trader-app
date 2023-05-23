@@ -142,6 +142,16 @@ export const tradeSchema = z.object({
 
 export const tradesSchema = z.array(tradeSchema);
 
+export const placeTradesResponseSchema = z.object({
+  successful_trades: tradesSchema,
+  unsuccessful_trades: z.array(
+    z.object({
+      trade: tradeSchema,
+      error: z.string(),
+    })
+  ),
+});
+
 // import { z } from 'zod';
 
 // export const marketDatumSchema = z.object({

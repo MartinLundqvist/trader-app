@@ -45,7 +45,7 @@ const Chart = (): JSX.Element => {
   const chartRef = useRef<ReactEChart>(null);
   const { ticker, currentTrade, setCurrentTradeSL, setCurrentTradeTP } =
     useTrader();
-  const { currentSignal } = useSignals();
+  // const { currentSignal } = useSignals();
   const { tickerSignals, isLoading, error } = useTickerSignals();
 
   const isDragging = useRef<string>('');

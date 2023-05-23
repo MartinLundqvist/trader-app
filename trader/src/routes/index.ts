@@ -3,9 +3,14 @@ import StrategySignalDB from '../database_provider/model_strategySignal.js';
 import { getTickerData, getSignal } from '../position_computer/index.js';
 import StrategyDB from '../database_provider/model_strategy.js';
 import TickerDB from '../database_provider/model_tickers.js';
-import { MarketDataInformation, StrategySignals } from '../types/index.js';
+import {
+  MarketDataInformation,
+  PlaceTradesResponse,
+  StrategySignals,
+} from '../types/index.js';
 import MarketDataDB from '../database_provider/model_marketdata.js';
 import MarketDataProvider from '../market_data_provider/tiingo/index.js';
+import { tradesSchema } from '../schemas/index.js';
 
 export const routes = router();
 
@@ -154,5 +159,26 @@ routes.get('/marketdata/information', async (req, res) => {
     res
       .status(500)
       .send({ error: 'Error while fetching market data information' });
+  }
+});
+
+routes.post('/trades/place', async (req, res) => {
+  try {
+    const trades = tradesSchema.parse(req.body);
+
+    let successfulTrades = [...trades].slice(0, 1);
+    let failedTrades = [...trades].slice(1, 2).map((trade) => ({
+      trade,
+      error: 'Not enough cash!',
+    }));
+
+    let response: PlaceTradesResponse = {
+      successful_trades: successfulTrades,
+      unsuccessful_trades: failedTrades,
+    };
+
+    res.status(200).send(response);
+  } catch (err) {
+    res.status(500).send({ error: 'Error parsing trades' });
   }
 });
