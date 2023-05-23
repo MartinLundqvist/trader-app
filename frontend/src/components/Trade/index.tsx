@@ -15,6 +15,7 @@ import { useSignals } from '../../hooks/useSignals';
 import { useTrader } from '../../contexts/TraderContext';
 import { TraderPaper } from '../../elements';
 import { useEffect } from 'react';
+import { useTrades } from '../../contexts/TradesContext';
 
 const Trade = (): JSX.Element => {
   const {
@@ -24,8 +25,10 @@ const Trade = (): JSX.Element => {
     setCurrentTradeSL,
     setCurrentTradeSide,
     setCurrentTradeTP,
+    setCurrentTradeSymbol,
   } = useTrader();
   const { currentSignal, isLoading, error } = useSignals();
+  const { addTrade, updateTrade, tradeExists } = useTrades();
 
   useEffect(() => {
     handleResetTrade();
@@ -35,8 +38,17 @@ const Trade = (): JSX.Element => {
     if (!currentSignal) return;
     setCurrentTradeQty(0);
     setCurrentTradeSide(currentSignal.signal === 'buy' ? 'buy' : 'sell');
-    setCurrentTradeTP(currentSignal.take_profit || 0);
-    setCurrentTradeSL(currentSignal.stop_loss || 0);
+    setCurrentTradeTP(currentSignal.take_profit);
+    setCurrentTradeSL(currentSignal.stop_loss);
+    setCurrentTradeSymbol(currentSignal.symbol);
+  };
+
+  const handleManageTrade = () => {
+    if (tradeExists(currentTrade.symbol)) {
+      updateTrade(currentTrade.symbol, currentTrade);
+    } else {
+      addTrade(currentTrade);
+    }
   };
 
   if (ticker === '') return <Alert severity='info'>Select a ticker</Alert>;
@@ -97,8 +109,12 @@ const Trade = (): JSX.Element => {
               >
                 Reset
               </Button>
-              <Button variant='contained' color='primary'>
-                Place
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={handleManageTrade}
+              >
+                {tradeExists(currentTrade.symbol) ? 'Update' : 'Place'}
               </Button>
             </Box>
           </FormControl>

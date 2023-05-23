@@ -12,6 +12,7 @@ interface ITraderContext {
   setCurrentTradeTP: (limit_price: number) => void;
   setCurrentTradeQty: (qty: number) => void;
   setCurrentTradeSide: (side: string) => void;
+  setCurrentTradeSymbol: (symbol: string) => void;
   // setCurrentTrade: (trade: Trade) => void;
   // trades: Trade[];
   // addTrade: (trade: Trade) => void;
@@ -42,6 +43,7 @@ const initialState: ITraderContext = {
   setCurrentTradeTP: () => {},
   setCurrentTradeQty: () => {},
   setCurrentTradeSide: () => {},
+  setCurrentTradeSymbol: () => {},
   // setCurrentTrade: () => {},
 };
 
@@ -101,6 +103,13 @@ export const TraderProvider = ({
     }));
   };
 
+  const setCurrentTradeSymbol = (symbol: string) => {
+    setCurrentTrade((prev) => ({
+      ...prev,
+      symbol,
+    }));
+  };
+
   // console.log(`CONTEXT: Strategy is ${strategy} and ticker is ${ticker}`);
 
   return (
@@ -116,6 +125,7 @@ export const TraderProvider = ({
         setCurrentTradeTP,
         setCurrentTradeQty,
         setCurrentTradeSide,
+        setCurrentTradeSymbol,
       }}
     >
       {children}

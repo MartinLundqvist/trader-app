@@ -106,10 +106,14 @@ const Chart = (): JSX.Element => {
 
     return () => {
       console.log('Removing event handlers');
-      instance.getZr().off('mousemove', handleMouseMove);
-      instance.off('mousedown', handleMouseDown);
-      instance.getZr().off('mouseup', handleMouseUp);
-      instance.off('datazoom', handleDataZoom);
+      if (instance.getZr()) {
+        instance.getZr().off('mousemove', handleMouseMove);
+        instance.getZr().off('mouseup', handleMouseUp);
+      }
+      if (instance) {
+        instance.off('mousedown', handleMouseDown);
+        instance.off('datazoom', handleDataZoom);
+      }
     };
   }, []);
 
