@@ -129,16 +129,30 @@ export const tradeSchema = z.object({
   symbol: z.string(),
   side: z.union([z.literal('buy'), z.literal('sell')]),
   qty: z.number().int(),
-  type: z.literal('market'),
-  time_in_force: z.literal('gtc'),
-  order_class: z.literal('bracket'),
-  stop_loss: z.object({
-    stop_price: twoDecimalSchema,
-  }),
-  take_profit: z.object({
-    limit_price: twoDecimalSchema,
-  }),
+  // type: z.literal('market'),
+  // time_in_force: z.literal('gtc'),
+  // order_class: z.literal('bracket'),
+  stop_loss: twoDecimalSchema,
+  take_profit: twoDecimalSchema,
+  limit: z.number(),
 });
+
+// Saving this in case we need it later
+// export const tradeSchema = z.object({
+//   id: z.optional(z.string()),
+//   symbol: z.string(),
+//   side: z.union([z.literal('buy'), z.literal('sell')]),
+//   qty: z.number().int(),
+//   type: z.literal('market'),
+//   time_in_force: z.literal('gtc'),
+//   order_class: z.literal('bracket'),
+//   stop_loss: z.object({
+//     stop_price: twoDecimalSchema,
+//   }),
+//   take_profit: z.object({
+//     limit_price: twoDecimalSchema,
+//   }),
+// });
 
 export const tradesSchema = z.array(tradeSchema);
 

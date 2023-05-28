@@ -188,8 +188,8 @@ const Chart = (): JSX.Element => {
           style={{ width: '100%', minHeight: '450px' }}
           option={createOption(
             tickerSignals,
-            currentTrade.stop_loss.stop_price,
-            currentTrade.take_profit.limit_price,
+            currentTrade.stop_loss,
+            currentTrade.take_profit,
             startZoom,
             endZoom
           )}

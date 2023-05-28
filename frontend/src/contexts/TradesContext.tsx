@@ -104,7 +104,6 @@ export const TradesProvider = ({
         removeTrades,
         removeAllTrades,
         tradeExists,
-        // placeTrades,
       }}
     >
       {children}

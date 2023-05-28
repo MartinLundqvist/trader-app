@@ -21,11 +21,11 @@ const Trade = (): JSX.Element => {
   const {
     ticker,
     currentTrade,
+    setCurrentTrade,
     setCurrentTradeQty,
     setCurrentTradeSL,
     setCurrentTradeSide,
     setCurrentTradeTP,
-    setCurrentTradeSymbol,
   } = useTrader();
   const { currentSignal, isLoading, error } = useSignals();
   const { getTrade, addTrade, updateTrade, tradeExists } = useTrades();
@@ -39,17 +39,16 @@ const Trade = (): JSX.Element => {
     // If we have a trade for this symbol already, use that one.
     const localTrade = getTrade(currentSignal.symbol);
     if (localTrade) {
-      setCurrentTradeQty(localTrade.qty);
-      setCurrentTradeSide(localTrade.side);
-      setCurrentTradeTP(localTrade.take_profit.limit_price);
-      setCurrentTradeSL(localTrade.stop_loss.stop_price);
-      setCurrentTradeSymbol(localTrade.symbol);
+      setCurrentTrade(localTrade);
     } else {
-      setCurrentTradeQty(0);
-      setCurrentTradeSide(currentSignal.signal === 'buy' ? 'buy' : 'sell');
-      setCurrentTradeTP(currentSignal.take_profit);
-      setCurrentTradeSL(currentSignal.stop_loss);
-      setCurrentTradeSymbol(currentSignal.symbol);
+      setCurrentTrade({
+        side: currentSignal.signal === 'buy' ? 'buy' : 'sell',
+        qty: 0,
+        stop_loss: Number(Number(currentSignal.stop_loss).toFixed(2)),
+        take_profit: Number(Number(currentSignal.take_profit).toFixed(2)),
+        limit: currentSignal.limit,
+        symbol: currentSignal.symbol,
+      });
     }
   };
 
@@ -101,13 +100,13 @@ const Trade = (): JSX.Element => {
             <TextField
               type='number'
               label='Take Profit'
-              value={currentTrade.take_profit.limit_price}
+              value={currentTrade.take_profit}
               onChange={(evt) => setCurrentTradeTP(Number(evt.target.value))}
             />
             <TextField
               type='number'
               label='Stop Loss'
-              value={currentTrade.stop_loss.stop_price}
+              value={currentTrade.stop_loss}
               onChange={(evt) => setCurrentTradeSL(Number(evt.target.value))}
             />
             <Divider />

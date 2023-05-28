@@ -7,7 +7,7 @@ interface ITraderContext {
   ticker: string;
   setTicker: (ticker: string) => void;
   currentTrade: Trade;
-  // setCurrentTrade: React.Dispatch<React.SetStateAction<Trade>>;
+  setCurrentTrade: React.Dispatch<React.SetStateAction<Trade>>;
   setCurrentTradeSL: (stop_price: number) => void;
   setCurrentTradeTP: (limit_price: number) => void;
   setCurrentTradeQty: (qty: number) => void;
@@ -27,24 +27,18 @@ const initialState: ITraderContext = {
   currentTrade: {
     id: '',
     symbol: '',
-    take_profit: {
-      limit_price: 0,
-    },
-    stop_loss: {
-      stop_price: 0,
-    },
-    order_class: 'bracket',
+    take_profit: 0,
+    stop_loss: 0,
     side: 'buy',
     qty: 0,
-    type: 'market',
-    time_in_force: 'gtc',
+    limit: 0,
   },
   setCurrentTradeSL: () => {},
   setCurrentTradeTP: () => {},
   setCurrentTradeQty: () => {},
   setCurrentTradeSide: () => {},
   setCurrentTradeSymbol: () => {},
-  // setCurrentTrade: () => {},
+  setCurrentTrade: () => {},
 };
 
 const TraderContext = createContext<ITraderContext>(initialState);
@@ -67,10 +61,7 @@ export const TraderProvider = ({
 
     setCurrentTrade((prev) => ({
       ...prev,
-      stop_loss: {
-        ...prev.stop_loss,
-        stop_price: value,
-      },
+      stop_loss: value,
     }));
   };
 
@@ -79,10 +70,7 @@ export const TraderProvider = ({
 
     setCurrentTrade((prev) => ({
       ...prev,
-      take_profit: {
-        ...prev.take_profit,
-        limit_price: value,
-      },
+      take_profit: value,
     }));
   };
 
@@ -120,7 +108,7 @@ export const TraderProvider = ({
         ticker,
         setTicker,
         currentTrade,
-        // setCurrentTrade,
+        setCurrentTrade,
         setCurrentTradeSL,
         setCurrentTradeTP,
         setCurrentTradeQty,

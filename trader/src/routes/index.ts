@@ -11,6 +11,7 @@ import {
 import MarketDataDB from '../database_provider/model_marketdata.js';
 import MarketDataProvider from '../market_data_provider/tiingo/index.js';
 import { tradesSchema } from '../schemas/index.js';
+import Trader from '../broker_provider/index.js';
 
 export const routes = router();
 
@@ -162,6 +163,19 @@ routes.get('/marketdata/information', async (req, res) => {
   }
 });
 
+routes.get('/marketdata/getlatesttrade/:ticker', async (req, res) => {
+  try {
+    const ticker = req.params.ticker;
+    const latest_trade = await Trader.getLastTrade_v2({ symbol: ticker });
+    const price = latest_trade.trade.p;
+
+    res.status(200).send({ price });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: 'Error while fetching latest trade' });
+  }
+});
+
 routes.post('/trades/place', async (req, res) => {
   try {
     const trades = tradesSchema.parse(req.body);
@@ -179,6 +193,7 @@ routes.post('/trades/place', async (req, res) => {
 
     res.status(200).send(response);
   } catch (err) {
+    console.log(err);
     res.status(500).send({ error: 'Error parsing trades' });
   }
 });

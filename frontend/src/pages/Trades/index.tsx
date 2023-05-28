@@ -114,6 +114,7 @@ const Trades = (): JSX.Element => {
                 <TableCell>Qty</TableCell>
                 <TableCell>TP</TableCell>
                 <TableCell>SL</TableCell>
+                <TableCell>Latest</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -128,8 +129,9 @@ const Trades = (): JSX.Element => {
                   <TableCell>{trade.symbol}</TableCell>
                   <TableCell>{trade.side}</TableCell>
                   <TableCell>{trade.qty}</TableCell>
-                  <TableCell>{trade.take_profit.limit_price}</TableCell>
-                  <TableCell>{trade.stop_loss.stop_price}</TableCell>
+                  <TableCell>{trade.take_profit}</TableCell>
+                  <TableCell>{trade.stop_loss}</TableCell>
+                  <TableCell>{trade.limit}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
