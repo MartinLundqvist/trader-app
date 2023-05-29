@@ -1,5 +1,5 @@
 import { Trade } from '@trader/types';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { useLocalStorageState } from '../hooks/useLocalStorageState';
 
 interface ITradesContext {
@@ -12,6 +12,8 @@ interface ITradesContext {
   removeTrades: (symbols: string[]) => void;
   removeAllTrades: () => void;
   tradeExists: (symbol: string) => boolean;
+  currentTrade: Trade;
+  setCurrentTrade: React.Dispatch<React.SetStateAction<Trade>>;
 }
 
 const initialState: ITradesContext = {
@@ -24,6 +26,16 @@ const initialState: ITradesContext = {
   removeTrades: () => {},
   removeAllTrades: () => {},
   tradeExists: () => false,
+  currentTrade: {
+    id: '',
+    symbol: '',
+    take_profit: 0,
+    stop_loss: 0,
+    side: 'buy',
+    qty: 0,
+    limit: 0,
+  },
+  setCurrentTrade: () => {},
 };
 
 const TradesContext = createContext<ITradesContext>(initialState);
@@ -38,6 +50,10 @@ export const TradesProvider = ({
   const [trades, setTrades] = useLocalStorageState<Trade[]>(
     'trades',
     initialState.trades
+  );
+
+  const [currentTrade, setCurrentTrade] = useState<Trade>(
+    initialState.currentTrade
   );
 
   const getTrade = (symbol: string): Trade | null => {
@@ -104,6 +120,8 @@ export const TradesProvider = ({
         removeTrades,
         removeAllTrades,
         tradeExists,
+        currentTrade,
+        setCurrentTrade,
       }}
     >
       {children}

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { strategiesSchema } from '@trader/schemas';
 import { Strategies } from '@trader/types';
-import { useTrader } from '../contexts/TraderContext';
+import { useParams } from 'react-router-dom';
 
 const getStrategies = async () => {
   const url = import.meta.env.VITE_API_URL;
@@ -21,7 +21,7 @@ const getStrategies = async () => {
 };
 
 export const useStrategies = () => {
-  const { strategy } = useTrader();
+  const { strategy } = useParams();
   const { error, data, isLoading } = useQuery<Strategies, Error>({
     queryKey: ['strategies'],
     queryFn: getStrategies,

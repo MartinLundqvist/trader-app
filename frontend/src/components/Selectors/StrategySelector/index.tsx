@@ -5,17 +5,25 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
 } from '@mui/material';
-import { useTrader } from '../../../contexts/TraderContext';
 import { useStrategies } from '../../../hooks/useStrategies';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const StrategySelector = () => {
   const { strategies, isLoading } = useStrategies();
-  const { strategy, setStrategy } = useTrader();
+  let { strategy } = useParams();
+  const navigate = useNavigate();
+
+  const handleStrategyChange = (e: SelectChangeEvent) => {
+    navigate(`/signals/${e.target.value}`);
+  };
 
   if (isLoading) return <CircularProgress />;
 
   if (!strategies) return <Alert severity='error'>No strategies found</Alert>;
+
+  if (!strategy) strategy = '';
 
   return (
     <FormControl>
@@ -25,7 +33,7 @@ const StrategySelector = () => {
         id='strategies'
         value={strategy}
         label='Strategy'
-        onChange={(e) => setStrategy(e.target.value)}
+        onChange={handleStrategyChange}
       >
         {strategies.map((s) => (
           <MenuItem key={s.id} value={s.name}>

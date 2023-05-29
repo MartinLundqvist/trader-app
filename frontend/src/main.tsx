@@ -3,26 +3,62 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import TraderProvider from './contexts/TraderContext';
 import { TradesProvider } from './contexts/TradesContext';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Strategies from './pages/Strategies';
+import Signals from './pages/Signals';
+import Trades from './pages/Trades';
+import Strategy from './components/Strategy';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const theme = createTheme({
   typography: {
     fontSize: 12,
   },
 });
+
 const queryClient = new QueryClient();
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        path: 'strategies',
+        element: <Strategies />,
+      },
+      {
+        path: 'signals',
+        element: <Signals />,
+        children: [
+          {
+            path: ':strategy',
+            element: <Strategy />,
+          },
+          {
+            path: ':strategy/:ticker',
+            element: <Strategy />,
+          },
+        ],
+      },
+      {
+        path: 'trades',
+        element: <Trades />,
+      },
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <TradesProvider>
-        <TraderProvider>
-          <QueryClientProvider client={queryClient}>
-            <CssBaseline />
-            <App />
-          </QueryClientProvider>
-        </TraderProvider>
+        <QueryClientProvider client={queryClient}>
+          <CssBaseline />
+          <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
       </TradesProvider>
     </ThemeProvider>
   </React.StrictMode>

@@ -3,26 +3,14 @@ import {
   Container,
   Divider,
   Grid,
-  Tab,
-  Tabs,
   Toolbar,
   Typography,
 } from '@mui/material';
 
-import Signals from './pages/Signals';
-import { SyntheticEvent, useState } from 'react';
-import Strategies from './pages/Strategies';
-import Trades from './pages/Trades';
-import { useTrades } from './contexts/TradesContext';
+import { Outlet } from 'react-router-dom';
+import Navigation from './components/Navigation';
 
 function App() {
-  const [tab, setTab] = useState(0);
-  const { trades } = useTrades();
-
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setTab(newValue);
-  };
-
   return (
     <>
       <Container maxWidth='xl'>
@@ -33,17 +21,11 @@ function App() {
                 <Typography variant='h6'>Trader</Typography>
               </Toolbar>
             </AppBar>
-            <Tabs value={tab} onChange={handleChange}>
-              <Tab label='Strategies' value={0} />
-              <Tab label='Signals' value={1} />
-              <Tab label={`Trades (${trades.length})`} value={2} />
-            </Tabs>
+            <Navigation />
             <Divider sx={{ marginBottom: '1rem' }} />
           </Grid>
         </Grid>
-        {tab === 0 && <Strategies />}
-        {tab === 1 && <Signals />}
-        {tab === 2 && <Trades />}
+        <Outlet />
       </Container>
     </>
   );

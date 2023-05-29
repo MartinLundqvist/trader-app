@@ -1,4 +1,4 @@
-import { FormControl, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import StrategySelector from './StrategySelector';
 import SymbolSelector from './SymbolSelector';
 

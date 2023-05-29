@@ -3,18 +3,11 @@ import { ECElementEvent } from 'echarts';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { STOP_LOSS_LINE, TAKE_PROFIT_LINE, createOption } from './createOption';
 import { useTickerSignals } from '../../hooks/useTickerSignals';
-import {
-  Alert,
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  Typography,
-} from '@mui/material';
-import { useTrader } from '../../contexts/TraderContext';
+import { Alert, Box, CircularProgress, Typography } from '@mui/material';
 import { TraderPaper } from '../../elements';
-import { useSignals } from '../../hooks/useSignals';
-// import { Trade } from '@trader/types';
+import { useTrades } from '../../contexts/TradesContext';
+import { useParams } from 'react-router-dom';
+import { Trade } from '@trader/types';
 
 interface ECDataZoomEvent {
   type: string;
@@ -38,17 +31,20 @@ interface ECDataZoomEvent {
 }
 
 const Chart = (): JSX.Element => {
-  // const [takeProfit, setTakeProfit] = useState<number>(160);
-  // const [stopLoss, setStopLoss] = useState<number>(150);
   const [startZoom, setStartZoom] = useState<number>(0);
   const [endZoom, setEndZoom] = useState<number>(100);
   const chartRef = useRef<ReactEChart>(null);
-  const { ticker, currentTrade, setCurrentTradeSL, setCurrentTradeTP } =
-    useTrader();
-  // const { currentSignal } = useSignals();
+  const { ticker } = useParams();
   const { tickerSignals, isLoading, error } = useTickerSignals();
 
+  const { currentTrade, setCurrentTrade } = useTrades();
+
   const isDragging = useRef<string>('');
+
+  const handleCurrentTradeChange = (key: keyof Trade, value: any) => {
+    if (!currentTrade) return;
+    setCurrentTrade((prev) => ({ ...prev, [key]: value }));
+  };
 
   const attachEventHandlers = useCallback((chart: ReactEChart) => {
     const instance = chart.getEchartsInstance();
@@ -140,13 +136,6 @@ const Chart = (): JSX.Element => {
     };
   }, [ticker]);
 
-  // useEffect(() => {
-  //   if (!currentSignal) return;
-
-  //   setTakeProfit(currentSignal.take_profit || 0);
-  //   setStopLoss(currentSignal.stop_loss || 0);
-  // }, [currentSignal]);
-
   const updatePosition = (LINE: string, event: ECElementEvent) => {
     if (!chartRef.current) return;
     const offsetY = event.event?.offsetY;
@@ -156,21 +145,21 @@ const Chart = (): JSX.Element => {
     const [_, newValue] = instance.convertFromPixel('grid', [0, offsetY]);
 
     if (LINE === TAKE_PROFIT_LINE) {
-      // setTakeProfit(newValue);
-      setCurrentTradeTP(newValue);
+      handleCurrentTradeChange(
+        'take_profit',
+        Number(Number(newValue).toFixed(2))
+      );
     }
     if (LINE === STOP_LOSS_LINE) {
-      // setStopLoss(newValue);
-      setCurrentTradeSL(newValue);
+      handleCurrentTradeChange(
+        'stop_loss',
+        Number(Number(newValue).toFixed(2))
+      );
     }
   };
 
-  // const handleUpdateTrade = () => {
-  //   setCurrentTradeSL(stopLoss);
-  //   setCurrentTradeTP(takeProfit);
-  // };
-
-  if (ticker === '') return <Alert severity='info'>Select a ticker</Alert>;
+  if (!ticker || ticker === '')
+    return <Alert severity='info'>Select a ticker</Alert>;
 
   if (isLoading) return <CircularProgress />;
 
@@ -188,20 +177,12 @@ const Chart = (): JSX.Element => {
           style={{ width: '100%', minHeight: '450px' }}
           option={createOption(
             tickerSignals,
-            currentTrade.stop_loss,
-            currentTrade.take_profit,
+            currentTrade?.stop_loss || 0,
+            currentTrade?.take_profit || 0,
             startZoom,
             endZoom
           )}
         />
-        {/* <Divider />
-        <Button
-          variant='contained'
-          sx={{ marginTop: '1rem' }}
-          onClick={handleUpdateTrade}
-        >
-          Update Trade
-        </Button> */}
       </Box>
     </TraderPaper>
   );

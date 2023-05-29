@@ -1,7 +1,8 @@
 import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
-import { useTrader } from '../contexts/TraderContext';
+// import { useTrader } from '../contexts/TraderContext';
 import { StrategySignals } from '@trader/types';
 import { strategySignalsSchema } from '@trader/schemas';
+import { useParams } from 'react-router-dom';
 
 // TODO: Refactor to the same pattern as useStrategies and useTickerSignals
 const getSignals = async ({ queryKey }: QueryFunctionContext) => {
@@ -28,12 +29,14 @@ const getSignals = async ({ queryKey }: QueryFunctionContext) => {
 
 export const useSignals = () => {
   // const queryClient = useQueryClient();
-  const { strategy, ticker } = useTrader();
+  // const { strategy, ticker } = useTrader();
+  const { strategy, ticker } = useParams();
 
   const { error, data, isLoading } = useQuery<StrategySignals, Error>({
     queryKey: ['signals', strategy],
     queryFn: getSignals,
     networkMode: 'offlineFirst',
+    enabled: !!strategy,
   });
 
   const currentSignal =

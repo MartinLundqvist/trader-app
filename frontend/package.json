@@ -13,10 +13,12 @@
     "@mui/material": "^5.12.0",
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@^5.12.0",
     "@tanstack/react-query": "^4.29.5",
+    "@tanstack/react-query-devtools": "^4.29.12",
     "echarts": "^5.4.2",
     "echarts-for-react": "^3.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.2",
     "styled-components": "^5.3.9"
   },
   "devDependencies": {
