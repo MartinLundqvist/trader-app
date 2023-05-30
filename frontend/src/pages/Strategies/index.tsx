@@ -2,6 +2,7 @@ import { Alert, CircularProgress, Grid } from '@mui/material';
 import { Strategy } from './Strategy';
 import { useStrategies } from '../../hooks/useStrategies';
 import { MarketData } from './MarketData';
+import { TraderHeader } from '../../elements';
 
 const Strategies = (): JSX.Element => {
   const {
@@ -18,16 +19,19 @@ const Strategies = (): JSX.Element => {
   if (!strategies) return <Alert severity='warning'>No strategies found</Alert>;
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <MarketData />
-      </Grid>
-      {strategies.map((s) => (
-        <Grid item xs={4} key={s.id}>
-          <Strategy strategy={s} />
+    <>
+      <TraderHeader title='Refresh market data and strategy signals' />
+      <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <MarketData />
         </Grid>
-      ))}
-    </Grid>
+        {strategies.map((s) => (
+          <Grid item xs={4} key={s.id}>
+            <Strategy strategy={s} />
+          </Grid>
+        ))}
+      </Grid>
+    </>
   );
 };
 

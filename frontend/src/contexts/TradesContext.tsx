@@ -29,6 +29,7 @@ const initialState: ITradesContext = {
   currentTrade: {
     id: '',
     symbol: '',
+    strategy: '',
     take_profit: 0,
     stop_loss: 0,
     side: 'buy',

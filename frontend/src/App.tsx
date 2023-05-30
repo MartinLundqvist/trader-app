@@ -1,34 +1,17 @@
-import {
-  AppBar,
-  Container,
-  Divider,
-  Grid,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-
+import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
+import { TraderHeader } from './elements';
 
-function App() {
+const App = (): JSX.Element => {
   return (
-    <>
-      <Container maxWidth='xl'>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <AppBar position='relative'>
-              <Toolbar>
-                <Typography variant='h6'>Trader</Typography>
-              </Toolbar>
-            </AppBar>
-            <Navigation />
-            <Divider sx={{ marginBottom: '1rem' }} />
-          </Grid>
-        </Grid>
+    <Box sx={{ display: 'flex' }}>
+      <Navigation />
+      <Box component='main' sx={{ flexGrow: 1, px: 3 }}>
         <Outlet />
-      </Container>
-    </>
+      </Box>
+    </Box>
   );
-}
+};
 
 export default App;

@@ -55,6 +55,7 @@ routes.get('/tickerdata/:strategyName/:ticker', async (req, res) => {
 routes.get('/strategies/refresh/:strategyName', async (req, res) => {
   console.log(`Refreshing strategy ${req.params.strategyName}`);
   const tickers = await TickerDB.findAllTickers();
+  // const slicedTickers = tickers.slice(0, 10);
   const slicedTickers = tickers;
   const tickerQueue = [...slicedTickers];
   const concurrency = 100;

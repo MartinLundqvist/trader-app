@@ -34,18 +34,20 @@ const Trade = (): JSX.Element => {
     handleResetTrade();
   }, [currentSignal]);
 
-  const handleResetTrade = () => {
+  const handleResetTrade = (force = false) => {
     if (!currentSignal) return;
     // If we have a trade for this symbol already, use that one.
     const trade = getTrade(currentSignal.symbol);
-    if (!trade) {
+    if (!trade || force) {
       setCurrentTrade({
+        id: '',
         side: currentSignal.signal === 'buy' ? 'buy' : 'sell',
         qty: 0,
         stop_loss: Number(Number(currentSignal.stop_loss).toFixed(2)),
         take_profit: Number(Number(currentSignal.take_profit).toFixed(2)),
         limit: currentSignal.limit,
         symbol: currentSignal.symbol,
+        strategy: currentSignal.strategy,
       });
       return;
     }
@@ -80,7 +82,7 @@ const Trade = (): JSX.Element => {
     return <Alert severity='error'>No trade yet defined for{ticker}</Alert>;
 
   return (
-    <TraderPaper>
+    <TraderPaper sx={{ height: '500px' }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FormControl fullWidth sx={{ gap: '1rem' }}>
@@ -135,7 +137,7 @@ const Trade = (): JSX.Element => {
               <Button
                 variant='contained'
                 color='warning'
-                onClick={handleResetTrade}
+                onClick={() => handleResetTrade(true)}
               >
                 Reset
               </Button>

@@ -19,7 +19,10 @@ const SymbolSelector = () => {
     navigate(`/signals/${strategy}/${e.target.value}`);
   };
 
-  if (!strategy) return <Alert severity='info'>Select a strategy</Alert>;
+  if (!strategy) return null;
+  // <Alert icon={false} severity='info' >
+  //   Select a strategy
+  // </Alert>
 
   if (isLoading) return <CircularProgress />;
 
@@ -28,7 +31,7 @@ const SymbolSelector = () => {
   if (!ticker) ticker = '';
 
   return (
-    <FormControl>
+    <FormControl fullWidth size='small'>
       <InputLabel id='todays-picks-label'>Symbol</InputLabel>
       <Select
         labelId='todays-picks-label'

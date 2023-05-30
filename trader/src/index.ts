@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { routes } from './routes/index.js';
 import { config } from 'dotenv';
+// import StrategySignalDB from './database_provider/model_strategySignal.js';
 // import StrategyDB from './database_provider/model_strategy.js';
 config();
 
@@ -29,3 +30,5 @@ app.listen(PORT, () => {
 //     last_run_ticker_count: 59,
 //   },
 // ]);
+
+// await StrategySignalDB.recreateTable();

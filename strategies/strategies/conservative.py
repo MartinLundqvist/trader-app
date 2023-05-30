@@ -244,6 +244,6 @@ def get_signal(df: pd.DataFrame, backcandles: int = 1):
     df = add_indicators(df)
     df = create_signals(df)
     df = add_trades(df)
-    df['name'] = 'conservative'
+    df['strategy'] = 'conservative'
     result, has_signal = get_latest_signal(df, backcandles)
     return df, result, has_signal

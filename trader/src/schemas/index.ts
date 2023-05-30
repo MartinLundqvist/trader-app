@@ -43,8 +43,8 @@ export const marketDataInformationSchema = z.object({
 // I might change this in the future, but this means we need an API return schema that can handle both cases.
 export const strategySignalResponseSchema = z.object({
   id: z.optional(z.string()),
-  // strategy_id: z.string(), //Not used yet!!
-  name: z.string(),
+  strategy: z.string(), //Not used yet!!
+  // name: z.string(),
   date: z.coerce.date(),
   symbol: z.string(),
   signal: z.string(),
@@ -64,7 +64,8 @@ export const strategySignalsResponseSchema = z.array(
 export const strategySignalSchema = z.object({
   id: z.optional(z.string()),
   // strategy_id: z.string(), //Not used yet!!
-  name: z.string(),
+  // strategy: z.string(),
+  strategy: z.string(),
   date: z.coerce.date(),
   symbol: z.string(),
   signal: z.string(),
@@ -125,7 +126,8 @@ const twoDecimalSchema = z.number().refine(
 );
 
 export const tradeSchema = z.object({
-  id: z.optional(z.string()),
+  id: z.string(),
+  strategy: z.string(),
   symbol: z.string(),
   side: z.union([z.literal('buy'), z.literal('sell')]),
   qty: z.number().int(),

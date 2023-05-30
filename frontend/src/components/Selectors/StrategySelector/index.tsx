@@ -26,7 +26,7 @@ const StrategySelector = () => {
   if (!strategy) strategy = '';
 
   return (
-    <FormControl>
+    <FormControl size='small' fullWidth>
       <InputLabel id='strategies-label'>Strategy</InputLabel>
       <Select
         labelId='strategies-label'

@@ -165,16 +165,17 @@ const Chart = (): JSX.Element => {
 
   if (error) return <Alert severity='error'>Error: {error.message}</Alert>;
 
-  if (!tickerSignals) return <Alert severity='warning'>No data found</Alert>;
+  if (!tickerSignals)
+    return <Alert severity='error'>No data found for {ticker}</Alert>;
 
   return (
-    <TraderPaper>
-      <Box gap={2}>
+    <TraderPaper sx={{ height: '500px' }}>
+      <Box gap={2} height='100%'>
         <Typography>Candlesticks and signals for {ticker}</Typography>
 
         <ReactEChart
           ref={chartRef}
-          style={{ width: '100%', minHeight: '450px' }}
+          style={{ width: '100%', height: '100%' }}
           option={createOption(
             tickerSignals,
             currentTrade?.stop_loss || 0,

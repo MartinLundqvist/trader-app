@@ -38,7 +38,7 @@ const StrategySignalModel: ModelDefined<
       allowNull: true,
       defaultValue: null,
     },
-    name: {
+    strategy: {
       type: DataTypes.STRING,
       defaultValue: '',
     },
@@ -83,14 +83,14 @@ const findAllStrategies = async (): Promise<string[]> => {
 
   try {
     const data = await StrategySignalModel.findAll({
-      attributes: ['name'],
+      attributes: ['strategy'],
       order: [['name', 'DESC']],
     });
 
     console.log(`${data.length} records found.`);
 
     results = Array.from(
-      new Set(data.map((entry) => entry.getDataValue('name')))
+      new Set(data.map((entry) => entry.getDataValue('strategy')))
     );
   } catch (err) {
     console.log(`Error while fetching data`);
@@ -129,7 +129,7 @@ const findLatestSignalsForStrategy = async (
   try {
     data = await StrategySignalModel.findAll({
       where: {
-        name: strategy,
+        strategy: strategy,
         date: date,
       },
     });
