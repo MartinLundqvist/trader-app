@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import { TraderHeader } from './elements';
 
 const App = (): JSX.Element => {
   return (
