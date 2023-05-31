@@ -12,6 +12,7 @@ import MarketDataDB from '../database_provider/model_marketdata.js';
 import MarketDataProvider from '../market_data_provider/tiingo/index.js';
 import { tradesSchema } from '../schemas/index.js';
 import Trader from '../broker_provider/index.js';
+import { JobsProvider } from '../jobs_provider/index.js';
 
 export const routes = router();
 
@@ -197,4 +198,25 @@ routes.post('/trades/place', async (req, res) => {
     console.log(err);
     res.status(500).send({ error: 'Error parsing trades' });
   }
+});
+
+routes.get('/jobs', async (req, res) => {
+  // const jobs = [
+  //   {
+  //     name: 'Refresh market data',
+  //     status: 'Running',
+  //   },
+  //   {
+  //     name: 'Refresh strategy',
+  //     status: 'Running',
+  //   },
+  // ];
+
+  // const sleep = (milliseconds: number) => {
+  //   return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  // };
+
+  let jobs = JobsProvider.getJobs();
+
+  res.status(200).send(jobs);
 });
