@@ -1,47 +1,81 @@
+import { Job, JobId } from '../types/index.js';
+import { runRefreshMarketData } from './runRefreshMarketData.js';
 import { runRefreshStrategy } from './runRefreshStrategy.js';
 
-const jobs = [
+const jobQueue: Job[] = [];
+const pendingJobs: Job[] = [];
+const completedJobs: Job[] = [];
+
+interface Worker {
+  id: JobId;
+  execute: (job: Job) => Promise<void>;
+}
+
+const workers: Worker[] = [
+  {
+    id: 'refresh-strategy',
+    execute: async (job: Job) => runRefreshStrategy(job),
+  },
   {
     id: 'refresh-market-data',
-    name: 'Refresh market data',
-    status: 'idle',
-    progress: 1,
-    message: '',
-  },
-  {
-    id: 'refresh-strategy',
-    name: 'Refresh strategy',
-    status: 'idle',
-    progress: 1,
-    message: '',
-  },
-];
-
-export type Job = (typeof jobs)[0];
-
-const jobQueue = [];
-
-const workers = [
-  {
-    id: 'refresh-strategy',
-    execute: (job: Job, strategy: string) => runRefreshStrategy(job, strategy),
+    execute: async (job: Job) => runRefreshMarketData(job),
   },
 ];
 
 const startJobs = (interval: number) => {
   setInterval(() => {
-    jobs.forEach((job) => {
-      let status = job.status;
-      job.status = status === 'Running' ? 'Idle' : 'Running';
-    });
+    const job = jobQueue.shift();
+
+    if (!job) return;
+
+    const worker = workers.find((worker) => worker.id === job.id);
+
+    console.log(
+      `Starting job ${job.id} with variables ${JSON.stringify(
+        job.variables
+      )}...`
+    );
+
+    worker &&
+      worker.execute(job).then(() => {
+        console.log(`Job ${job.id} complete.`);
+        if (job.status === 'failed') {
+          console.log(`Error: ${job.message}`);
+        }
+        if (job.status === 'completed') {
+          pendingJobs.splice(pendingJobs.indexOf(job), 1);
+          completedJobs.push(job);
+        }
+      });
   }, interval);
 };
 
 const getJobs = () => {
-  return jobs.map((job) => ({ ...job }));
+  const results = {
+    pending: pendingJobs.map((job) => ({ ...job })),
+    completed: completedJobs.map((job) => ({ ...job })),
+  };
+
+  return results;
 };
 
-export const JobsProvider = {
+const addJob = (job: Pick<Job, 'id' | 'variables'>) => {
+  const newJob: Job = {
+    ...job,
+    status: 'pending',
+    progress: 0,
+    message: '',
+  };
+
+  jobQueue.push(newJob);
+
+  pendingJobs.push(newJob);
+};
+
+const JobsProvider = {
   startJobs,
   getJobs,
+  addJob,
 };
+
+export default JobsProvider;

@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { routes } from './routes/index.js';
 import { config } from 'dotenv';
-import { JobsProvider } from './jobs_provider/index.js';
+import JobsProvider from './jobs_provider/index.js';
 // import StrategySignalDB from './database_provider/model_strategySignal.js';
 // import StrategyDB from './database_provider/model_strategy.js';
 config();
@@ -18,6 +18,11 @@ app.listen(PORT, () => {
 });
 
 JobsProvider.startJobs(1000);
+
+// JobsProvider.addJob({
+//   id: 'refresh-strategy',
+//   variables: ['conservative'],
+// });
 
 // await StrategyDB.recreateTable();
 // await StrategyDB.createData([

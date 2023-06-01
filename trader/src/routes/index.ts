@@ -12,7 +12,7 @@ import MarketDataDB from '../database_provider/model_marketdata.js';
 import MarketDataProvider from '../market_data_provider/tiingo/index.js';
 import { tradesSchema } from '../schemas/index.js';
 import Trader from '../broker_provider/index.js';
-import { JobsProvider } from '../jobs_provider/index.js';
+import JobsProvider from '../jobs_provider/index.js';
 
 export const routes = router();
 
@@ -54,95 +54,109 @@ routes.get('/tickerdata/:strategyName/:ticker', async (req, res) => {
 });
 
 routes.get('/strategies/refresh/:strategyName', async (req, res) => {
-  console.log(`Refreshing strategy ${req.params.strategyName}`);
-  const tickers = await TickerDB.findAllTickers();
-  // const slicedTickers = tickers.slice(0, 10);
-  const slicedTickers = tickers;
-  const tickerQueue = [...slicedTickers];
-  const concurrency = 100;
-  let results: StrategySignals = [];
+  JobsProvider.addJob({
+    id: 'refresh-strategy',
+    variables: [req.params.strategyName],
+  });
 
-  try {
-    const getNextTickerBatch = () => {
-      if (tickerQueue.length === 0) return null;
-      return tickerQueue.splice(0, concurrency);
-    };
+  res.status(200).send({ message: 'Job added' });
 
-    const runPromisesBatch = async (tickerBatch: string[]) => {
-      const promisesBatch = tickerBatch.map((ticker) => getSignal(ticker));
-      return await Promise.all(promisesBatch);
-    };
+  // console.log(`Refreshing strategy ${req.params.strategyName}`);
+  // const tickers = await TickerDB.findAllTickers();
+  // // const slicedTickers = tickers.slice(0, 10);
+  // const slicedTickers = tickers;
+  // const tickerQueue = [...slicedTickers];
+  // const concurrency = 100;
+  // let results: StrategySignals = [];
 
-    let batch = getNextTickerBatch();
-    let index = 1;
+  // try {
+  //   const getNextTickerBatch = () => {
+  //     if (tickerQueue.length === 0) return null;
+  //     return tickerQueue.splice(0, concurrency);
+  //   };
 
-    while (batch) {
-      console.log(`Running batch ${index} with ${batch.length} tickers...`);
-      const batchResults = (await runPromisesBatch(batch)).flat();
-      for (let result of batchResults) {
-        if (result) {
-          results.push(result);
-        }
-      }
+  //   const runPromisesBatch = async (tickerBatch: string[]) => {
+  //     const promisesBatch = tickerBatch.map((ticker) => getSignal(ticker));
+  //     return await Promise.all(promisesBatch);
+  //   };
 
-      batch = getNextTickerBatch();
-      index++;
-    }
+  //   let batch = getNextTickerBatch();
+  //   let index = 1;
 
-    console.log(
-      `Tested ${slicedTickers.length} tickers and found ${results.length} signals.`
-    );
+  //   while (batch) {
+  //     console.log(`Running batch ${index} with ${batch.length} tickers...`);
+  //     const batchResults = (await runPromisesBatch(batch)).flat();
+  //     for (let result of batchResults) {
+  //       if (result) {
+  //         results.push(result);
+  //       }
+  //     }
 
-    // await writeFile('strategies.json', JSON.stringify(results));
+  //     batch = getNextTickerBatch();
+  //     index++;
+  //   }
 
-    await StrategySignalDB.createData(results);
+  //   console.log(
+  //     `Tested ${slicedTickers.length} tickers and found ${results.length} signals.`
+  //   );
 
-    await StrategyDB.updateStrategy(
-      req.params.strategyName,
-      new Date(),
-      results.length
-    );
+  //   // await writeFile('strategies.json', JSON.stringify(results));
 
-    res.status(200).send({
-      message: `Tested ${slicedTickers.length} tickers and found ${results.length} signals.`,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ error: 'Error while refreshing strategy' });
-  }
+  //   await StrategySignalDB.createData(results);
+
+  //   await StrategyDB.updateStrategy(
+  //     req.params.strategyName,
+  //     new Date(),
+  //     results.length
+  //   );
+
+  //   res.status(200).send({
+  //     message: `Tested ${slicedTickers.length} tickers and found ${results.length} signals.`,
+  //   });
+  // } catch (err) {
+  //   console.log(err);
+  //   res.status(500).send({ error: 'Error while refreshing strategy' });
+  // }
 });
 
 routes.get('/marketdata/refresh', async (req, res) => {
-  try {
-    const lastestDate = await MarketDataDB.getLatestDate();
-    const oneDayOffset = 1000 * 60 * 60 * 24;
-    const fromDate = new Date(lastestDate.getTime() + oneDayOffset);
-    const toDate = new Date();
+  JobsProvider.addJob({
+    id: 'refresh-market-data',
+    variables: [],
+  });
 
-    const tickers = await TickerDB.findAllTickers();
+  res.status(200).send({ message: 'Job added' });
 
-    const data = await MarketDataProvider.getMultipleEODDataFromTo(
-      tickers,
-      fromDate,
-      toDate
-    );
+  // try {
+  //   const lastestDate = await MarketDataDB.getLatestDate();
+  //   const oneDayOffset = 1000 * 60 * 60 * 24;
+  //   const fromDate = new Date(lastestDate.getTime() + oneDayOffset);
+  //   const toDate = new Date();
 
-    // const data: MarketData = [];
+  //   const tickers = await TickerDB.findAllTickers();
 
-    // For testing, write data to a file
-    // await writeFile(
-    //   `marketdata_test_${toDate.toISOString()}.json`,
-    //   JSON.stringify(data)
-    // );
+  //   const data = await MarketDataProvider.getMultipleEODDataFromTo(
+  //     tickers,
+  //     fromDate,
+  //     toDate
+  //   );
 
-    let message = await MarketDataDB.createData(data);
-    // let message = 'Market data refreshed';
+  //   // const data: MarketData = [];
 
-    res.status(200).send({ message });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ error: 'Error while refreshing market data' });
-  }
+  //   // For testing, write data to a file
+  //   // await writeFile(
+  //   //   `marketdata_test_${toDate.toISOString()}.json`,
+  //   //   JSON.stringify(data)
+  //   // );
+
+  //   let message = await MarketDataDB.createData(data);
+  //   // let message = 'Market data refreshed';
+
+  //   res.status(200).send({ message });
+  // } catch (err) {
+  //   console.log(err);
+  //   res.status(500).send({ error: 'Error while refreshing market data' });
+  // }
 });
 
 routes.get('/marketdata/information', async (req, res) => {

@@ -1,4 +1,4 @@
-import got from 'got';
+import got, { RequestError } from 'got';
 import MarketDataDB from '../database_provider/model_marketdata.js';
 import { StrategySignal, StrategyTickerData } from '../types/index.js';
 import {
@@ -57,9 +57,14 @@ export const getSignal = async (
     let parsedSignal = strategySignalSchema.parse(parsedResponse);
 
     return parsedSignal;
-  } catch (err) {
-    console.log('Error in getSignal: ', ticker);
-    console.log(err);
+  } catch (err: any) {
+    if (err instanceof RequestError) {
+      console.log('RequestError in getSignal: ', ticker);
+      console.log(err.code);
+    } else {
+      console.log('Unkonwn error in getSignal: ', ticker);
+      console.log(err);
+    }
   }
 
   return null;

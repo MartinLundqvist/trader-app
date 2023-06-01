@@ -1,5 +1,5 @@
 import { Strategy as StrategyType } from '@trader/types';
-import { TraderCard } from '../../../elements';
+import { ButtonWithProgress, TraderCard } from '../../../elements';
 import { useRefreshSignals } from '../../../hooks/useRefreshSignals';
 import { useEffect, useState } from 'react';
 import { getDaysDifference } from '../../../utils';
@@ -8,29 +8,29 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import CardActions from '@mui/material/CardActions';
-import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import { useJobs } from '../../../hooks/useJobs';
 
 export const Strategy = ({
   strategy,
 }: {
   strategy: StrategyType;
 }): JSX.Element => {
-  const {
-    triggerRefresh,
-    result,
-    isLoading: isRefreshing,
-    error: refreshError,
-  } = useRefreshSignals();
+  const { triggerRefresh, result, error: refreshError } = useRefreshSignals();
+  const { jobs } = useJobs();
   const [openDialog, setOpenDialog] = useState(false);
   const [message, setMessage] = useState('');
 
   const daysDifference = getDaysDifference(new Date(), strategy.last_run_date);
+
+  const activeJob = jobs?.pending.find(
+    (job) => job.variables[0] === strategy.name
+  );
 
   useEffect(() => {
     if (result) {
@@ -68,21 +68,19 @@ export const Strategy = ({
           </Box>
         </CardContent>
         <CardActions>
-          {isRefreshing ? (
-            <CircularProgress />
+          {activeJob ? (
+            <ButtonWithProgress value={activeJob.progress * 100} disabled>
+              Refreshing
+            </ButtonWithProgress>
           ) : (
-            <Button
-              variant='contained'
-              onClick={triggerRefresh}
-              disabled={daysDifference === 0}
-            >
+            <Button variant='contained' onClick={triggerRefresh}>
               Refresh data
             </Button>
           )}
         </CardActions>
       </TraderCard>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>Refresh result</DialogTitle>
+        <DialogTitle>Refresh status</DialogTitle>
         <DialogContent>
           <DialogContentText>{message}</DialogContentText>
         </DialogContent>

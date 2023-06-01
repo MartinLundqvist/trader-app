@@ -1,5 +1,5 @@
 import CardContent from '@mui/material/CardContent';
-import { TraderCard } from '../../../elements';
+import { ButtonWithProgress, TraderCard } from '../../../elements';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
@@ -16,6 +16,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import { useEffect, useState } from 'react';
+import { useJobs } from '../../../hooks/useJobs';
 
 export const MarketData = (): JSX.Element => {
   const { marketDataInformation, isLoading, error } =
@@ -23,12 +24,16 @@ export const MarketData = (): JSX.Element => {
   const {
     triggerRefresh,
     result,
-    isLoading: isRefreshing,
     error: refreshError,
   } = useRefreshMarketData();
+  const { jobs } = useJobs();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [message, setMessage] = useState('');
+
+  const activeJob = jobs?.pending.find(
+    (job) => job.id === 'refresh-market-data'
+  );
 
   useEffect(() => {
     if (result) {
@@ -82,8 +87,10 @@ export const MarketData = (): JSX.Element => {
           </Box>
         </CardContent>
         <CardActions>
-          {isRefreshing ? (
-            <CircularProgress />
+          {activeJob ? (
+            <ButtonWithProgress value={activeJob.progress * 100} disabled>
+              Refreshing
+            </ButtonWithProgress>
           ) : (
             <Button variant='contained' onClick={triggerRefresh}>
               Refresh data
@@ -92,7 +99,7 @@ export const MarketData = (): JSX.Element => {
         </CardActions>
       </TraderCard>
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>Refresh result</DialogTitle>
+        <DialogTitle>Refresh status</DialogTitle>
         <DialogContent>
           <DialogContentText>{message}</DialogContentText>
         </DialogContent>

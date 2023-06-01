@@ -1,5 +1,8 @@
 import {
+  Button,
+  ButtonProps,
   Card,
+  CircularProgressProps,
   Paper,
   PaperTypeMap,
   Toolbar,
@@ -7,6 +10,7 @@ import {
   styled,
 } from '@mui/material';
 import { ReactNode } from 'react';
+import { CircularProgressWithLabel } from './CircularProgressWithLabel';
 
 const TraderPaperStyled = styled(Paper)`
   padding: ${(props) => props.theme.spacing(2)};
@@ -44,5 +48,19 @@ export const TraderHeader = ({
         {children}
       </Toolbar>
     </>
+  );
+};
+
+export const ButtonWithProgress = (
+  props: CircularProgressProps & ButtonProps & { value: number }
+) => {
+  return (
+    <Button
+      variant='contained'
+      disabled
+      endIcon={<CircularProgressWithLabel size={20} value={props.value} />}
+    >
+      {props.children}
+    </Button>
   );
 };

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { JobStatus } from '@trader/types';
 
 const getJobs = async () => {
   const url = import.meta.env.VITE_API_URL;
@@ -12,11 +13,11 @@ const getJobs = async () => {
 };
 
 export const useJobs = () => {
-  const { data, error, isError, isLoading } = useQuery<any, Error>({
+  const { data, error, isError, isLoading } = useQuery<JobStatus, Error>({
     queryKey: ['jobs'],
     queryFn: getJobs,
     refetchInterval: 1000,
   });
 
-  return { data, error, isError, isLoading };
+  return { jobs: data, error, isError, isLoading };
 };

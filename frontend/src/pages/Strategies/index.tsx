@@ -2,8 +2,7 @@ import { Alert, CircularProgress, Grid } from '@mui/material';
 import { Strategy } from './Strategy';
 import { useStrategies } from '../../hooks/useStrategies';
 import { MarketData } from './MarketData';
-import { TraderCard, TraderHeader } from '../../elements';
-import { useJobs } from '../../hooks/useJobs';
+import { TraderHeader } from '../../elements';
 
 const Strategies = (): JSX.Element => {
   const {
@@ -31,31 +30,8 @@ const Strategies = (): JSX.Element => {
             <Strategy strategy={s} />
           </Grid>
         ))}
-        <Grid item xs={4}>
-          <Jobs />
-        </Grid>
       </Grid>
     </>
-  );
-};
-
-const Jobs = (): JSX.Element => {
-  const { data, isLoading, isError, error } = useJobs();
-
-  return (
-    <TraderCard>
-      <TraderHeader title='Jobs' />
-      {isLoading && <CircularProgress />}
-      {isError && <Alert severity='error'>Error: {error?.message}</Alert>}
-      {data &&
-        data.map((job: any) => (
-          <div key={job.id}>
-            <p>
-              {job.name}: {job.status}
-            </p>
-          </div>
-        ))}
-    </TraderCard>
   );
 };
 
