@@ -37,12 +37,12 @@ export const MarketData = (): JSX.Element => {
 
   useEffect(() => {
     if (result) {
-      console.log(result);
+      // console.log(result);
       setMessage(result.message);
       setOpenDialog(true);
     }
     if (refreshError) {
-      console.log(refreshError);
+      // console.log(refreshError);
       setMessage(refreshError.message);
       setOpenDialog(true);
     }

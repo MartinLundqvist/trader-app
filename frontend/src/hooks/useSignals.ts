@@ -4,7 +4,6 @@ import { StrategySignals } from '@trader/types';
 import { strategySignalsSchema } from '@trader/schemas';
 import { useParams } from 'react-router-dom';
 
-// TODO: Refactor to the same pattern as useStrategies and useTickerSignals
 const getSignals = async ({ queryKey }: QueryFunctionContext) => {
   const [_, strategy] = queryKey;
 

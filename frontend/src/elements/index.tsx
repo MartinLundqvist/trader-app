@@ -64,3 +64,5 @@ export const ButtonWithProgress = (
     </Button>
   );
 };
+
+export * from './CircularProgressWithLabel';

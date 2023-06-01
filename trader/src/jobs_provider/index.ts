@@ -1,4 +1,4 @@
-import { Job, JobId } from '../types/index.js';
+import { Job } from '../types/index.js';
 import { runRefreshMarketData } from './runRefreshMarketData.js';
 import { runRefreshStrategy } from './runRefreshStrategy.js';
 
@@ -7,7 +7,7 @@ const pendingJobs: Job[] = [];
 const completedJobs: Job[] = [];
 
 interface Worker {
-  id: JobId;
+  id: Job['id'];
   execute: (job: Job) => Promise<void>;
 }
 
@@ -65,6 +65,7 @@ const addJob = (job: Pick<Job, 'id' | 'variables'>) => {
     status: 'pending',
     progress: 0,
     message: '',
+    added: new Date(),
   };
 
   jobQueue.push(newJob);

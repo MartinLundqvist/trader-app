@@ -3,12 +3,18 @@ import { useTrades } from '../contexts/TradesContext';
 import { NavLink } from 'react-router-dom';
 import {
   CandlestickChart,
+  Checklist,
   Insights,
   ShoppingCartCheckout,
 } from '@mui/icons-material';
+import { useJobs } from './useJobs';
 
 export const useNavItems = () => {
   const { trades } = useTrades();
+  const { jobs } = useJobs();
+
+  const nrJobs = jobs ? jobs.pending.length : 0;
+  const nrTrades = trades ? trades.length : 0;
 
   const NAV_ITEMS = useMemo(
     () => [
@@ -27,14 +33,21 @@ export const useNavItems = () => {
         icon: CandlestickChart,
       },
       {
-        label: `Trades (${trades.length})`,
+        label: `Trades (${nrTrades})`,
         value: '/trades',
         to: '/trades',
         component: NavLink,
         icon: ShoppingCartCheckout,
       },
+      {
+        label: `Background jobs (${nrJobs})`,
+        value: '/jobs',
+        to: '/jobs',
+        component: NavLink,
+        icon: Checklist,
+      },
     ],
-    [trades]
+    [nrTrades, nrJobs]
   );
 
   return NAV_ITEMS;

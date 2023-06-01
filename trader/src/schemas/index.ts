@@ -168,6 +168,30 @@ export const placeTradesResponseSchema = z.object({
   ),
 });
 
+export const jobSchema = z.object({
+  id: z.union([
+    z.literal('refresh-strategy'),
+    z.literal('refresh-market-data'),
+  ]),
+  status: z.union([
+    z.literal('pending'),
+    z.literal('running'),
+    z.literal('completed'),
+    z.literal('failed'),
+  ]),
+  progress: z.number(),
+  message: z.string(),
+  added: z.coerce.date(),
+  variables: z.array(z.string()),
+});
+
+export const jobsSchema = z.array(jobSchema);
+
+export const jobsResponseSchema = z.object({
+  pending: jobsSchema,
+  completed: jobsSchema,
+});
+
 // import { z } from 'zod';
 
 // export const marketDatumSchema = z.object({

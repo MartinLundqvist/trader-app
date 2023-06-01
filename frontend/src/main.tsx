@@ -9,6 +9,7 @@ import Strategies from './pages/Strategies';
 import Signals from './pages/Signals';
 import Trades from './pages/Trades';
 import Strategy from './components/Strategy';
+import Jobs from './pages/Jobs';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const theme = createTheme({
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: 'trades',
         element: <Trades />,
+      },
+      {
+        path: 'jobs',
+        element: <Jobs />,
       },
     ],
   },

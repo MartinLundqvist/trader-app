@@ -2,7 +2,6 @@ import MarketDataDB from '../database_provider/model_marketdata.js';
 import TickerDB from '../database_provider/model_tickers.js';
 import MarketDataProvider from '../market_data_provider/tiingo/index.js';
 import { Job, MarketData } from '../types/index.js';
-import { sleep } from '../utils/index.js';
 
 export const runRefreshMarketData = async (job: Job) => {
   job.status = 'running';
@@ -27,12 +26,9 @@ export const runRefreshMarketData = async (job: Job) => {
     };
 
     const runPromisesBatch = async (tickerBatch: string[]) => {
-      const promisesBatch = tickerBatch.map(
-        (ticker) => []
-        // MarketDataProvider.getEODDataFromTo(ticker, fromDate, toDate)
+      const promisesBatch = tickerBatch.map((ticker) =>
+        MarketDataProvider.getEODDataFromTo(ticker, fromDate, toDate)
       );
-
-      await sleep(100);
 
       return await Promise.all(promisesBatch);
     };
@@ -52,8 +48,8 @@ export const runRefreshMarketData = async (job: Job) => {
       index++;
     }
 
-    // let message = await MarketDataDB.createData(results);
-    let message = 'Market data refreshed';
+    let message = await MarketDataDB.createData(results);
+    // let message = 'Market data refreshed';
 
     job.status = 'completed';
     job.message = message;
