@@ -234,3 +234,14 @@ routes.get('/jobs', async (req, res) => {
 
   res.status(200).send(jobs);
 });
+
+routes.get('/account', async (req, res) => {
+  try {
+    const account = await Trader.getAccount();
+
+    res.status(200).send(account);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: 'Error while fetching account' });
+  }
+});

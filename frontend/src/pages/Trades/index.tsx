@@ -14,18 +14,32 @@ import {
   Typography,
 } from '@mui/material';
 import { useTrades } from '../../contexts/TradesContext';
-import { TraderHeader, TraderPaper } from '../../elements';
+import { TraderCard, TraderHeader, TraderPaper } from '../../elements';
 import { useEffect, useState } from 'react';
 import { usePlaceTrades } from '../../hooks/usePlaceTrades';
 import { Link, useNavigate } from 'react-router-dom';
+import { getMaintenanceMargin } from '../../utils';
+import { useAccount } from '../../hooks/useAccount';
+import { AccountCard } from './AccountCard';
 
 const Trades = (): JSX.Element => {
   const { trades, removeTrades, removeAllTrades } = useTrades();
   const { placeTrades, isLoading, isError, isSuccess, error, data } =
     usePlaceTrades();
+  const { account } = useAccount();
   const [selected, setSelected] = useState<string[]>([]);
 
   const navigate = useNavigate();
+
+  console.log(account);
+
+  const totalPosition = trades.reduce((acc, trade) => {
+    return acc + trade.qty * trade.limit;
+  }, 0);
+
+  const totalMaintenanceMargin = trades.reduce((acc, trade) => {
+    return acc + getMaintenanceMargin(trade);
+  }, 0);
 
   const handleSelectOne = (symbol: string) => {
     if (isSelected(symbol)) {
@@ -85,6 +99,27 @@ const Trades = (): JSX.Element => {
       <TraderHeader title='Manage trades' />
       {/* <Grid container spacing={2} component={TraderPaper}> */}
       <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <AccountCard
+            caption='Buying power'
+            value={`$ ${account?.buying_power}`}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <AccountCard caption='Cash' value={`$ ${account?.cash}`} />
+        </Grid>
+        <Grid item xs={3}>
+          <AccountCard
+            caption='Maintenance margin'
+            value={`$ ${account?.maintenance_margin}`}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <AccountCard
+            caption='Portfolio value'
+            value={`$ ${account?.portfolio_value}`}
+          />
+        </Grid>
         <Grid item xs={12}>
           <TableContainer component={TraderPaper}>
             {selected.length > 0 && (
@@ -123,6 +158,8 @@ const Trades = (): JSX.Element => {
                   <TableCell>TP</TableCell>
                   <TableCell>SL</TableCell>
                   <TableCell>Latest</TableCell>
+                  <TableCell>Position size</TableCell>
+                  <TableCell>Maint. margin</TableCell>
                   <TableCell />
                 </TableRow>
               </TableHead>
@@ -143,6 +180,12 @@ const Trades = (): JSX.Element => {
                     <TableCell>{trade.stop_loss}</TableCell>
                     <TableCell>{trade.limit}</TableCell>
                     <TableCell>
+                      $ {Number(trade.limit * trade.qty).toFixed(2)}
+                    </TableCell>
+                    <TableCell>
+                      $ {Number(getMaintenanceMargin(trade)).toFixed(2)}
+                    </TableCell>
+                    <TableCell>
                       <Button
                         onClick={() =>
                           handleChartClick(trade.strategy, trade.symbol)
@@ -153,6 +196,14 @@ const Trades = (): JSX.Element => {
                     </TableCell>
                   </TableRow>
                 ))}
+                <TableRow>
+                  <TableCell colSpan={8}>Total</TableCell>
+                  <TableCell>$ {Number(totalPosition).toFixed(2)}</TableCell>
+                  <TableCell>
+                    $ {Number(totalMaintenanceMargin).toFixed(2)}
+                  </TableCell>
+                  <TableCell />
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
