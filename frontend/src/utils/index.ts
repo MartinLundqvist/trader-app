@@ -36,3 +36,9 @@ export const getMaintenanceMargin = (trade: Trade): number => {
 
   return 0;
 };
+
+export const getPositionSize = (trade: Trade) => {
+  if (trade.side === 'buy') return trade.limit * trade.qty;
+
+  return 0;
+};

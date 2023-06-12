@@ -21,7 +21,7 @@
 // export type Strategy = z.infer<typeof strategySchema>;
 // export type Quote = z.infer<typeof quoteSchema>;
 
-import JobsProvider from '../jobs_provider/index.js';
+// import JobsProvider from '../jobs_provider/index.js';
 import {
   marketDatumSchema,
   marketDataSchema,
@@ -38,7 +38,8 @@ import {
   marketDataInformationSchema,
   tradeSchema,
   tradesSchema,
-  placeTradesResponseSchema,
+  placedTradeSchema,
+  placedTradesSchema,
   jobSchema,
   jobsSchema,
   jobsResponseSchema,
@@ -65,7 +66,9 @@ export type StrategyTickerDatum = z.infer<typeof strategyTickerDatumSchema>;
 export type StrategyTickerData = z.infer<typeof strategyTickerDataSchema>;
 export type Trade = z.infer<typeof tradeSchema>;
 export type Trades = z.infer<typeof tradesSchema>;
-export type PlaceTradesResponse = z.infer<typeof placeTradesResponseSchema>;
+export type PlacedTrade = z.infer<typeof placedTradeSchema>;
+export type PlacedTrades = z.infer<typeof placedTradesSchema>;
+// export type PlaceTradesResponse = z.infer<typeof placeTradesResponseSchema>;
 export type Job = z.infer<typeof jobSchema>;
 export type Jobs = z.infer<typeof jobsSchema>;
 export type JobsResponse = z.infer<typeof jobsResponseSchema>;

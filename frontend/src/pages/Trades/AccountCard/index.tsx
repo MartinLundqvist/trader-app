@@ -1,13 +1,18 @@
 import { Box, Typography } from '@mui/material';
 import { TraderCard } from '../../../elements';
 
+// TODO: Need to test this error handler properly
 export const AccountCard = ({
   caption,
   value,
+  error,
 }: {
   caption: string;
   value: string;
+  error: Error | null;
 }): JSX.Element => {
+  if (error) return <>{error.message}</>;
+
   return (
     <TraderCard>
       <Box

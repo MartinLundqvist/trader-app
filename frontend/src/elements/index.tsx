@@ -42,7 +42,7 @@ export const TraderHeader = ({
   return (
     <>
       <Toolbar disableGutters>
-        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+        <Typography variant='h5' component='div' sx={{ flexGrow: 1 }}>
           {title}
         </Typography>
         {children}

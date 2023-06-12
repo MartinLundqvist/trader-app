@@ -1,30 +1,22 @@
 import {
   Alert,
-  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import { useSignals } from '../../../hooks/useSignals';
 import { useNavigate, useParams } from 'react-router-dom';
+import { StrategySignals } from '@trader/types';
 
-const SymbolSelector = () => {
-  const { signals, isLoading } = useSignals();
+// TODO: This generates an "out of range" warning when the URL based ticker is not part of the filtered symbols.
+const SymbolSelector = ({ signals }: { signals: StrategySignals }) => {
   let { strategy, ticker } = useParams();
   const navigate = useNavigate();
 
   const handleTickerChange = (e: SelectChangeEvent) => {
     navigate(`/signals/${strategy}/${e.target.value}`);
   };
-
-  if (!strategy) return null;
-  // <Alert icon={false} severity='info' >
-  //   Select a strategy
-  // </Alert>
-
-  if (isLoading) return <CircularProgress />;
 
   if (!signals) return <Alert severity='error'>No signals found</Alert>;
 

@@ -1,18 +1,14 @@
 import router from 'express';
 import StrategySignalDB from '../database_provider/model_strategySignal.js';
-import { getTickerData, getSignal } from '../position_computer/index.js';
+import { getTickerData } from '../position_computer/index.js';
 import StrategyDB from '../database_provider/model_strategy.js';
 import TickerDB from '../database_provider/model_tickers.js';
-import {
-  MarketDataInformation,
-  PlaceTradesResponse,
-  StrategySignals,
-} from '../types/index.js';
+import { MarketDataInformation, Trades } from '../types/index.js';
 import MarketDataDB from '../database_provider/model_marketdata.js';
-import MarketDataProvider from '../market_data_provider/tiingo/index.js';
 import { tradesSchema } from '../schemas/index.js';
 import Trader from '../broker_provider/index.js';
 import JobsProvider from '../jobs_provider/index.js';
+import { PlaceOrder } from '../broker_provider/alpaca/params.js';
 
 export const routes = router();
 
@@ -193,25 +189,72 @@ routes.get('/marketdata/getlatesttrade/:ticker', async (req, res) => {
 });
 
 routes.post('/trades/place', async (req, res) => {
+  let trades: Trades = [];
+  const tradesToPlace: PlaceOrder[] = [];
+
   try {
-    const trades = tradesSchema.parse(req.body);
+    trades = tradesSchema.parse(req.body);
 
-    let successfulTrades = [...trades].slice(0, 1);
-    let failedTrades = [...trades].slice(1, 2).map((trade) => ({
-      trade,
-      error: 'Not enough cash!',
-    }));
+    JobsProvider.addJob({
+      id: 'place-orders',
+      variables: [],
+      trades,
+    });
 
-    let response: PlaceTradesResponse = {
-      successful_trades: successfulTrades,
-      unsuccessful_trades: failedTrades,
-    };
+    res.status(200).send({ message: 'Job added' });
 
-    res.status(200).send(response);
+    // for (let trade of trades) {
+    //   const { symbol, side, qty, stop_loss, take_profit } = trade;
+
+    //   tradesToPlace.push({
+    //     symbol: '3R3R3R',
+    //     side,
+    //     qty,
+    //     type: 'market',
+    //     time_in_force: 'gtc',
+    //     order_class: 'bracket',
+    //     stop_loss: {
+    //       stop_price: stop_loss,
+    //     },
+    //     take_profit: {
+    //       limit_price: take_profit,
+    //     },
+    //   });
+    // }
+
+    // console.log(JSON.stringify(tradesToPlace, null, 2));
   } catch (err) {
     console.log(err);
     res.status(500).send({ error: 'Error parsing trades' });
   }
+
+  // try {
+  //   for (let trade of tradesToPlace) {
+  //     const order = await Trader.placeOrder(trade);
+  //     console.log(JSON.stringify(order, null, 2));
+  //   }
+
+  //   let successfulTrades = [...trades].slice(0, 1);
+  //   let failedTrades = [...trades].slice(1, 2).map((trade) => ({
+  //     trade,
+  //     error: 'Not enough cash!',
+  //   }));
+
+  //   let response: PlaceTradesResponse = {
+  //     successful_trades: successfulTrades,
+  //     unsuccessful_trades: failedTrades,
+  //   };
+
+  //   res.status(200).send(response);
+  // } catch (err: any) {
+  //   console.log(err);
+  //   if ('code' in err && 'message' in err) {
+  //     console.log(err.code, err.message);
+  //     res.status(500).send({ error: err.message });
+  //   } else {
+  //     res.status(500).send({ error: 'Error while placing trades' });
+  //   }
+  // }
 });
 
 routes.get('/jobs', async (req, res) => {

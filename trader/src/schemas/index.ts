@@ -126,7 +126,7 @@ const twoDecimalSchema = z.number().refine(
 );
 
 export const tradeSchema = z.object({
-  id: z.string(),
+  id: z.optional(z.string()),
   strategy: z.string(),
   symbol: z.string(),
   side: z.union([z.literal('buy'), z.literal('sell')]),
@@ -138,6 +138,15 @@ export const tradeSchema = z.object({
   take_profit: twoDecimalSchema,
   limit: z.number(),
 });
+
+export const placedTradeSchema = tradeSchema.extend({
+  client_id: z.string(), // This is the client_id used to uniquely identify the trade in the Alpaca API
+  job_id: z.string(), // This is the identified for a specific bulk of trades (a "job"), used internally for this applications
+  status: z.union([z.literal('failed'), z.literal('successful')]),
+  error: z.nullable(z.string()),
+});
+
+export const placedTradesSchema = z.array(placedTradeSchema);
 
 // Saving this in case we need it later
 // export const tradeSchema = z.object({
@@ -158,20 +167,21 @@ export const tradeSchema = z.object({
 
 export const tradesSchema = z.array(tradeSchema);
 
-export const placeTradesResponseSchema = z.object({
-  successful_trades: tradesSchema,
-  unsuccessful_trades: z.array(
-    z.object({
-      trade: tradeSchema,
-      error: z.string(),
-    })
-  ),
-});
+// export const placeTradesResponseSchema = z.object({
+//   successful_trades: tradesSchema,
+//   unsuccessful_trades: z.array(
+//     z.object({
+//       trade: tradeSchema,
+//       error: z.string(),
+//     })
+//   ),
+// });
 
 export const jobSchema = z.object({
   id: z.union([
     z.literal('refresh-strategy'),
     z.literal('refresh-market-data'),
+    z.literal('place-orders'),
   ]),
   status: z.union([
     z.literal('pending'),
@@ -183,6 +193,7 @@ export const jobSchema = z.object({
   message: z.string(),
   added: z.coerce.date(),
   variables: z.array(z.string()),
+  trades: z.optional(tradesSchema),
 });
 
 export const jobsSchema = z.array(jobSchema);

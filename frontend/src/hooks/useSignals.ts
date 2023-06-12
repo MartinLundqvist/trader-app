@@ -1,5 +1,4 @@
 import { QueryFunctionContext, useQuery } from '@tanstack/react-query';
-// import { useTrader } from '../contexts/TraderContext';
 import { StrategySignals } from '@trader/types';
 import { strategySignalsSchema } from '@trader/schemas';
 import { useParams } from 'react-router-dom';
@@ -26,6 +25,8 @@ const getSignals = async ({ queryKey }: QueryFunctionContext) => {
   return parsedData.data;
 };
 
+export type Filter = 'Buy' | 'Sell' | 'All';
+
 export const useSignals = () => {
   // const queryClient = useQueryClient();
   // const { strategy, ticker } = useTrader();
@@ -45,5 +46,10 @@ export const useSignals = () => {
 
   // console.log(currentSignal);
 
-  return { currentSignal, signals: data, isLoading, error };
+  return {
+    currentSignal,
+    signals: data,
+    isLoading,
+    error,
+  };
 };

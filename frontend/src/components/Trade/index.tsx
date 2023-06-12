@@ -40,7 +40,6 @@ const Trade = (): JSX.Element => {
     const trade = getTrade(currentSignal.symbol);
     if (!trade || force) {
       setCurrentTrade({
-        id: '',
         side: currentSignal.signal === 'Buy' ? 'buy' : 'sell',
         qty: 0,
         stop_loss: Number(Number(currentSignal.stop_loss).toFixed(2)),

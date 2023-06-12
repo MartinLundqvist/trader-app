@@ -3,6 +3,7 @@ import cors from 'cors';
 import { routes } from './routes/index.js';
 import { config } from 'dotenv';
 import JobsProvider from './jobs_provider/index.js';
+import PlacedTradesDB from './database_provider/model_placedTrade.js';
 // import StrategySignalDB from './database_provider/model_strategySignal.js';
 // import StrategyDB from './database_provider/model_strategy.js';
 config();
@@ -18,6 +19,8 @@ app.listen(PORT, () => {
 });
 
 JobsProvider.startJobs(1000);
+
+// await PlacedTradesDB.recreateTable();
 
 // JobsProvider.addJob({
 //   id: 'refresh-strategy',

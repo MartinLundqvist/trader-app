@@ -27,7 +27,6 @@ const initialState: ITradesContext = {
   removeAllTrades: () => {},
   tradeExists: () => false,
   currentTrade: {
-    id: '',
     symbol: '',
     strategy: '',
     take_profit: 0,

@@ -1,4 +1,5 @@
 import { Job } from '../types/index.js';
+import { runPlaceOrders } from './runPlaceOrders.js';
 import { runRefreshMarketData } from './runRefreshMarketData.js';
 import { runRefreshStrategy } from './runRefreshStrategy.js';
 
@@ -19,6 +20,10 @@ const workers: Worker[] = [
   {
     id: 'refresh-market-data',
     execute: async (job: Job) => runRefreshMarketData(job),
+  },
+  {
+    id: 'place-orders',
+    execute: async (job: Job) => runPlaceOrders(job),
   },
 ];
 
@@ -41,6 +46,8 @@ const startJobs = (interval: number) => {
         console.log(`Job ${job.id} complete.`);
         if (job.status === 'failed') {
           console.log(`Error: ${job.message}`);
+          pendingJobs.splice(pendingJobs.indexOf(job), 1);
+          completedJobs.push(job);
         }
         if (job.status === 'completed') {
           pendingJobs.splice(pendingJobs.indexOf(job), 1);
@@ -59,7 +66,10 @@ const getJobs = () => {
   return results;
 };
 
-const addJob = (job: Pick<Job, 'id' | 'variables'>) => {
+// const addJob = (job: Pick<Job, 'id' | 'variables'>) => {
+const addJob = (
+  job: Omit<Job, 'status' | 'progress' | 'message' | 'added'>
+) => {
   const newJob: Job = {
     ...job,
     status: 'pending',
