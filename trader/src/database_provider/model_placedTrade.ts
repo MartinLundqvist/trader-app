@@ -60,6 +60,10 @@ const PlacedTradeModel: ModelDefined<
       type: DataTypes.STRING,
       defaultValue: '',
     },
+    placed_at: {
+      type: DataTypes.DATE,
+      defaultValue: new Date(),
+    },
   },
   {
     tableName: 'placed_trades',

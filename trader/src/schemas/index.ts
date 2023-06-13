@@ -144,6 +144,7 @@ export const placedTradeSchema = tradeSchema.extend({
   job_id: z.string(), // This is the identified for a specific bulk of trades (a "job"), used internally for this applications
   status: z.union([z.literal('failed'), z.literal('successful')]),
   error: z.nullable(z.string()),
+  placed_at: z.coerce.date(),
 });
 
 export const placedTradesSchema = z.array(placedTradeSchema);

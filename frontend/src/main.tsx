@@ -11,6 +11,7 @@ import Trades from './pages/Trades';
 import Strategy from './components/Strategy';
 import Jobs from './pages/Jobs';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import PlacedTrades from './pages/PlacedTrades';
 
 const theme = createTheme({
   typography: {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: 'jobs',
         element: <Jobs />,
+      },
+      {
+        path: 'placedtrades',
+        element: <PlacedTrades />,
       },
     ],
   },

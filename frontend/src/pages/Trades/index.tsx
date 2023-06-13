@@ -102,7 +102,7 @@ const Trades = (): JSX.Element => {
   const handleApplyClick = () => {
     const positionPerTrade =
       ((account?.buying_power || 0) * shareOfBP) / 100 / trades.length;
-    console.log(positionPerTrade);
+    // console.log(positionPerTrade);
     trades.forEach((trade) => {
       const qty = Math.floor(positionPerTrade / trade.limit);
       updateTrade(trade.symbol, { ...trade, qty });
@@ -139,7 +139,7 @@ const Trades = (): JSX.Element => {
 
   return (
     <>
-      <TraderHeader title='Manage trades' />
+      <TraderHeader title='Manage and place new trades' />
       {/* <Grid container spacing={2} component={TraderPaper}> */}
       <Grid container spacing={2}>
         <Grid item xs={4}>
@@ -303,7 +303,9 @@ const Trades = (): JSX.Element => {
         <Grid item xs={4}>
           <AccountCard
             caption='Buying power after'
-            value={`$ ${account?.buying_power || 0 - totalPosition} (-${Number(
+            value={`$ ${Number(
+              (account?.buying_power || 0) - totalPosition
+            ).toFixed(2)} (-${Number(
               (totalPosition / (account?.buying_power || 1)) * 100
             ).toFixed(1)}%)`}
             error={accountError}
@@ -312,9 +314,11 @@ const Trades = (): JSX.Element => {
         <Grid item xs={4}>
           <AccountCard
             caption='Cash after'
-            value={`$ ${(account?.cash || 0) - totalPosition} (-${Number(
-              (totalPosition / (account?.cash || 1)) * 100
-            ).toFixed(1)}%)`}
+            value={`$ ${Number((account?.cash || 0) - totalPosition).toFixed(
+              2
+            )} (-${Number((totalPosition / (account?.cash || 1)) * 100).toFixed(
+              1
+            )}%)`}
             error={accountError}
           />
         </Grid>

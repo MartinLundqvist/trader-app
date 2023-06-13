@@ -15,6 +15,7 @@ export const runPlaceOrders = async (job: Job) => {
   job.progress = 0;
 
   const job_id = nanoid();
+  const placed_at = new Date();
 
   const successfulOrders: PlacedTrades = [];
   const failedOrders: PlacedTrades = [];
@@ -69,6 +70,7 @@ export const runPlaceOrders = async (job: Job) => {
 
       successfulOrders.push({
         ...trade,
+        placed_at,
         client_id,
         job_id,
         status: 'successful',
@@ -79,6 +81,7 @@ export const runPlaceOrders = async (job: Job) => {
         console.log(err.code, err.message);
         failedOrders.push({
           ...trade,
+          placed_at,
           client_id,
           job_id,
           status: 'failed',

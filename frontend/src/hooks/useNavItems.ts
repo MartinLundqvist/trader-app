@@ -5,6 +5,7 @@ import {
   CandlestickChart,
   Checklist,
   Insights,
+  ListAlt,
   ShoppingCartCheckout,
 } from '@mui/icons-material';
 import { useJobs } from './useJobs';
@@ -33,7 +34,7 @@ export const useNavItems = () => {
         icon: CandlestickChart,
       },
       {
-        label: `Trades (${nrTrades})`,
+        label: `New trades (${nrTrades})`,
         value: '/trades',
         to: '/trades',
         component: NavLink,
@@ -45,6 +46,13 @@ export const useNavItems = () => {
         to: '/jobs',
         component: NavLink,
         icon: Checklist,
+      },
+      {
+        label: `Placed trades`,
+        value: '/placedtrades',
+        to: '/placedtrades',
+        component: NavLink,
+        icon: ListAlt,
       },
     ],
     [nrTrades, nrJobs]

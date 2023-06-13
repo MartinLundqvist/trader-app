@@ -1,4 +1,5 @@
-import { Trade } from '@trader/types';
+import { PlacedTrades, Trade } from '@trader/types';
+import { PlacedTradeJob } from '../hooks/usePlacedTradeJobs';
 
 export const getDaysDifference = (date1: Date, date2: Date) => {
   // Get the difference in milliseconds
@@ -41,4 +42,33 @@ export const getPositionSize = (trade: Trade) => {
   if (trade.side === 'buy') return trade.limit * trade.qty;
 
   return 0;
+};
+
+export const createPlacedTradeJobs = (
+  placedTrades: PlacedTrades
+): PlacedTradeJob[] => {
+  const jobs: PlacedTradeJob[] = [];
+
+  placedTrades.forEach((trade) => {
+    const job = jobs.find((j) => j.job_id === trade.job_id);
+
+    if (!job) {
+      jobs.push({
+        job_id: trade.job_id,
+        placed_at: trade.placed_at,
+        nrTrades: 1,
+        nrSuccessful: trade.status === 'successful' ? 1 : 0,
+        nrFailed: trade.status === 'failed' ? 1 : 0,
+        trades: [trade],
+      });
+    } else {
+      job.nrTrades += 1;
+      if (trade.status === 'successful') job.nrSuccessful += 1;
+      if (trade.status === 'failed') job.nrFailed += 1;
+
+      job.trades.push(trade);
+    }
+  });
+
+  return jobs;
 };

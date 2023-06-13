@@ -1,6 +1,7 @@
 from utils.data_parser import json_to_df_adjusted
 from strategies.conservative import get_signal
-from flask import Flask, request, jsonify
+from flask import Flask, request
+from waitress import serve
 app = Flask(__name__)
 
 
@@ -37,4 +38,5 @@ def fn_conservative():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=4000)
+    # app.run(debug=True, port=4000)
+    serve(app, host='0.0.0.0', port=4000)
