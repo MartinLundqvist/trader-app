@@ -94,7 +94,7 @@ const Navigation = (): JSX.Element => {
             component={item.component}
             to={item.to}
             disablePadding
-            sx={{ display: 'block', color: 'inherit' }}
+            sx={{ display: 'block', color: 'inherit', textWrap: 'nowrap' }}
           >
             <ListItemButton
               sx={{

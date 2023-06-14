@@ -10,12 +10,17 @@ import Signals from './pages/Signals';
 import Trades from './pages/Trades';
 import Strategy from './components/Strategy';
 import Jobs from './pages/Jobs';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import PlacedTrades from './pages/PlacedTrades';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const theme = createTheme({
   typography: {
     fontSize: 12,
+  },
+  palette: {
+    background: {
+      default: '#f5f5f5e5',
+    },
   },
 });
 
@@ -26,6 +31,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
+      { path: '/', element: <Strategies /> },
       {
         path: 'strategies',
         element: <Strategies />,
