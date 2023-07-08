@@ -159,3 +159,33 @@ routes.get('/positions', async (req, res) => {
     res.status(500).send({ error: 'Error while fetching positions' });
   }
 });
+
+routes.get('/orders', async (req, res) => {
+  try {
+    const orders = await Trader.getOrders();
+
+    res.status(200).send(orders);
+  } catch (err) {
+    res.status(500).send({ error: 'Error while fetching orders' });
+  }
+});
+
+routes.get('/positions/close/:ticker', async (req, res) => {
+  try {
+    const ticker = req.params.ticker;
+    const positions = await Trader.getPositions();
+    const position = positions.find((p) => p.symbol === ticker);
+
+    if (position) {
+      await Trader.closePosition({ symbol: ticker });
+      res
+        .status(200)
+        .send({ message: `Position ${ticker} closed`, success: true });
+    } else {
+      res.status(404).send({ error: `Position ${ticker} not found` });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: 'Error while closing position' });
+  }
+});

@@ -1,6 +1,5 @@
 import {
   Alert,
-  Button,
   CircularProgress,
   Grid,
   Table,
@@ -13,12 +12,15 @@ import {
 import { TraderHeader, TraderPaper } from '../../elements';
 import { usePositions } from '../../hooks/usePositions';
 import { useNavigate } from 'react-router-dom';
+import { useOrders } from '../../hooks/useOrders';
+import { PositionRow } from './PositionRow';
 
 const Positions = (): JSX.Element => {
   const { positions, isLoading, error } = usePositions();
+  const { orders } = useOrders();
   const navigate = useNavigate();
 
-  console.log(positions);
+  console.log(orders);
 
   const handleChartClick = (strategy: string, symbol: string) => {
     navigate(`/signals/${strategy}/${symbol}`);
@@ -34,6 +36,7 @@ const Positions = (): JSX.Element => {
           <Table size='small'>
             <TableHead>
               <TableRow>
+                <TableCell />
                 <TableCell>Symbol</TableCell>
                 <TableCell>Side</TableCell>
                 <TableCell>Avg. entry price</TableCell>
@@ -46,26 +49,7 @@ const Positions = (): JSX.Element => {
             <TableBody>
               {positions &&
                 positions.map((pos, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{pos.symbol}</TableCell>
-                    <TableCell>{pos.side}</TableCell>
-                    <TableCell>{pos.avg_entry_price}</TableCell>
-                    <TableCell>{pos.current_price}</TableCell>
-                    <TableCell>{pos.qty}</TableCell>
-                    <TableCell>
-                      {pos.unrealized_pl} ({pos.unrealized_plpc?.toFixed(2)}%)
-                    </TableCell>
-                    <TableCell>
-                      {' '}
-                      <Button
-                        onClick={() =>
-                          handleChartClick('conservative', pos.symbol)
-                        }
-                      >
-                        Go to chart
-                      </Button>
-                    </TableCell>
-                  </TableRow>
+                  <PositionRow pos={pos} key={index} />
                 ))}
             </TableBody>
           </Table>
