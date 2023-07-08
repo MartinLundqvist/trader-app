@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useTrades } from '../contexts/TradesContext';
 import { NavLink } from 'react-router-dom';
 import {
+  BusinessCenter,
   CandlestickChart,
   Checklist,
   Insights,
@@ -53,6 +54,13 @@ export const useNavItems = () => {
         to: '/placedtrades',
         component: NavLink,
         icon: ListAlt,
+      },
+      {
+        label: `Positions`,
+        value: '/positions',
+        to: '/positions',
+        component: NavLink,
+        icon: BusinessCenter,
       },
     ],
     [nrTrades, nrJobs]

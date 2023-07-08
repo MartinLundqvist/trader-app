@@ -148,3 +148,14 @@ routes.get('/placedtrades', async (req, res) => {
     res.status(500).send({ error: 'Error while fetching placed trades' });
   }
 });
+
+routes.get('/positions', async (req, res) => {
+  try {
+    const positions = await Trader.getPositions();
+
+    res.status(200).send(positions);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: 'Error while fetching positions' });
+  }
+});

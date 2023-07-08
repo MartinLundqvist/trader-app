@@ -1,5 +1,9 @@
 // import { StrategyTickerData } from '@trader-app/shared';
-import { EChartsOption, MarkPointComponentOption } from 'echarts';
+import {
+  EChartsOption,
+  MarkAreaComponentOption,
+  MarkPointComponentOption,
+} from 'echarts';
 // import { TickerSignal } from '../../hooks/useTickerSignals';
 import { StrategyTickerData } from '@trader/types';
 export const STOP_LOSS_LINE = 'Stop Loss';
@@ -30,12 +34,15 @@ export const createOption = (
     entry.Low,
   ]);
 
+  // TODO: Refactor the below to be programmatically declared by the Strategy
+  // TODO: Also move all these map methods into the below for-loop - this is a performance disaster
   let bb_highData = data.map((entry) => entry.BB_high);
   let bb_lowData = data.map((entry) => entry.BB_low);
   let sma_slowData = data.map((entry) => entry.SMA_slow);
   let sma_fastData = data.map((entry) => entry.SMA_fast);
   let volumeData: any[] = [];
   let signalMarkPoints: MarkPointComponentOption['data'] = [];
+  // let positionMarkAreas: MarkAreaComponentOption['data'] = [];
 
   for (let i = 0; i < data.length; i++) {
     volumeData.push([i, data[i].Volume, data[i].Close < data[i].Open ? 1 : -1]);
@@ -57,6 +64,16 @@ export const createOption = (
       });
     }
   }
+
+  // positionMarkAreas.push([
+  //   {
+  //     name: 'Testarea',
+  //     xAxis: '2023-02-28',
+  //   },
+  //   {
+  //     xAxis: '2023-04-19',
+  //   },
+  // ]);
 
   let option: EChartsOption = {
     animation: false,
@@ -197,7 +214,7 @@ export const createOption = (
 
     series: [
       {
-        name: 'AAPL',
+        name: 'AAPL', //TODO: Fix this
         type: 'candlestick',
         data: candlestickData,
         itemStyle: {
@@ -244,6 +261,13 @@ export const createOption = (
             },
           ],
         },
+        // markArea: {
+        //   name: 'Test',
+        //   itemStyle: {
+        //     color: 'rgba(255,0,0,0.1)',
+        //   },
+        //   data: positionMarkAreas,
+        // },
 
         tooltip: {
           formatter: (param: any) => {

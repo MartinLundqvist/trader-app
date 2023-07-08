@@ -168,6 +168,16 @@ const Chart = (): JSX.Element => {
   if (!tickerSignals)
     return <Alert severity='error'>No data found for {ticker}</Alert>;
 
+  // console.log(
+  //   createOption(
+  //     tickerSignals,
+  //     currentTrade?.stop_loss || 0,
+  //     currentTrade?.take_profit || 0,
+  //     startZoom,
+  //     endZoom
+  //   )
+  // );
+
   return (
     <TraderPaper sx={{ height: '500px' }}>
       <Box gap={2} height='100%'>
