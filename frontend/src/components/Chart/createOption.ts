@@ -21,7 +21,7 @@ export const createOption = (
   const upColor = '#00da3c';
   const downColor = '#ec0000';
 
-  // let symbol = data[0].symbol;
+  let symbol = data[0].symbol;
 
   let categoryData = data.map(
     (entry) => entry.date.toISOString().split('T')[0]
@@ -83,7 +83,7 @@ export const createOption = (
     legend: {
       bottom: 10,
       left: 'center',
-      data: ['AAPL', 'BB Higher', 'BB Lower', 'Fast SMA', 'Slow SMA'],
+      data: [symbol, 'BB Higher', 'BB Lower', 'Fast SMA', 'Slow SMA'],
     },
     tooltip: {
       trigger: 'axis',
@@ -214,7 +214,7 @@ export const createOption = (
 
     series: [
       {
-        name: 'AAPL', //TODO: Fix this
+        name: symbol, //TODO: Fix this
         type: 'candlestick',
         data: candlestickData,
         itemStyle: {
