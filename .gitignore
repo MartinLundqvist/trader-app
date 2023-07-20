@@ -4,7 +4,7 @@
 
 # Node.js .gitignore
 node_modules
-*.env
+*.env*
 build
 development_assets
 

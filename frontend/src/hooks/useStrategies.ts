@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 
 const getStrategies = async () => {
   const url = import.meta.env.VITE_API_URL;
+
   const response = await fetch(`${url}/strategies`);
 
   if (!response.ok) throw new Error('Error calling API');

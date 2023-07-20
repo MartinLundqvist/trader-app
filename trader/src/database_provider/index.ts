@@ -1,6 +1,7 @@
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
-dotenv.config();
+import config from '../config/index.js';
+config();
 
 const DB = process.env.URL_POSTGRES ?? '';
 
