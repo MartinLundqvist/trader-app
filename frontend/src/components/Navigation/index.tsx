@@ -12,6 +12,7 @@ import {
   Typography,
   css,
   styled,
+  Theme,
 } from '@mui/material';
 
 import { useState } from 'react';
@@ -24,16 +25,18 @@ const NAV_WIDTH_CLOSED = '60px';
 const openMixin = css`
   width: ${NAV_WIDTH_OPEN};
   transition: width
-    ${(props) => props.theme.transitions.duration.enteringScreen}ms
-    ${(props) => props.theme.transitions.easing.sharp};
+    ${(props: { theme: Theme }) =>
+      props.theme.transitions.duration.enteringScreen}ms
+    ${(props: { theme: Theme }) => props.theme.transitions.easing.sharp};
   overflow-x: hidden;
 `;
 
 const closedMixin = css`
   width: ${NAV_WIDTH_CLOSED};
   transition: width
-    ${(props) => props.theme.transitions.duration.leavingScreen}ms
-    ${(props) => props.theme.transitions.easing.sharp};
+    ${(props: { theme: Theme }) =>
+      props.theme.transitions.duration.leavingScreen}ms
+    ${(props: { theme: Theme }) => props.theme.transitions.easing.sharp};
   overflow-x: hidden;
 `;
 

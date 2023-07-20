@@ -6,6 +6,10 @@ import {
   strategySignalSchema,
   strategyTickerDataSchema,
 } from '../schemas/index.js';
+import config from '../config/index.js';
+config();
+const URL_STRATEGIES = process.env.URL_STRATEGIES || 'http://localhost:4000';
+
 /**
  * Fetches the latest signal for a specific ticker from the conservative strategy service.
  *
@@ -25,7 +29,8 @@ import {
 export const getSignal = async (
   ticker: string
 ): Promise<StrategySignal | null> => {
-  const url = 'http://127.0.0.1:4000/conservative/signal';
+  const url = `${URL_STRATEGIES}/conservative/signal`;
+  // const url = 'http://127.0.0.1:4000/conservative/signal';
   const dateOffset = 400 * 24 * 60 * 60 * 1000; // 400 days
   // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
   // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days
@@ -89,7 +94,8 @@ export const getSignal = async (
 export const getTickerData = async (
   ticker: string
 ): Promise<StrategyTickerData | null> => {
-  const url = 'http://127.0.0.1:4000/conservative';
+  const url = `${URL_STRATEGIES}/conservative`;
+  // const url = 'http://127.0.0.1:4000/conservative';
   const dateOffset = 400 * 24 * 60 * 60 * 1000; // 400 days
   // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
   // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days

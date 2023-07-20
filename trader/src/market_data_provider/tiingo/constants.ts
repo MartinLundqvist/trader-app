@@ -1,5 +1,7 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import config from '../../config/index.js';
+
+// import dotenv from 'dotenv';
+config();
 
 // https://api.tiingo.com/tiingo/daily/<ticker>/prices?startDate=2012-1-1&endDate=2016-1-1&format=csv&resampleFreq=monthly
 // https://api.tiingo.com/tiingo/fundamentals/<ticker>/daily?token=xxx&startDate=2023-03-16
