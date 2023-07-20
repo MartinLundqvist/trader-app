@@ -7,7 +7,7 @@ import { config } from 'dotenv';
 const envString =
   process.env.NODE_ENV === 'production' ? '.env.production' : '.env.local';
 
-console.log(`Loading configuration from ${envString}`);
+// console.log(`Loading configuration from ${envString}`);
 
 config({ path: envString, debug: true, override: true });
 
@@ -18,18 +18,14 @@ const port = process.env.PORT || 3000;
 // This is because I do not want to expose the trader, databsae or strategies services to the outside world.
 const BACK_END_URL = process.env.BACK_END_URL || 'http://localhost:4001/api';
 
-console.log(`Proxying API requests to ${BACK_END_URL}`);
+// console.log(`Proxying API requests to ${BACK_END_URL}`);
 
-app.all('*', (req, res, next) => {
-  console.log(`Request received: ${req.method} ${req.path}`);
-  next();
-});
+// app.all('*', (req, res, next) => {
+//   console.log(`Request received: ${req.method} ${req.path}`);
+//   next();
+// });
 
-app.all('/api/*', (req, res, next) => {
-  console.log(`Proxying request from ${req.ip}`);
-
-  proxy(BACK_END_URL)(req, res, next);
-});
+app.all('/api/*', proxy(BACK_END_URL));
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
