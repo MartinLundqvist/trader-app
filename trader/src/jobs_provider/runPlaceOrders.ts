@@ -20,29 +20,6 @@ export const runPlaceOrders = async (job: Job) => {
   const successfulOrders: PlacedTrades = [];
   const failedOrders: PlacedTrades = [];
 
-  // const tradesToPlace: PlaceOrder[] = [];
-
-  // for (let trade of job.trades) {
-  //   const { symbol, side, qty, stop_loss, take_profit } = trade;
-  //   const client_id = nanoid();
-
-  //   tradesToPlace.push({
-  //     client_order_id: client_id,
-  //     symbol,
-  //     side,
-  //     qty,
-  //     type: 'market',
-  //     time_in_force: 'gtc',
-  //     order_class: 'bracket',
-  //     stop_loss: {
-  //       stop_price: stop_loss,
-  //     },
-  //     take_profit: {
-  //       limit_price: take_profit,
-  //     },
-  //   });
-  // }
-
   job.message = 'Orders placed for: ';
 
   for (let trade of job.trades) {
@@ -59,6 +36,7 @@ export const runPlaceOrders = async (job: Job) => {
       order_class: 'bracket',
       stop_loss: {
         stop_price: stop_loss,
+        limit_price: stop_loss,
       },
       take_profit: {
         limit_price: take_profit,

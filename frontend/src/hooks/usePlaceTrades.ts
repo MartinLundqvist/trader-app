@@ -1,8 +1,6 @@
 import { Trade } from '@trader/types';
 import { useState } from 'react';
 
-// TODO: URGENT refactor this to use the useRefresh pattern!!!!!!!
-
 export const usePlaceTrades = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -37,26 +35,3 @@ export const usePlaceTrades = () => {
 
   return { placeTrades, result: data, isLoading, error };
 };
-
-// export const usePlaceTrades = () => {
-//   const mutation = useMutation<PlaceTradesResponse, Error, Trade[]>(
-//     postTrades,
-//     {
-//       networkMode: 'offlineFirst',
-//     }
-//   );
-
-//   const placeTrades = (trades: Trade[]) => {
-//     console.log('Placing trades');
-//     mutation.mutate(trades);
-//   };
-
-//   return {
-//     placeTrades,
-//     isLoading: mutation.isLoading,
-//     isError: mutation.isError,
-//     isSuccess: mutation.isSuccess,
-//     error: mutation.error,
-//     data: mutation.data,
-//   };
-// };
