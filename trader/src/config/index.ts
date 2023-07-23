@@ -4,8 +4,7 @@ const envString = process.env.NODE_ENV === 'production' ? '.env' : '.env.local';
 
 const getConfiguration = () => {
   console.log(`Loading configuration from ${envString}`);
-
-  config({ path: envString, debug: true, override: true });
+  config({ path: envString, debug: false, override: true });
 };
 
 export default getConfiguration;
