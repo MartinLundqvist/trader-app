@@ -2,6 +2,7 @@ import { Job } from '../types/index.js';
 import { runPlaceOrders } from './runPlaceOrders.js';
 import { runRefreshMarketData } from './runRefreshMarketData.js';
 import { runRefreshStrategy } from './runRefreshStrategy.js';
+import { runTestJob } from './runTestJob.js';
 
 const jobQueue: Job[] = [];
 const pendingJobs: Job[] = [];
@@ -13,6 +14,10 @@ interface Worker {
 }
 
 const workers: Worker[] = [
+  {
+    id: 'test-job',
+    execute: async (job: Job) => runTestJob(job),
+  },
   {
     id: 'refresh-strategy',
     execute: async (job: Job) => runRefreshStrategy(job),

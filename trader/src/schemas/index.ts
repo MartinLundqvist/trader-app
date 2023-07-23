@@ -183,6 +183,7 @@ export const jobSchema = z.object({
     z.literal('refresh-strategy'),
     z.literal('refresh-market-data'),
     z.literal('place-orders'),
+    z.literal('test-job'),
   ]),
   status: z.union([
     z.literal('pending'),

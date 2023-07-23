@@ -1,12 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import { routes } from './routes/index.js';
-// import { config } from 'dotenv';
 import JobsProvider from './jobs_provider/index.js';
-import PlacedTradesDB from './database_provider/model_placedTrade.js';
 import config from './config/index.js';
-// import StrategySignalDB from './database_provider/model_strategySignal.js';
-// import StrategyDB from './database_provider/model_strategy.js';
+import { CronJob } from 'cron';
 
 config();
 
@@ -22,6 +19,30 @@ app.use('/api', routes);
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+// Start cron jobs to update the market data at the end of every day, and then re-run the strategy signal hunter 10 minutes later
+const cronJobRefreshMarketData = new CronJob('0 0 5 * * *', () => {
+  const date = new Date();
+  console.log(date.toISOString() + ': Refreshing market data');
+
+  JobsProvider.addJob({
+    id: 'refresh-market-data',
+    variables: [],
+  });
+});
+
+const cronJobRefreshStrategy = new CronJob('0 10 5 * * *', () => {
+  const date = new Date();
+  console.log(date.toISOString() + ': Refreshing strategy signals');
+
+  JobsProvider.addJob({
+    id: 'refresh-strategy',
+    variables: ['conservative'],
+  });
+});
+
+cronJobRefreshMarketData.start();
+cronJobRefreshStrategy.start();
 
 JobsProvider.startJobs(1000);
 
