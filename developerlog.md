@@ -231,3 +231,23 @@ A tonne of work has gone in. I struggled a lot with getting the event listeners 
 - Use the useEffect hook to add the event listener to the element
 - In the useEffect hook, add a recursive function that keeps calling itself with 100ms delay until the element is available (`if (!ref.current)` and so on).
 - Then in the clean-up function, remove the event listeners as per usual, but check if the element actually exists first.
+
+# July
+
+Main useful entry is dockerizing the whole beast into an app that is now running locally on my computer. The pattern is a `docker-compose.yml` sitting in the root of the project. Each service (frontend, strategies, trader) has a Docker file, except the database that just uses the standard PostGres image and mounts to a local folder where the data sits.
+
+## Learned how to work with networking
+
+- All the services defined in the docker-compose file will run in a default network, where they can communicate with each other using the service name as the hostname.
+- This means, all the environment URL variables need to be dynamically set to either "localhost" or the service name, depending on whether the service is running in a container or not.
+- Only the frontend service needs a mapping to the host port, as this is the only service that needs to be exposed to the outside world.
+- In order for the frontend to access APIs which are inside the container, the server (`frontend/server/server.ts`) that serves the frontend need to proxy the requests from `http://localhost:3210/api` to `http://trader:4001/api` (for example). This is done using the `express-http-proxy` package.
+
+## Learned hot to work with build context
+
+`trader` and `frontend` share types and Zod schemas which are provided by the `trader/src/types` and `trader/src/schemas`.
+
+- Run the `docker-compose.yml` from the project root
+- Provide the root folder as the build `context` for each Docker image to be built in the `docker-compose.yml` file
+- The local `Dockerfiles` are written such that they reference from the project root
+- In the case of the `frontend` service, it makes a full copy of the `trader/.` folder - this is not ideal, but it works for now. The culprit are the zod schemas... I do not have zod installed in the `frontend` service, but I need the schemas to be available...
