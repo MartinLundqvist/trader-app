@@ -7,6 +7,7 @@
     "test": "jest",
     "tests_NOTUSED": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:broker": "ts-node --esm ./src/broker_provider/index.ts",
+    "test:strategyperformance": "NODE_ENV=development ts-node --esm ./src/tests/strategy_performance.ts",
     "dev": "NODE_ENV=development nodemon --esm ./src/index.ts",
     "build": "rm -rf build && tsc",
     "start": "NODE_ENV=production node --experimental-vm-modules build/index.js"

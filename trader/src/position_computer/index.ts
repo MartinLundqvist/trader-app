@@ -31,7 +31,7 @@ export const getSignal = async (
 ): Promise<StrategySignal | null> => {
   const url = `${URL_STRATEGIES}/conservative/signal`;
   // const url = 'http://127.0.0.1:4000/conservative/signal';
-  const dateOffset = 400 * 24 * 60 * 60 * 1000; // 400 days
+  const dateOffset = 300 * 24 * 60 * 60 * 1000; // 300 days
   // const dateOffset = 100 * 24 * 60 * 60 * 1000; // 100 days
   // const dateOffset = 10 * 24 * 60 * 60 * 1000; // 10 days
   const toDate = new Date();
@@ -39,7 +39,10 @@ export const getSignal = async (
 
   console.log(`Getting signal for ${ticker} from ${fromDate} to ${toDate}.`);
 
+  // console.time('getdata' + ticker);
+
   const tickerData = await MarketDataDB.readData([ticker], fromDate, toDate);
+  // console.timeEnd('getdata' + ticker);
 
   if (tickerData.length < 200) return null;
 
@@ -50,10 +53,6 @@ export const getSignal = async (
         json: tickerData,
       })
       .json();
-
-    // console.log(response);
-
-    // const parsed = strategiesSchema.parse(response);
 
     let parsedResponse = strategySignalResponseSchema.parse(response);
 

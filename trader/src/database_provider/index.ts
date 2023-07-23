@@ -8,6 +8,10 @@ const DB = process.env.URL_POSTGRES ?? '';
 export const sequelize = new Sequelize(DB, {
   dialect: 'postgres',
   protocol: 'postgres',
+  pool: {
+    max: 50,
+    min: 0,
+  },
 });
 
 export const connectToDB = async () => {
