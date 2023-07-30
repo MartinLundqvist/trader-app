@@ -11,20 +11,21 @@ import {
 } from '@mui/material';
 import { TraderHeader, TraderPaper } from '../../elements';
 import { usePositions } from '../../hooks/usePositions';
-import { useNavigate } from 'react-router-dom';
-import { useOrders } from '../../hooks/useOrders';
+// import { useNavigate } from 'react-router-dom';
+// import { useOrders } from '../../hooks/useOrders';
 import { PositionRow } from './PositionRow';
 
 const Positions = (): JSX.Element => {
   const { positions, isLoading, error } = usePositions();
-  const { orders } = useOrders();
-  const navigate = useNavigate();
+  // const { orders } = useOrders();
+  // const navigate = useNavigate();
 
-  console.log(orders);
+  // console.log(orders);
+  // console.log(positions);
 
-  const handleChartClick = (strategy: string, symbol: string) => {
-    navigate(`/signals/${strategy}/${symbol}`);
-  };
+  // const handleChartClick = (strategy: string, symbol: string) => {
+  //   navigate(`/signals/${strategy}/${symbol}`);
+  // };
 
   return (
     <>
