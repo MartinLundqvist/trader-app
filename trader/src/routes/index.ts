@@ -162,7 +162,7 @@ routes.get('/positions', async (req, res) => {
 
 routes.get('/orders', async (req, res) => {
   try {
-    const orders = await Trader.getOrders();
+    const orders = await Trader.getOrders({ status: 'all', nested: true });
 
     res.status(200).send(orders);
   } catch (err) {

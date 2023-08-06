@@ -1,4 +1,4 @@
-import { PlacedTrades, Trade } from '@trader/types';
+import { Order, PlacedTrades, Trade } from '@trader/types';
 import { PlacedTradeJob } from '../hooks/usePlacedTradeJobs';
 
 export const getDaysDifference = (date1: Date, date2: Date) => {
@@ -71,4 +71,36 @@ export const createPlacedTradeJobs = (
   });
 
   return jobs;
+};
+
+export const positionStatus = (order: Order): 'open' | 'closed' => {
+  if (order.status !== 'filled') return 'open';
+
+  const originalQty = order.qty;
+  const legs = order.legs;
+
+  const filledQty = legs.reduce((acc, leg) => {
+    return leg.status === 'filled' ? acc + leg.qty : acc;
+  }, 0);
+
+  return originalQty === filledQty ? 'closed' : 'open';
+};
+
+export const positionPnL = (order: Order) => {
+  if (positionStatus(order) === 'open') return undefined;
+  const acquisitionCost = order.qty * order.filled_avg_price;
+
+  // If there is a leg with a status of 'filled', then we can calculate the PnL
+  const filledLeg = order.legs.find((leg) => leg.status === 'filled');
+
+  if (!filledLeg) return undefined;
+
+  const filledCost = filledLeg.qty * filledLeg.filled_avg_price;
+
+  return {
+    absolute: (filledCost - acquisitionCost).toFixed(2),
+    percent: ((100 * (filledCost - acquisitionCost)) / acquisitionCost).toFixed(
+      2
+    ),
+  };
 };

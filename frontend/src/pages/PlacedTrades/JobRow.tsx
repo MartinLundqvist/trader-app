@@ -17,6 +17,7 @@ import { TradeRow } from './TradeRow';
 
 export const JobRow = ({ job }: { job: PlacedTradeJob }): JSX.Element => {
   const [open, setOpen] = useState(false);
+
   return (
     <>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -52,8 +53,10 @@ export const JobRow = ({ job }: { job: PlacedTradeJob }): JSX.Element => {
                     <TableCell>Qty</TableCell>
                     <TableCell>TP</TableCell>
                     <TableCell>SL</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Error?</TableCell>
+                    <TableCell>Job status</TableCell>
+                    <TableCell>Trade status</TableCell>
+                    <TableCell>Position status</TableCell>
+                    <TableCell>PnL (if closed)</TableCell>
                     <TableCell />
                   </TableRow>
                 </TableHead>
