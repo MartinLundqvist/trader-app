@@ -104,3 +104,29 @@ export const positionPnL = (order: Order) => {
     ),
   };
 };
+
+export const nrProfitableOrders = (orders: Order[]) => {
+  return orders.filter((order) => {
+    const pnl = positionPnL(order);
+    if (!pnl) return false;
+
+    return Number(pnl.absolute) > 0;
+  }).length;
+};
+
+export const totalAquisitionCost = (orders: Order[]) => {
+  return orders.reduce((acc, order) => {
+    const acquisitionCost = order.qty * order.filled_avg_price;
+
+    return acc + acquisitionCost;
+  }, 0);
+};
+
+export const totalProfit = (orders: Order[]) => {
+  return orders.reduce((acc, order) => {
+    const pnl = positionPnL(order);
+    if (!pnl) return acc;
+
+    return acc + Number(pnl.absolute);
+  }, 0);
+};

@@ -2,6 +2,7 @@ import {
   Box,
   Chip,
   Collapse,
+  Grid,
   IconButton,
   Table,
   TableBody,
@@ -14,9 +15,47 @@ import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import { useState } from 'react';
 import { PlacedTradeJob } from '../../hooks/usePlacedTradeJobs';
 import { TradeRow } from './TradeRow';
+import { AccountCard } from '../Trades/AccountCard';
+import { useOrders } from '../../hooks/useOrders';
+import {
+  nrProfitableOrders,
+  positionStatus,
+  totalAquisitionCost,
+  totalProfit,
+} from '../../utils';
+import { Order } from '@trader/types';
 
 export const JobRow = ({ job }: { job: PlacedTradeJob }): JSX.Element => {
   const [open, setOpen] = useState(false);
+  const { orders } = useOrders();
+
+  const _theseOrders =
+    orders &&
+    job.trades.map((trade) => {
+      return orders.find((order) => order.client_order_id === trade.client_id);
+    });
+
+  const theseOrders = _theseOrders?.reduce((acc: Order[], value) => {
+    if (value) {
+      acc.push(value);
+    }
+    return acc;
+  }, []);
+
+  const _closedOrders =
+    theseOrders &&
+    theseOrders.map((order) => {
+      if (positionStatus(order!) === 'closed') {
+        return order;
+      }
+    });
+
+  const closedOrders = _closedOrders?.reduce((acc: Order[], value) => {
+    if (value) {
+      acc.push(value);
+    }
+    return acc;
+  }, []);
 
   return (
     <>
@@ -44,6 +83,49 @@ export const JobRow = ({ job }: { job: PlacedTradeJob }): JSX.Element => {
               <Typography variant='body1' gutterBottom>
                 Trades
               </Typography>
+              <Grid container spacing={2} marginTop={1} marginBottom={1}>
+                <Grid item xs={4}>
+                  <AccountCard
+                    caption='Trades closed out of total'
+                    value={
+                      (closedOrders?.length.toString() ?? '-') +
+                      ' / ' +
+                      job.trades.length.toString()
+                    }
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <AccountCard
+                    caption='Profitable trades out of closed'
+                    value={
+                      (closedOrders
+                        ? nrProfitableOrders(closedOrders).toString()
+                        : '-') +
+                      ' / ' +
+                      (closedOrders?.length.toString() ?? '-')
+                    }
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <AccountCard
+                    caption='Profit and loss'
+                    value={
+                      closedOrders
+                        ? totalProfit(closedOrders).toLocaleString() +
+                          ' / ' +
+                          totalAquisitionCost(closedOrders).toLocaleString() +
+                          ' (' +
+                          (
+                            (totalProfit(closedOrders) /
+                              totalAquisitionCost(closedOrders)) *
+                            100
+                          ).toFixed(2) +
+                          '%)'
+                        : '-'
+                    }
+                  />
+                </Grid>
+              </Grid>
               <Table size='small'>
                 <TableHead>
                   <TableRow>

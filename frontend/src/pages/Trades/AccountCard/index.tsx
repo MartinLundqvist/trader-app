@@ -5,11 +5,11 @@ import { TraderCard } from '../../../elements';
 export const AccountCard = ({
   caption,
   value,
-  error,
+  error = null,
 }: {
   caption: string;
   value: string;
-  error: Error | null;
+  error?: Error | null;
 }): JSX.Element => {
   if (error) return <>{error.message}</>;
 
