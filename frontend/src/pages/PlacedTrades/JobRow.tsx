@@ -137,7 +137,10 @@ export const JobRow = ({ job }: { job: PlacedTradeJob }): JSX.Element => {
                     <TableCell>SL</TableCell>
                     <TableCell>Job status</TableCell>
                     <TableCell>Trade status</TableCell>
+                    <TableCell>Filled on </TableCell>
+                    <TableCell>Avg. filled price</TableCell>
                     <TableCell>Position status</TableCell>
+                    <TableCell>Price change</TableCell>
                     <TableCell>PnL (if closed)</TableCell>
                     <TableCell />
                   </TableRow>

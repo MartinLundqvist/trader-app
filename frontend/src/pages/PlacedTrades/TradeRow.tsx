@@ -1,9 +1,18 @@
-import { Box, Button, Chip, TableCell, TableRow, Tooltip } from '@mui/material';
+import {
+  Box,
+  Button,
+  Chip,
+  CircularProgress,
+  TableCell,
+  TableRow,
+  Tooltip,
+} from '@mui/material';
 import { Order, PlacedTrade } from '@trader/types';
 import { useNavigate } from 'react-router-dom';
 import { useOrders } from '../../hooks/useOrders';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { positionPnL, positionStatus } from '../../utils';
+import { useLatestTradePrice } from '../../hooks/useLatestTradePrice';
 
 export const TradeRow = ({
   placedTrade,
@@ -12,13 +21,31 @@ export const TradeRow = ({
 }): JSX.Element => {
   const navigate = useNavigate();
   const { orders } = useOrders();
+  const { latestTradePrice, isLoading } = useLatestTradePrice(
+    placedTrade.symbol
+  );
 
   const thisOrder = orders?.find(
     (order) => order.client_order_id === placedTrade.client_id
   );
 
+  console.log(latestTradePrice);
+
   const thisPositionStatus = thisOrder && positionStatus(thisOrder);
   const thisOrderPnL = thisOrder && positionPnL(thisOrder);
+
+  const getPriceChange = () => {
+    if (!thisOrder || !latestTradePrice) return null;
+
+    if (thisOrder.status !== 'filled') return null;
+
+    const priceChange =
+      ((Number(latestTradePrice) - Number(thisOrder.filled_avg_price)) /
+        Number(thisOrder.filled_avg_price)) *
+      100;
+
+    return priceChange.toFixed(2);
+  };
 
   const handleChartClick = (strategy: string, symbol: string) => {
     navigate(`/signals/${strategy}/${symbol}`);
@@ -39,7 +66,28 @@ export const TradeRow = ({
         <TradeStatusChip status={thisOrder?.status} />
       </TableCell>
       <TableCell>
+        {thisOrder?.status === 'filled' &&
+          new Date(thisOrder?.filled_at).toLocaleDateString()}
+      </TableCell>
+      <TableCell>
+        {thisOrder?.status === 'filled' && thisOrder?.filled_avg_price}
+      </TableCell>
+      <TableCell>
         <OrderStatusChip status={thisPositionStatus} />
+      </TableCell>
+      <TableCell>
+        {isLoading ? (
+          <CircularProgress size='1rem' />
+        ) : (
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {getPriceChange() && Number(getPriceChange()) > 0 ? (
+              <ArrowDropUp color='success' />
+            ) : (
+              <ArrowDropDown color='error' />
+            )}
+            {getPriceChange()}%
+          </Box>
+        )}
       </TableCell>
       {/* <TableCell>{thisOrder && thisOrder.status}</TableCell>
       <TableCell>{thisOrderClosed ? 'Closed' : 'Open'}</TableCell> */}
