@@ -11,10 +11,6 @@ const getOrders = async () => {
 
   const data = await response.json();
 
-  // const parsedData = jobsResponseSchema.safeParse(data);
-
-  // if (!parsedData.success) throw new Error(parsedData.error.message);
-
   return data;
 };
 

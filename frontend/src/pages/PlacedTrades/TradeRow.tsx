@@ -70,7 +70,8 @@ export const TradeRow = ({
           new Date(thisOrder?.filled_at).toLocaleDateString()}
       </TableCell>
       <TableCell>
-        {thisOrder?.status === 'filled' && thisOrder?.filled_avg_price}
+        {thisOrder?.status === 'filled' &&
+          thisOrder?.filled_avg_price.toFixed(2)}
       </TableCell>
       <TableCell>
         <OrderStatusChip status={thisPositionStatus} />
