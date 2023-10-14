@@ -29,7 +29,7 @@ export const TradeRow = ({
     (order) => order.client_order_id === placedTrade.client_id
   );
 
-  console.log(latestTradePrice);
+  // console.log(latestTradePrice);
 
   const thisPositionStatus = thisOrder && positionStatus(thisOrder);
   const thisOrderPnL = thisOrder && positionPnL(thisOrder);
@@ -99,7 +99,7 @@ export const TradeRow = ({
             ) : (
               <ArrowDropDown color='error' />
             )}
-            {thisOrderPnL.absolute} (${thisOrderPnL.percent}%)
+            {thisOrderPnL.absolute} ({thisOrderPnL.percent}%)
           </Box>
         ) : (
           'N/A'
