@@ -1,18 +1,8 @@
-// import {
-//   Fundamentals,
-//   MarketData,
-//   TiingoAPIResponse,
-// } from '../../types/index.js';
 import got, { OptionsOfJSONResponseBody } from 'got';
 import { AUTHORIZATION, DAILY_URL, END_POINT_EOD } from './constants.js';
 import { fromDateToString } from '../../utils/index.js';
-// import { MarketData } from '@trader-app/shared/types/index.js';
 import { MarketData, TiingoAPIResponse } from '../../types/index.js';
 import { marketDataSchema } from '../../schemas/index.js';
-// import { MarketData } from '@trader-app/shared';
-// import { marketDataSchema } from '@trader-app/shared/src/schemas.js';
-// import { marketDataSchema } from '@trader-app/shared/schemas/index.js';
-// import { fundamentalsSchema, marketDataSchema } from '../../schemas/index.js';
 
 const getMultipleEODDataFromTo = async (
   tickers: string[],
@@ -56,8 +46,7 @@ const getEODDataFromTo = async (
 ): Promise<MarketData> => {
   const results: MarketData = [];
 
-  // for (let ticker of tickers) {
-  console.log(`Fetching data for ${ticker}...`);
+  console.log(`Fetching data from tiingo for ${ticker}...`);
 
   try {
     const url = `${DAILY_URL}/${ticker}/${END_POINT_EOD}?${AUTHORIZATION}&startDate=${fromDateToString(
@@ -69,8 +58,6 @@ const getEODDataFromTo = async (
         'Content-Type': 'application/json',
       },
     };
-
-    // console.log(url);
 
     const response = await got<TiingoAPIResponse>(url, options);
 
@@ -99,14 +86,11 @@ const getEODDataFromTo = async (
     console.log(`Error while fetching data for ${ticker}`);
     console.log(error);
   }
-  // }
-
   return results;
 };
 
 const MarketDataProvider = {
   getEODDataFromTo,
-  // getFundamentalsFrom,
   getMultipleEODDataFromTo,
 };
 

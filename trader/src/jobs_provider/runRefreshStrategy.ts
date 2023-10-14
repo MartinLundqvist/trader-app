@@ -1,7 +1,7 @@
 import StrategyDB from '../database_provider/model_strategy.js';
 import StrategySignalDB from '../database_provider/model_strategySignal.js';
 import TickerDB from '../database_provider/model_tickers.js';
-import { getSignal } from '../position_computer/index.js';
+import { getStrategySignal } from '../position_computer/index.js';
 import { Job, StrategySignals } from '../types/index.js';
 
 export const runRefreshStrategy = async (job: Job) => {
@@ -11,7 +11,7 @@ export const runRefreshStrategy = async (job: Job) => {
 
   console.log(`Refreshing strategy ${strategy}`);
   const tickers = await TickerDB.findAllTickers();
-  // const slicedTickers = tickers.slice(0, 10);
+  // const slicedTickers = tickers.slice(0, 10); // This is for testing
   const slicedTickers = tickers;
   const tickerQueue = [...slicedTickers];
   const concurrency = 100;
@@ -25,7 +25,9 @@ export const runRefreshStrategy = async (job: Job) => {
     };
 
     const runPromisesBatch = async (tickerBatch: string[]) => {
-      const promisesBatch = tickerBatch.map((ticker) => getSignal(ticker));
+      const promisesBatch = tickerBatch.map((ticker) =>
+        getStrategySignal(strategy, ticker)
+      );
       return await Promise.all(promisesBatch);
     };
 
@@ -53,8 +55,6 @@ export const runRefreshStrategy = async (job: Job) => {
     );
 
     job.message = `Tested ${slicedTickers.length} tickers and found ${results.length} signals.`;
-
-    // await writeFile('strategies.json', JSON.stringify(results));
 
     await StrategySignalDB.createData(results);
 

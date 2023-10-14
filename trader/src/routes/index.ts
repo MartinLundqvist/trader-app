@@ -1,6 +1,6 @@
 import router from 'express';
 import StrategySignalDB from '../database_provider/model_strategySignal.js';
-import { getTickerData } from '../position_computer/index.js';
+import { getStrategyTickerData } from '../position_computer/index.js';
 import StrategyDB from '../database_provider/model_strategy.js';
 import TickerDB from '../database_provider/model_tickers.js';
 import { MarketDataInformation, Trades } from '../types/index.js';
@@ -37,11 +37,14 @@ routes.get('/signals/:strategyName', async (req, res) => {
 });
 
 routes.get('/tickerdata/:strategyName/:ticker', async (req, res) => {
+  const { strategyName, ticker } = req.params;
+
   console.log(
-    `Fetching ticker data for strategy ${req.params.strategyName} and ticker ${req.params.ticker}`
+    `Fetching ticker data for strategy ${strategyName} and ticker ${ticker}`
   );
   try {
-    const results = await getTickerData(req.params.ticker);
+    // We use live market data.
+    const results = await getStrategyTickerData(strategyName, ticker, 'market');
     res.status(200).send(results);
   } catch (err) {
     res.status(500).send({

@@ -1,5 +1,5 @@
 import TickerDB from '../database_provider/model_tickers.js';
-import { getSignal } from '../position_computer/index.js';
+import { getStrategySignal } from '../position_computer/index.js';
 import { StrategySignals } from '../types/index.js';
 
 export const runStrategyPerformanceTest = async (
@@ -22,7 +22,9 @@ export const runStrategyPerformanceTest = async (
     };
 
     const runPromisesBatch = async (tickerBatch: string[]) => {
-      const promisesBatch = tickerBatch.map((ticker) => getSignal(ticker));
+      const promisesBatch = tickerBatch.map((ticker) =>
+        getStrategySignal(strategy, ticker)
+      );
       return await Promise.all(promisesBatch);
     };
 
