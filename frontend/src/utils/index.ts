@@ -131,19 +131,40 @@ export const totalProfit = (orders: Order[]) => {
   }, 0);
 };
 
-export const createOrderChartObject = (orders: Order[], ticker: string) => {
-  // console.log(orders);
+export interface FilledOrder {
+  ticker: string;
+  date: Date;
+  price: number;
+  side: string;
+}
+
+export const findFilledOrders = (
+  orders: Order[],
+  ticker: string
+): FilledOrder[] => {
   const filtered = orders.filter((order) => order.symbol === ticker);
 
-  const data = filtered.map((order) => {
+  const results = [];
+
+  for (let order of filtered) {
     const date = new Date(order.filled_at);
+    if (date.getFullYear() === 1970) continue; // Skip orders that are not filled
     const price = order.filled_avg_price;
     const side = order.side;
 
-    return { date, price, side };
-  });
+    results.push({ ticker, date, price, side });
 
-  return data;
+    for (let leg of order.legs) {
+      const date = new Date(leg.filled_at);
+      if (date.getFullYear() === 1970) continue; // Skip orders that are not filled
+      const price = leg.filled_avg_price;
+      const side = leg.side;
+
+      results.push({ ticker, date, price, side });
+    }
+  }
+
+  return results;
 };
 
 const testObject = {

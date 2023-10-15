@@ -9,7 +9,7 @@ import { useTrades } from '../../contexts/TradesContext';
 import { useParams } from 'react-router-dom';
 import { Trade } from '@trader/types';
 import { useOrders } from '../../hooks/useOrders';
-import { createOrderChartObject } from '../../utils';
+import { findFilledOrders } from '../../utils';
 
 interface ECDataZoomEvent {
   type: string;
@@ -42,14 +42,6 @@ const Chart = (): JSX.Element => {
   const { currentTrade, setCurrentTrade } = useTrades();
 
   const { orders } = useOrders();
-
-  const testobject = useMemo(() => {
-    if (!orders || !ticker) return null;
-
-    return createOrderChartObject(orders, ticker);
-  }, [orders, ticker]);
-
-  console.log(testobject);
 
   const isDragging = useRef<string>('');
 
@@ -170,6 +162,19 @@ const Chart = (): JSX.Element => {
     }
   };
 
+  const chartOption = useMemo(() => {
+    if (!tickerSignals) return null;
+    const filledOrders = findFilledOrders(orders || [], ticker || '');
+    return createOption(
+      tickerSignals,
+      currentTrade?.stop_loss || 0,
+      currentTrade?.take_profit || 0,
+      startZoom,
+      endZoom,
+      filledOrders
+    );
+  }, [tickerSignals, currentTrade, startZoom, endZoom]);
+
   if (!ticker || ticker === '')
     return <Alert severity='info'>Select a ticker</Alert>;
 
@@ -198,13 +203,7 @@ const Chart = (): JSX.Element => {
         <ReactEChart
           ref={chartRef}
           style={{ width: '100%', height: '100%' }}
-          option={createOption(
-            tickerSignals,
-            currentTrade?.stop_loss || 0,
-            currentTrade?.take_profit || 0,
-            startZoom,
-            endZoom
-          )}
+          option={chartOption}
         />
       </Box>
     </TraderPaper>

@@ -6,6 +6,7 @@ import {
 } from 'echarts';
 // import { TickerSignal } from '../../hooks/useTickerSignals';
 import { StrategyTickerData } from '@trader/types';
+import { FilledOrder } from '../../utils';
 export const STOP_LOSS_LINE = 'Stop Loss';
 export const TAKE_PROFIT_LINE = 'Take Profit';
 
@@ -14,7 +15,8 @@ export const createOption = (
   stopLoss = 0,
   takeProfit = 0,
   startZoom = 0,
-  endZoom = 100
+  endZoom = 100,
+  filledOrders: FilledOrder[] = []
 ): EChartsOption => {
   // console.log('createOption', stopLoss, takeProfit, startZoom, endZoom);
 
@@ -42,7 +44,6 @@ export const createOption = (
   let sma_fastData = data.map((entry) => entry.SMA_fast);
   let volumeData: any[] = [];
   let signalMarkPoints: MarkPointComponentOption['data'] = [];
-  // let positionMarkAreas: MarkAreaComponentOption['data'] = [];
 
   for (let i = 0; i < data.length; i++) {
     volumeData.push([i, data[i].Volume, data[i].Close < data[i].Open ? 1 : -1]);
@@ -53,6 +54,7 @@ export const createOption = (
         xAxis: data[i].date.toISOString().split('T')[0],
         yAxis: data[i].Close,
         symbolRotate: data[i].Signal === 'Buy' ? 180 : 0,
+        symbol: 'pin',
         symbolSize: 40,
         itemStyle: {
           color: 'orange',
@@ -63,6 +65,32 @@ export const createOption = (
         },
       });
     }
+  }
+
+  for (let i = 0; i < filledOrders.length; i++) {
+    signalMarkPoints.push({
+      name: filledOrders[i].side,
+      // value: filledOrders[i].side === 'buy' ? 'Long' : 'Short',
+      value:
+        (filledOrders[i].side === 'buy' ? 'Bought' : 'Sold') +
+        ' at ' +
+        filledOrders[i].price,
+      xAxis: filledOrders[i].date.toISOString().split('T')[0],
+      yAxis: filledOrders[i].price,
+      symbol: 'triangle',
+      symbolSize: 20,
+      symbolOffset: filledOrders[i].side === 'buy' ? [0, 15] : [0, -15],
+      symbolRotate: filledOrders[i].side === 'buy' ? 0 : 180,
+      itemStyle: {
+        color: 'black',
+      },
+      label: {
+        show: false,
+        position: filledOrders[i].side === 'buy' ? 'insideBottom' : 'insideTop',
+        offset: [0, filledOrders[i].side === 'buy' ? 20 : -20],
+        color: 'black',
+      },
+    });
   }
 
   // positionMarkAreas.push([
@@ -225,7 +253,6 @@ export const createOption = (
         },
         markPoint: {
           data: signalMarkPoints,
-          symbol: 'pin',
         },
         markLine: {
           symbol: 'none', // Remove the default symbols at the end of the lines
