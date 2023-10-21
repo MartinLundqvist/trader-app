@@ -73,8 +73,12 @@ export const createOption = (
       // value: filledOrders[i].side === 'buy' ? 'Long' : 'Short',
       value:
         (filledOrders[i].side === 'buy' ? 'Bought' : 'Sold') +
+        ' ' +
+        filledOrders[i].qty +
+        ' shares of ' +
+        filledOrders[i].ticker +
         ' at ' +
-        filledOrders[i].price,
+        filledOrders[i].price.toFixed(2),
       xAxis: filledOrders[i].date.toISOString().split('T')[0],
       yAxis: filledOrders[i].price,
       symbol: 'triangle',
@@ -87,8 +91,9 @@ export const createOption = (
       label: {
         show: false,
         position: filledOrders[i].side === 'buy' ? 'insideBottom' : 'insideTop',
-        offset: [0, filledOrders[i].side === 'buy' ? 20 : -20],
+        offset: [0, filledOrders[i].side === 'buy' ? 30 : -30],
         color: 'black',
+        backgroundColor: 'white',
       },
     });
   }
