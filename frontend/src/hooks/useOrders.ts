@@ -9,6 +9,7 @@ const getOrders = async () => {
     throw new Error('Error calling account API');
   }
 
+  // TODO: Add schema validation
   const data = await response.json();
 
   return data;

@@ -1,6 +1,6 @@
 import ReactEChart from 'echarts-for-react';
 import { ECElementEvent } from 'echarts';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { STOP_LOSS_LINE, TAKE_PROFIT_LINE, createOption } from './createOption';
 import { useTickerSignals } from '../../hooks/useTickerSignals';
 import { Alert, Box, CircularProgress, Typography } from '@mui/material';
@@ -8,6 +8,8 @@ import { TraderPaper } from '../../elements';
 import { useTrades } from '../../contexts/TradesContext';
 import { useParams } from 'react-router-dom';
 import { Trade } from '@trader/types';
+import { useOrders } from '../../hooks/useOrders';
+import { findFilledOrders } from '../../utils';
 
 interface ECDataZoomEvent {
   type: string;
@@ -38,6 +40,8 @@ const Chart = (): JSX.Element => {
   const { tickerSignals, isLoading, error } = useTickerSignals();
 
   const { currentTrade, setCurrentTrade } = useTrades();
+
+  const { orders } = useOrders();
 
   const isDragging = useRef<string>('');
 
@@ -158,6 +162,19 @@ const Chart = (): JSX.Element => {
     }
   };
 
+  const chartOption = useMemo(() => {
+    if (!tickerSignals) return null;
+    const filledOrders = findFilledOrders(orders || [], ticker || '');
+    return createOption(
+      tickerSignals,
+      currentTrade?.stop_loss || 0,
+      currentTrade?.take_profit || 0,
+      startZoom,
+      endZoom,
+      filledOrders
+    );
+  }, [tickerSignals, currentTrade, startZoom, endZoom]);
+
   if (!ticker || ticker === '')
     return <Alert severity='info'>Select a ticker</Alert>;
 
@@ -186,13 +203,7 @@ const Chart = (): JSX.Element => {
         <ReactEChart
           ref={chartRef}
           style={{ width: '100%', height: '100%' }}
-          option={createOption(
-            tickerSignals,
-            currentTrade?.stop_loss || 0,
-            currentTrade?.take_profit || 0,
-            startZoom,
-            endZoom
-          )}
+          option={chartOption}
         />
       </Box>
     </TraderPaper>

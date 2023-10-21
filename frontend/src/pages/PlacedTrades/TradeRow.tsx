@@ -14,6 +14,8 @@ import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { positionPnL, positionStatus } from '../../utils';
 import { useLatestTradePrice } from '../../hooks/useLatestTradePrice';
 
+// TODO: This causes a tonne of re-renders
+
 export const TradeRow = ({
   placedTrade,
 }: {
