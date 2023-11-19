@@ -205,6 +205,20 @@ export const jobsResponseSchema = z.object({
   completed: jobsSchema,
 });
 
+export const newsItemSchema = z.object({
+  id: z.number(),
+  publishedDate: z.coerce.date(),
+  title: z.string(),
+  url: z.string().url(), // Validates that the string is a valid URL.
+  description: z.nullable(z.string()),
+  source: z.string(),
+  tags: z.array(z.string()), // An array of strings.
+  crawlDate: z.coerce.date(),
+  tickers: z.array(z.string()), // An array of strings.
+});
+
+export const newsSchema = z.array(newsItemSchema);
+
 // import { z } from 'zod';
 
 // export const marketDatumSchema = z.object({

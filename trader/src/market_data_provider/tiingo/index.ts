@@ -1,8 +1,13 @@
 import got, { OptionsOfJSONResponseBody } from 'got';
-import { AUTHORIZATION, DAILY_URL, END_POINT_EOD } from './constants.js';
+import {
+  AUTHORIZATION,
+  DAILY_URL,
+  END_POINT_EOD,
+  NEWS_URL,
+} from './constants.js';
 import { fromDateToString } from '../../utils/index.js';
-import { MarketData, TiingoAPIResponse } from '../../types/index.js';
-import { marketDataSchema } from '../../schemas/index.js';
+import { MarketData, News, TiingoAPIResponse } from '../../types/index.js';
+import { marketDataSchema, newsSchema } from '../../schemas/index.js';
 
 const getMultipleEODDataFromTo = async (
   tickers: string[],
@@ -46,7 +51,7 @@ const getEODDataFromTo = async (
 ): Promise<MarketData> => {
   const results: MarketData = [];
 
-  console.log(`Fetching data from tiingo for ${ticker}...`);
+  console.log(`Fetching ticker data from tiingo for ${ticker}...`);
 
   try {
     const url = `${DAILY_URL}/${ticker}/${END_POINT_EOD}?${AUTHORIZATION}&startDate=${fromDateToString(
@@ -89,9 +94,73 @@ const getEODDataFromTo = async (
   return results;
 };
 
+const getLatestNews = async (ticker: string): Promise<News> => {
+  console.log(`Fetching news from tiingo for ${ticker}...`);
+
+  const result: News = [];
+
+  try {
+    const url = `${NEWS_URL}?tickers=${ticker}&${AUTHORIZATION}`;
+    const options: OptionsOfJSONResponseBody = {
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const response = await got<News>(url, options);
+
+    const data = response?.body;
+
+    if (!Array.isArray(data)) {
+      throw new Error('No data returned from API');
+    }
+
+    let parsed = newsSchema.parse(data);
+
+    if (parsed.length > 0) {
+      result.push(...parsed);
+    }
+  } catch (error) {
+    console.log(`Error while fetching news for ${ticker}`);
+    console.log(error);
+  }
+
+  return result;
+};
+
 const MarketDataProvider = {
   getEODDataFromTo,
   getMultipleEODDataFromTo,
+  getLatestNews,
 };
+
+// const example = {
+//   id: 59655792,
+//   publishedDate: '2023-11-18T06:20:43Z',
+//   title: 'Cepton, Inc. (NASDAQ:CPTN) Short Interest Update',
+//   url: 'https://www.thelincolnianonline.com/2023/11/18/cepton-inc-nasdaqcptn-short-interest-update.html',
+//   description:
+//     'Cepton, Inc. (NASDAQ:CPTN – Get Free Report) saw a large growth in short interest in the month of October. As of October 31st, there was short interest totalling 100,100 shares, a growth of 6.8% from the October 15th total of 93,700 shares. Approximately 2.1% of the shares of the company are sold short. Based on […]',
+//   source: 'thelincolnianonline.com',
+//   tags: [
+//     'Auto',
+//     'Call',
+//     'Cepton',
+//     'Communication Services',
+//     'Cptn',
+//     'Financial Services',
+//     'Nasdaq:Cptn',
+//     'Options',
+//     'Put',
+//     'Stock',
+//     'Stocks',
+//     'Tires',
+//     'Truck',
+//     'Unknown Sector',
+//   ],
+//   crawlDate: '2023-11-18T06:35:08.770051Z',
+//   tickers: ['bk', 'call', 'cptn', 'ry'],
+// };
 
 export default MarketDataProvider;

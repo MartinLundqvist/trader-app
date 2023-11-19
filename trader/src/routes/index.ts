@@ -10,6 +10,7 @@ import Trader from '../broker_provider/index.js';
 import JobsProvider from '../jobs_provider/index.js';
 import { PlaceOrder } from '../broker_provider/alpaca/params.js';
 import PlacedTradesDB from '../database_provider/model_placedTrade.js';
+import MarketDataProvider from '../market_data_provider/tiingo/index.js';
 
 export const routes = router();
 
@@ -101,6 +102,18 @@ routes.get('/marketdata/getlatesttrade/:ticker', async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send({ error: 'Error while fetching latest trade' });
+  }
+});
+
+routes.get('/marketdata/getlatestnews/:ticker', async (req, res) => {
+  try {
+    const ticker = req.params.ticker;
+    const news = await MarketDataProvider.getLatestNews(ticker);
+
+    res.status(200).send({ news });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: 'Error while fetching latest news' });
   }
 });
 

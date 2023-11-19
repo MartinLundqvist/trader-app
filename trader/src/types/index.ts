@@ -43,6 +43,7 @@ import {
   jobSchema,
   jobsSchema,
   jobsResponseSchema,
+  newsSchema,
 } from '../schemas/index.js';
 
 import { z } from 'zod';
@@ -72,6 +73,7 @@ export type PlacedTrades = z.infer<typeof placedTradesSchema>;
 export type Job = z.infer<typeof jobSchema>;
 export type Jobs = z.infer<typeof jobsSchema>;
 export type JobsResponse = z.infer<typeof jobsResponseSchema>;
+export type News = z.infer<typeof newsSchema>;
 
 export type {
   Account,

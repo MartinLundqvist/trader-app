@@ -4,6 +4,7 @@ import { TraderPaper } from '../../elements';
 import { useParams } from 'react-router-dom';
 import Chart from '../Chart';
 import Trade from '../Trade';
+import News from '../News';
 
 const Strategy = (): JSX.Element => {
   const { strategies } = useStrategies();
@@ -30,6 +31,9 @@ const Strategy = (): JSX.Element => {
       </Grid>
       <Grid item xs={3}>
         <Trade />
+      </Grid>
+      <Grid item xs={12}>
+        <News />
       </Grid>
     </Grid>
   );

@@ -8,6 +8,7 @@ config();
 
 export const BASE_URL = 'https://api.tiingo.com/tiingo';
 export const DAILY_URL = BASE_URL + '/daily';
+export const NEWS_URL = BASE_URL + '/news';
 export const FUNDAMENTALS_URL = BASE_URL + '/fundamentals';
 export const END_POINT_EOD = 'prices';
 export const END_POINT_DAILY = 'daily';
