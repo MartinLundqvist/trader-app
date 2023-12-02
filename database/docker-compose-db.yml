@@ -1,12 +1,12 @@
-services:
-  trader_db:
-    image: postgres
-    container_name: trader_db
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
-    volumes:
-      - ./data:/var/lib/postgresql/data
+# services:
+#   trader_db:
+#     image: postgres
+#     container_name: trader_db
+#     ports:
+#       - 5432:5432
+#     environment:
+#       - POSTGRES_PASSWORD=postgres
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_DB=postgres
+#     volumes:
+#       - ./data:/var/lib/postgresql/data
