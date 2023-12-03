@@ -16,9 +16,6 @@ import { JobRow } from './JobRow';
 const PlacedTrades = (): JSX.Element => {
   const { placedTradeJobs, isLoading, error } = usePlacedTradeJobs();
 
-  //TODO: Debug
-  // console.log(placedTradeJobs);
-
   return (
     <>
       <TraderHeader title='Manage trades' />

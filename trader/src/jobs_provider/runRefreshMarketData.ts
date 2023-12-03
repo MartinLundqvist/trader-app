@@ -8,15 +8,22 @@ export const runRefreshMarketData = async (job: Job) => {
   job.progress = 0;
 
   try {
+    // TODO: Uncomment the below lines to do a 400 day refresh of the market data
+    // const lastestDate = await MarketDataDB.getLatestDate();
+    // const fourHoundredDaysOffset = 1000 * 60 * 60 * 24 * 400;
+    // const fromDate = new Date(lastestDate.getTime() - fourHoundredDaysOffset);
+    // const toDate = new Date();
+    // const concurrency = 10;
+
     const lastestDate = await MarketDataDB.getLatestDate();
     const oneDayOffset = 1000 * 60 * 60 * 24;
     const fromDate = new Date(lastestDate.getTime() + oneDayOffset);
     const toDate = new Date();
+    const concurrency = 100;
 
     const tickers = await TickerDB.findAllTickers();
 
     const tickerQueue = [...tickers];
-    const concurrency = 100;
     const results: MarketData = [];
     let jobLength = tickerQueue.length;
 

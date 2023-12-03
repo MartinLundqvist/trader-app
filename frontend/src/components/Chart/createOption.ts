@@ -1,9 +1,5 @@
 // import { StrategyTickerData } from '@trader-app/shared';
-import {
-  EChartsOption,
-  MarkAreaComponentOption,
-  MarkPointComponentOption,
-} from 'echarts';
+import { EChartsOption, MarkPointComponentOption } from 'echarts';
 // import { TickerSignal } from '../../hooks/useTickerSignals';
 import { StrategyTickerData } from '@trader/types';
 import { FilledOrder } from '../../utils';
@@ -48,6 +44,7 @@ export const createOption = (
   for (let i = 0; i < data.length; i++) {
     volumeData.push([i, data[i].Volume, data[i].Close < data[i].Open ? 1 : -1]);
     if (data[i].Signal !== '') {
+      // console.log('Signal', data[i].Signal, data[i].date.toISOString());
       signalMarkPoints.push({
         name: data[i].Signal,
         value: data[i].Signal,
@@ -66,6 +63,8 @@ export const createOption = (
       });
     }
   }
+
+  // console.log(signalMarkPoints);
 
   for (let i = 0; i < filledOrders.length; i++) {
     signalMarkPoints.push({
